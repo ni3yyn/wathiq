@@ -9,34 +9,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # Upgraded to v4
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Upgraded to v4
+      # IMPROVEMENT 1: Use built-in 'cache: npm'
+      # This replaces the manual 'actions/cache' step. It caches the 
+      # global cache directory instead of node_modules, which is safer and faster.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
 
-      # NEW: Cache Node Modules
-      - name: Cache Node Modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # Upgraded to v4
+      # IMPROVEMENT 2: Add 'cache: gradle'
+      # This is critical for Android. It caches downloaded JARs/AARs 
+      # and the Gradle wrapper, saving massive download time on repeats.
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '21'
+          cache: 'gradle'
 
       - name: Install Dependencies
-        # This step will be much faster if a cache hit occurred above
         run: npm ci --legacy-peer-deps
 
       - name: Build Web Assets
@@ -45,14 +40,12 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
-      # Crucial fix for permission denied error
       - name: Make Gradlew Executable
         run: cd android && chmod +x gradlew
 
       - name: Build Android APK (Debug)
         run: cd android && ./gradlew assembleDebug
 
-      # Upgraded to v4
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
