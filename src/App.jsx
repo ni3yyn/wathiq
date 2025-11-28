@@ -1,3 +1,5 @@
+--- START OF FILE App.jsx ---
+
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
@@ -64,12 +66,16 @@ const WathiqRoutes = () => {
     }
   }, [loading, isNative]);
 
-  // --- CHANGE 3: Splash Guard ---
+  // --- CRITICAL FIX START: CHANGE 3: Splash Guard ---
   // Only block rendering if on Native AND (Splash is active OR Data is loading)
-  // This allows Web to load Landing Page instantly without waiting for Auth
-  if (isNative && (showSplash || loading || (user && !userProfile))) {
+  // The check for (user && !userProfile) has been removed, as that state
+  // should be handled by a generic in-app loader or the destination component,
+  // not by the full-screen native splash guard.
+  if (isNative && (showSplash || loading)) {
     return <AnimatedSplash />;
   }
+  // --- CRITICAL FIX END ---
+
 
   // --- 4. Routing Logic ---
   const isProfileComplete = userProfile?.onboardingComplete === true;
