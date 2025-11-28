@@ -77,7 +77,22 @@ const WathiqRoutes = () => {
 
   // --- 4. Routing Logic ---
   const isProfileComplete = userProfile?.onboardingComplete === true;
-  const appHomeRoute = isProfileComplete ? "/oil-guard" : "/welcome";
+  let appHomeRoute = "/oil-guard"; // Default for all existing users
+
+  if (isProfileComplete) {
+      // User is fully onboarded.
+      appHomeRoute = "/oil-guard";
+  } else if (user && !userProfile) {
+      // User is logged in, but NO userProfile exists yet.
+      // This is the strongest indicator of a BRAND NEW sign-up.
+      appHomeRoute = "/welcome";
+  } else {
+      // User is logged in, and a userProfile *exists* but onboardingComplete is false.
+      // This is an EXISTING user who quit the onboarding flow.
+      // We send them to the main app (/oil-guard) to break the infinite /welcome loop.
+      // The /oil-guard page should handle displaying a prompt/banner to complete the profile.
+      appHomeRoute = "/oil-guard";
+  }
 
   // --- 5. Navigation Visibility ---
   const showNav = user && 
