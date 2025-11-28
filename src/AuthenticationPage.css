@@ -1,0 +1,22 @@
+.authentication-container {
+    width: 100vw;
+    /* CHANGED: Use min-height to allow the container to grow */
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* CHANGED: Allow vertical scrolling but keep horizontal scrolling hidden for animations */
+    overflow-x: hidden;
+    overflow-y: auto; 
+    background: transparent; /* Your theme's background */
+}
+
+.auth-component-wrapper {
+    width: 100%;
+    /* CHANGED: Allow height to be determined by content */
+    min-height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

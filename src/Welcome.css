@@ -1,0 +1,320 @@
+.welcome-page-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    overflow: hidden;
+    }
+    /* =================================== /
+    / PARTICLE BACKGROUND EFFECT /
+    / =================================== */
+    .welcome-particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    }
+    .welcome-particle {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 50%;
+    background: var(--bg-color);
+    width: var(--size);
+    height: var(--size);
+    left: var(--left-start);
+    box-shadow: 0 0 8px 1px var(--glow-color);
+    filter: blur(0.5px);
+    animation-duration: var(--anim-duration);
+    animation-delay: var(--anim-delay);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    }
+    @keyframes welcome-float-particle {
+    0% { transform: translateY(0); opacity: 0; }
+    20% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    100% { transform: translateY(-100vh) translateX(var(--x-end)); opacity: 0; }
+    }
+    /* =================================== /
+    / MAIN WELCOME PANEL /
+    / =================================== */
+    .welcome-panel {
+    width: 100%;
+    max-width: 800px;
+    background: transparent;
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    border-radius: 30px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #EAEAEA;
+    padding: 2.5rem 3rem;
+    text-align: center;
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    }
+    .welcome-header h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    color: #f0fdf4;
+    text-shadow: 0 0 20px rgba(178, 216, 180, 0.5);
+    }
+    .welcome-progress-bar-container {
+    width: 100%; height: 6px; background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px; overflow: hidden; margin: 1.5rem auto 2rem;
+    }
+    .welcome-progress-bar-filler {
+    height: 100%; background: #B2D8B4; border-radius: 3px;
+    box-shadow: 0 0 10px rgba(178, 216, 180, 0.7);
+    transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: welcome-pulse-glow 2s infinite alternate;
+    }
+    @keyframes welcome-pulse-glow { from { opacity: 0.8; } to { opacity: 1; } }
+    .welcome-content { min-height: 350px; margin-bottom: 2rem; }
+    .welcome-step-subtitle {
+    font-size: 1.1rem; color: rgba(234, 234, 234, 0.8);
+    margin: 0 auto 2rem auto; max-width: 500px; line-height: 1.6;
+    }
+    .welcome-name-input {
+    width: 100%; max-width: 400px; background-color: rgba(0, 0, 0, 0.253) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important; border-radius: 12px;
+    color: #EAEAEA !important; font-size: 1.2rem !important; padding: 1rem !important; text-align: center;
+    transition: all 0.3s !important;
+    margin: 0 auto !important;
+    }
+    .welcome-name-input:focus {
+    outline: none; border-color: #B2D8B4;
+    box-shadow: 0 0 15px rgba(178, 216, 180, 0.3);
+    }
+    /* =================================== /
+    / HYPER-INTERACTIVE BUTTONS /
+    / =================================== */
+    .welcome-selection-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .welcome-selection-grid.welcome-gender-grid .welcome-selection-item { min-width: 150px; }
+    .welcome-selection-item {
+    font-family: inherit; font-size: 1rem; font-weight: 500;
+    color: #cbd5e1; background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0.8rem 1.5rem; cursor: pointer; border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    }
+    .welcome-selection-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #B2D8B4;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    .welcome-selection-item:active {
+    transform: translateY(-2px);
+    transition-duration: 0.1s;
+    }
+    .welcome-selection-item.selected {
+    background: #B2D8B4;
+    color: #1a3b25;
+    border-color: #B2D8B4;
+    font-weight: 700;
+    box-shadow: 0 5px 25px rgba(178, 216, 180, 0.3);
+    transform: translateY(-5px);
+    }
+    .welcome-check-icon {
+    font-size: 1rem;
+    color: #1a3b25;
+    }
+    /* Styles for icon-based buttons */
+    .welcome-selection-grid.welcome-icon-grid { gap: 1.5rem; }
+    .welcome-icon-item {
+    flex-direction: column;
+    width: 120px;
+    height: 100px;
+    border-radius: 20px;
+    padding: 1rem;
+    }
+    .welcome-item-icon {
+    font-size: 2rem;
+    color: #B2D8B4;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+    }
+    .welcome-icon-item.selected .welcome-item-icon {
+    color: #1a3b25;
+    }
+    .welcome-icon-item.selected .welcome-check-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    }
+    /* =================================== /
+    / STEP-SPECIFIC STYLES /
+    / =================================== */
+    .welcome-conditions-step {
+    display: flex; flex-direction: column; gap: 2rem; max-height: 350px; overflow-y: auto;
+    padding: 0.5rem 1rem 0.5rem 0;
+    }
+    .welcome-conditions-step::-webkit-scrollbar { width: 6px; }
+    .welcome-conditions-step::-webkit-scrollbar-track { background: transparent; }
+    .welcome-conditions-step::-webkit-scrollbar-thumb { background-color: rgba(178, 216, 180, 0.3); border-radius: 6px; }
+    .welcome-condition-category h4 {
+    font-size: 1.2rem; margin: 0 0 1rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.75rem; color: #EAEAEA;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .welcome-final-step-content {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
+    }
+    .welcome-final-icon-wrapper {
+    width: 80px; height: 80px;
+    display: flex; justify-content: center; align-items: center;
+    background: #B2D8B4;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 30px rgba(178, 216, 180, 0.5);
+    }
+    .welcome-final-icon {
+    font-size: 3rem; color: #1a3b25;
+    }
+    .welcome-final-step-content h3 { font-size: 1.8rem; margin: 0 0 0.5rem; }
+    .welcome-final-step-content p { max-width: 400px; color: rgba(234, 234, 234, 0.8); }
+    /* =================================== /
+    / NAVIGATION & MISC /
+    / =================================== */
+    .welcome-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .welcome-nav-btn {
+    background: transparent; border: none; padding: 0.85rem 1.75rem;
+    border-radius: 50px; font-family: inherit; font-size: 1.1rem;
+    font-weight: 600; cursor: pointer; display: inline-flex;
+    align-items: center; gap: 0.75rem; transition: all 0.3s ease;
+    }
+    .welcome-nav-btn { background: #B2D8B4; color: #1a3b25; }
+    .welcome-nav-btn:hover:not(:disabled) { background: #c1e0c2; transform: translateY(-3px); box-shadow: 0 5px 20px rgba(178, 216, 180, 0.25); }
+    .welcome-nav-btn.welcome-secondary { color: #94a3b8; }
+    .welcome-nav-btn.welcome-secondary:hover { color: #EAEAEA; }
+    .welcome-nav-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; background: #5a6e5b;}
+    .welcome-spinning { animation: welcome-spin 1s linear infinite; }
+    @keyframes welcome-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    /* =================================== /
+    / RESPONSIVE DESIGN /
+    / =================================== */
+    @media (max-width: 768px) {
+    .welcome-panel {
+    padding: 2rem 1.5rem;
+    max-width: 95%;
+    cursor: none;
+    }
+    .welcome-header h2 {
+    font-size: 2rem;
+    }
+    .welcome-content {
+    min-height: 320px;
+    cursor: none;
+    }
+    }
+    @media (max-width: 480px) {
+    .welcome-page-container {
+    padding: 1rem;
+    align-items: center;
+    cursor: none;
+    }
+    .welcome-panel {
+    padding: 1.5rem 1rem;
+    }
+    .welcome-header h2 {
+    font-size: 1.6rem;
+    }
+    .welcome-step-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    }
+    .welcome-name-input {
+    font-size: 1.1rem;
+    padding: 0.8rem;
+    cursor: none;
+    }
+    .welcome-selection-item {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+    cursor: none;
+    }
+    .welcome-selection-grid.welcome-icon-grid {
+    gap: 1rem;
+    cursor: none;
+    }
+    .welcome-icon-item {
+    width: 100px;
+    height: 90px;
+    padding: 0.5rem;
+    border-radius: 16px;
+    cursor: none;
+    }
+    .welcome-item-icon {
+    font-size: 1.8rem;
+    }
+    .welcome-icon-item.selected .welcome-check-icon {
+    font-size: 1rem;
+    top: 8px;
+    right: 8px;
+    cursor: none;
+    }
+    .welcome-conditions-step {
+    padding-right: 0.5rem;
+    }
+    .welcome-condition-category h4 {
+    font-size: 1.1rem;
+    }
+    .welcome-final-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    cursor: none;
+    }
+    .welcome-final-icon {
+    font-size: 2.5rem;
+    cursor: none;
+    }
+    .welcome-final-step-content h3 {
+    font-size: 1.5rem;
+    }
+    .welcome-navigation {
+    flex-direction: column-reverse;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    cursor: none;
+    }
+    .welcome-nav-btn{
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.85rem 1.5rem;
+    cursor: none;
+    }
+    .welcome-nav-btn .welcome-secondary {
+        cursor: none;
+        color: #EAEAEA;
+    }
+
+    }

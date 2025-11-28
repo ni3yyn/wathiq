@@ -1,0 +1,2491 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+
+
+/* --- 1. Global Styles & Background --- */
+.profile-scope {
+  position: relative; /* Needed for absolute positioning of particles */
+  padding: 1rem 0;
+  min-height: 100vh;
+  overflow: hidden; /* Hide particles leaving the screen */
+}
+
+.profile-particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0; /* Background layer */
+  pointer-events: none;
+}
+
+.profile-particle {
+  position: absolute;
+  bottom: -20px;
+  border-radius: 50%;
+  background: var(--bg-color);
+  width: var(--size);
+  height: var(--size);
+  left: var(--left-start);
+  box-shadow: 0 0 8px 1px var(--glow-color);
+  filter: blur(2px); /* Exact blur from Login.css */
+  will-change: transform, opacity;
+  animation-duration: var(--anim-duration);
+  animation-delay: var(--anim-delay);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  /* Ensure the animation name is applied from the inline style */
+  animation-name: var(--animationName, profile-float-particle); 
+}
+
+/* Exact Keyframes from Login.css, renamed */
+
+@keyframes profile-float-particle {
+  0% {
+      transform: translateY(0) scale(1);
+      opacity: 0;
+  }
+  20% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% {
+      transform: translateY(-100vh) translateX(var(--x-end)) scale(0.8);
+      opacity: 0;
+  }
+}
+
+@keyframes profile-pulse-glow {
+  0%, 100% {
+      transform: translateY(0) scale(0.9);
+      opacity: 0;
+  }
+  15%, 85% { opacity: 0.8; }
+  50% {
+      transform: translateY(-50vh) translateX(calc(var(--x-end) / 2)) scale(1.1);
+      opacity: 1;
+  }
+}
+
+/* ========================================= */
+/*   Sparkle Particle Header                 */
+/* ========================================= */
+
+.profile-header-sparkle {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 1rem 0.1rem;
+  margin-top: -4rem;
+  /* Transparent & Blurred as requested */
+  background: transparent;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  z-index: 2;
+  /* Optional: Very subtle border to define the area */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0 0 30px 30px;
+}
+
+.header-content-sparkle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.greeting-pill {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 16px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Wrapper needs relative positioning to contain the sparks */
+.username-wrapper {
+  position: relative;
+  display: inline-block;
+  padding: 0 10px; /* Add space so sparks don't get cut off */
+}
+
+.username-text {
+  margin: 0;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+  
+  /* Elegant Text Glow */
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.header-subtitle-sparkle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* --- THE PARTICLES --- */
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .profile-header-sparkle {
+    padding: 0.5rem 0,1rem;
+    margin-bottom: 1rem;
+    
+  }
+  
+  .username-text {
+    font-size: 2.2rem;
+  }
+  
+  /* Make sparks slightly smaller on mobile */
+  .spark-particle.star { font-size: 0.6rem; }
+  .spark-particle.dot { font-size: 0.4rem; }
+}
+
+.profile-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Tajawal', sans-serif;
+  direction: rtl;
+  color: #cbd5e1;
+}
+
+/* --- 2. Typography & Headers --- */
+.profile-title {
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 0 20px rgba(5, 150, 105, 0.3);
+}
+
+.profile-email {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #94a3b8;
+  margin-bottom: 2.5rem;
+}
+
+/* --- 3. Tab Navigation --- */
+.profile-tabs-container {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.profile-tabs {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50px;
+  scroll-behavior: smooth; 
+}
+
+.profile-tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 50px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tab-btn:hover:not(.active) {
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  color: #ffffff;
+  background: #0596688c;
+  font-weight: 700;
+  
+}
+
+.tab-btn.active svg { color: #ffffff; }
+
+.swipe-indicator {
+  display: none;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .swipe-indicator { display: flex; }
+}
+.tab-animator {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  
+  /* Match the border radius of your design */
+  border-radius: 24px;
+  
+  /* CRITICAL: This clips the blur filter to the rounded corners */
+  overflow: hidden;
+  
+  /* Safari Fix: Forces the browser to respect border-radius on filters */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  
+  /* Move the shadow here so it doesn't get clipped inside */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  
+  /* Border moves here too to encompass the whole shape */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Force GPU */
+  transform: translate3d(0,0,0);
+}
+/* --- 4. Main Content Containers --- */
+.tab-content-container {
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 0; 
+    border: none;
+    box-shadow: none;
+    margin-top: 0;
+  padding: 2rem;
+  will-change: transform, opacity, backdrop-filter;
+    /* Force Hardware Acceleration */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .tab-content-container {
+      /* Increase opacity slightly on mobile to hide blur-lag if it still happens */
+      padding: 1rem;
+  }
+}
+
+.tab-content-container h2 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #e2e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.tab-content-container h2 svg {
+  color: #059669;
+}
+
+/* --- 5. Controls (Inputs, Selects, Buttons) --- */
+.profile-elegantt-inputt, select.profile-elegantt-inputt {
+    width: 100%;
+    background-color: rgba(221, 86, 8, 0.048);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    color: #e2e8f00e;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.profile-elegantt-inputt:focus, select.profile-elegantt-inputt:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.3);
+    background: rgba(44, 53, 73, 0.5);
+}
+
+.elegant-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.75rem;
+    font-family: inherit;
+    font-weight: 600;
+    text-decoration: none;
+}
+.elegant-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+.elegant-btn.primary { background: #059669; border-color: #059669; color: #fff; }
+.elegant-btn.primary:hover { background: #10b981; border-color: #10b981; box-shadow: 0 4px 20px rgba(5, 150, 105, 0.4); }
+.elegant-btn.small { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+.elegant-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+/* --- 6. Shelf Tab & Product Card --- */
+.shelf-controls { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.search-bar { position: relative; }
+.search-bar svg { position: absolute; top: 50%; right: 1.25rem; transform: translateY(-50%); color: #94a3b8; }
+.search-bar .clear-search-btn {
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.search-bar .clear-search-btn:hover { background: rgba(255, 255, 255, 0.2); color: #e2e8f0; }
+
+.product-type-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.product-type-filters button {
+    font-family: inherit; font-size: 0.85rem; font-weight: 500;
+    color: #94a3b8; background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1); padding: 0.5rem 1rem;
+    cursor: pointer; border-radius: 50px; transition: all 0.2s ease;
+}
+.product-type-filters button:hover { color: #e2e8f0; background: rgba(255,255,255,0.1); }
+.product-type-filters button.active { color: #fff; background: #059669; border-color: #059669; font-weight: 600; }
+
+.product-card-wrapper {
+  position: relative;
+  margin-bottom: 1rem; /* Spacing between items moves here */
+  isolation: isolate;
+  border-radius: 16px; /* Match card radius */
+  
+  /* FIX: Helps wrapper hug the content height exactly */
+  display: flex; 
+  flex-direction: column;
+}
+
+/* The Red Background Layer */
+.swipe-action-background {
+  position: absolute;
+  /* FIX: use inset: 0 to snap exactly to edges */
+  inset: 0; 
+  z-index: 0;
+  
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 16px; /* Match card radius */
+  
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Icon on left in RTL */
+  padding-left: 2rem;
+  
+  color: #fca5a5;
+  font-weight: bold;
+  gap: 8px;
+  
+  /* Ensure box sizing includes borders */
+  box-sizing: border-box;
+}
+
+
+/* Ensure the main card sits on top and has a background */
+.product-card-elegant {
+  position: relative;
+  z-index: 1; 
+  /* Important: Needs a background color so you don't see the red layer through it until swiped */
+  background: rgba(3, 143, 73, 0.904); 
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.034); 
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: grab;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  margin: 0 !important; 
+  
+  /* Ensure height calculation matches */
+  box-sizing: border-box;
+}
+
+.weather-insight-card .glass-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.weather-insight-icon {
+  font-size: 1.5rem;
+}
+.weather-insight-body h4 {
+  margin: 0 0 0.5rem 0;
+  color: #e2e8f0;
+}
+.weather-insight-body p {
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Severity styles */
+.weather-insight-card.severity-critical { border-left: 4px solid #f43f5e; }
+.weather-insight-card.severity-warning { border-left: 4px solid #f59e0b; }
+.weather-insight-card.severity-info { border-left: 4px solid #60a5fa; }
+.weather-insight-card.severity-good { border-left: 4px solid #10b981; }
+.weather-insight-card.severity-error { border-left: 4px solid #b91c1c; }
+
+.product-card-info { flex-grow: 1; display: flex; flex-direction: column; gap: 0.75rem; min-width: 0; }
+.product-card-name { font-size: 1.1rem; font-weight: 600; color: #e2e8f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.product-card-tags { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.product-card-tag { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; font-weight: 500; padding: 0.25rem 0.75rem; border-radius: 50px; background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid rgba(255, 255, 255, 0.1); user-select: none; }
+.product-card-tag.type-tag { cursor: default; }
+
+.product-card-footer { display: flex; align-items: center; gap: 1.5rem; flex-shrink: 0; }
+.product-actions-flat-group { display: flex; align-items: center; gap: 1.25rem; }
+.product-flat-action { background: transparent; border: none; padding: 10px; margin: 0; color: #94a3b8; font-size: 1.2rem; cursor: pointer; transition: color 0.2s ease-in-out, transform 0.2s ease-in-out; display: flex; align-items: center; justify-content: center; }
+.product-flat-action:hover { transform: scale(1.15); }
+.product-flat-action.action-view:hover { color: #60a5fa; }
+.product-flat-action.action-delete:hover { color: #f87171; }
+.product-card-drag-handle { color: #94a3b8; opacity: 0.4; cursor: grab; padding: 0 0.5rem; }
+
+@media (max-width: 640px) {
+  .product-card-elegant { flex-direction: column; align-items: stretch; gap: 1rem; padding: 1rem; }
+  .product-card-footer { justify-content: space-between; width: 100%; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .product-card-name { font-size: 1rem; }
+}
+
+/* --- 7. Routine Builder Tab --- */
+.routine-glass-toggle {
+  display: flex;
+  position: relative;
+  background: rgba(255, 255, 255, 0.007); /* Deep glass background */
+  padding: 6px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Centering & Width */
+  margin: 0 auto 2rem auto;
+  width: fit-content;
+  min-width: 300px; /* Ensure it has good width on desktop */
+  max-width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.routine-glass-toggle:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  background: transparent;
+}
+
+.toggle-option {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 40px;
+  
+  /* Text Styles */
+  color: #94a3b8;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  white-space: nowrap; /* Prevent text wrapping */
+  
+  /* Disable tap highlight on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.toggle-option:focus {
+  outline: none;
+}
+
+.toggle-option.active {
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.toggle-option:hover {
+  background: transparent;
+}
+
+/* The Sliding Green Pill */
+.active-highlight {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  border-radius: 40px;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+  z-index: 0; /* Behind content */
+}
+
+/* Content Wrapper (to sit above the highlight) */
+.toggle-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Icons */
+.toggle-content svg {
+  font-size: 1.1rem;
+  margin-bottom: 2px; /* Optical alignment */
+}
+
+
+/* --- Responsiveness for Tight Screens --- */
+@media (max-width: 600px) {
+  .routine-glass-toggle {
+    width: 100%; /* Fill the available container width */
+    min-width: 0; /* CRITICAL: Remove the 300px desktop limit */
+    max-width: 100%;
+    
+    display: flex;
+    justify-content: space-between; /* Distribute space evenly */
+    
+    border-radius: 16px;
+    padding: 4px;
+    gap: 4px; /* Small gap between pills */
+    box-sizing: border-box; /* Include padding in width calculation */
+  }
+
+  .toggle-option {
+    flex: 1; /* Force all 3 tabs to be exactly the same width */
+    width: 0; /* CSS Flexbox trick to ensure true equal distribution */
+    
+    padding: 10px 0;
+    border-radius: 12px;
+    justify-content: center; /* Center the icon/text inside the button */
+  }
+  
+  .active-highlight {
+    border-radius: 12px;
+  }
+  
+  .toggle-content {
+    gap: 6px;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .toggle-label {
+    font-size: 0.85rem;
+  }
+  
+  .toggle-content svg {
+    font-size: 1rem;
+    margin-bottom: 1px;
+  }
+}
+
+/* --- Extremely Small Screens (iPhone SE / Fold) --- */
+@media (max-width: 360px) {
+  .toggle-label {
+    display: none; /* Hide text */
+  }
+  
+  .toggle-option.active .toggle-label {
+    display: inline-block; /* Only show text for active tab */
+    font-size: 0.8rem;
+  }
+}
+
+.auto-save-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+/* State: Saved */
+.auto-save-indicator.saved {
+  color: #10b981; /* Green */
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* State: Saving... */
+.auto-save-indicator.saving {
+  color: #fbbf24; /* Gold/Amber */
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.auto-save-indicator .spinner {
+  animation: spin 1s linear infinite;
+}
+
+.routine-timeline-item {
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  /* Add a slight reveal animation */
+  animation: fadeInNode 0.5s ease forwards;
+}
+
+@keyframes fadeInNode {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 1. The Left Track --- */
+.timeline-track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40px; /* Fixed width for alignment */
+  padding-top: 0.5rem; /* Align node with header text */
+}
+
+.timeline-node {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  
+  /* Default Empty State: Dark Circle */
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  z-index: 1; /* Sit on top of the line */
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Pop effect */
+}
+
+/* The Vertical Line */
+.timeline-line {
+  width: 2px;
+  flex-grow: 1; /* Fill remaining height */
+  background: rgba(255, 255, 255, 0.05);
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border-radius: 2px;
+  transition: background-color 0.4s ease;
+}
+
+/* --- 2. Filled State (Active) --- */
+.routine-timeline-item.filled .timeline-node {
+  background: #059669;
+  border-color: #059669;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(5, 150, 105, 0.4);
+  transform: scale(1.1); /* Slight pop */
+}
+
+/* Make the line glow if the CURRENT step is filled */
+.routine-timeline-item.filled .timeline-line {
+  background: linear-gradient(to bottom, #059669 0%, rgba(255,255,255,0.05) 100%);
+}
+
+@media (max-width: 768px) {
+  .routine-timeline-item {
+    gap: 0.8rem;
+  }
+  .timeline-track {
+    min-width: 30px;
+  }
+  .timeline-node {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+}
+
+.routine-builder-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.routine-step-wrapper {
+  background: rgba(30, 41, 59, 0.05);
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-grow: 1;
+  margin-bottom: 1.5rem;
+}
+
+.routine-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: #94a3b8;
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+    /* Align visually with the node */
+  height: 32px; 
+  }
+
+.add-product-btn {
+  background: none;
+  border: none;
+  color: #059669;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+.add-product-btn:hover {
+  color: #10b981;
+  transform: scale(1.1);
+}
+
+.routine-step {
+  background: rgba(15, 23, 42, 0);
+  border-radius: 12px;
+  padding: 0.75rem;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: background-color 0.3s;
+}
+
+.routine-step.dragging-over {
+  background: rgba(5, 150, 105, 0.1);
+}
+
+.empty-step-placeholder {
+  display: flex; align-items: center; justify-content: center;
+  flex-grow: 1; color: #fdfeffd8; font-size: 0.85rem;
+  padding: 0.5rem;
+}
+
+.routine-product-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  color: #e2e8f0;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  cursor: grab;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.remove-product-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.2s ease;
+}
+.remove-product-btn:hover {
+  opacity: 1;
+  color: #f87171;
+}
+
+/* Modal for Product Selection */
+.product-select-modal {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  max-height: 70vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+.product-select-modal h4 {
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+  color: #e2e8f0;
+}
+.product-select-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.product-select-list button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  text-align: right;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.product-select-list button:hover {
+  background: #059669;
+  color: #fff;
+  border-color: #059669;
+}
+.product-select-list p {
+  text-align: center;
+  color: #94a3b8;
+}
+
+/* --- 8. Analysis Tab --- */
+.focus-area-selector {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    max-width: 400px;
+}
+.focus-area-selector label { font-weight: 600; flex-shrink: 0; }
+
+.glass-analysis-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.glass-card {
+  background: rgba(30, 41, 59, 0.05);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  border-color: rgba(5, 150, 105, 0.5);
+  background: rgba(30, 41, 59, 0.1);
+}
+.glass-card-header { display: flex; align-items: center; gap: 0.75rem; font-size: 1.2rem; font-weight: 600; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: #e2e8f0; cursor: help; }
+.glass-card-header svg { color: #059669; }
+.glass-card-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; }
+
+.ai-coach-content { display: flex; flex-direction: column; gap: 1rem; height: 100%; max-height: 500px; overflow-y: auto; padding-right: 0.5rem; }
+.ai-coach-content::-webkit-scrollbar { width: 6px; }
+.ai-coach-content::-webkit-scrollbar-track { background: transparent; }
+.ai-coach-content::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.15); border-radius: 6px; }
+.ai-coach-content::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.3); }
+
+.insight-pill { background: rgba(15, 23, 42, 0.3); border-radius: 16px; padding: 1rem 1.25rem; border-left: 5px solid #94a3b8; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); flex-shrink: 0; }
+.insight-pill:hover { background: rgba(15, 23, 42, 0.6); transform: translateX(-8px); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.insight-pill.severity-good { border-color: #10b981; }
+.insight-pill.severity-warning { border-color: #f59e0b; }
+.insight-pill.severity-critical { border-color: #dc2626; }
+.insight-pill-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+.insight-pill-header h6 { margin: 0; font-size: 1rem; font-weight: 600; color: #e2e8f0; }
+.insight-pill-header svg { font-size: 1.1rem; flex-shrink: 0; }
+.insight-pill.severity-good svg { color: #10b981; }
+.insight-pill.severity-warning svg { color: #f59e0b; }
+.insight-pill.severity-critical svg { color: #dc2626; }
+.insight-pill p { margin: 0 0 0.75rem 0; color: #94a3b8; font-size: 0.9rem; line-height: 1.5; }
+.insight-pill .insight-pill-action { font-size: 0.85rem; font-weight: 700; color: #059669; }
+
+.routine-overview-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+@media (min-width: 640px) { .routine-overview-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
+.routine-column-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.routine-column-header h6 { margin: 0; font-size: 1.1rem; font-weight: 600; color: #e2e8f0; }
+.interaction-summary { display: flex; gap: 1rem; font-size: 0.9rem; }
+.interaction-summary span { display: flex; align-items: center; gap: 0.5rem; color: #94a3b8; }
+.interaction-summary span svg { font-size: 1rem; }
+.interaction-summary span:first-of-type svg { color: #f87171; }
+.interaction-summary span:last-of-type svg { color: #10b981; }
+.routine-product-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.routine-product-list li { font-size: 0.95rem; color: #cbd5e1; padding-right: 1.25rem; position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.routine-product-list li::before { content: '■'; position: absolute; right: 0; top: 1px; font-size: 0.7rem; color: #059669; }
+.routine-product-list li.empty { color: #64748b; font-style: italic; }
+.routine-product-list li.empty::before { display: none; }
+
+.weather-placeholder { display: flex; align-items: center; justify-content: center; gap: 1rem; color: #94a3b8; height: 100%; flex-grow: 1; }
+.weather-placeholder.error { color: #f87171; }
+.weather-data-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; align-items: center; height: 100%; }
+.weather-stat { text-align: center; }
+.weather-stat svg { font-size: 1.8rem; color: #60a5fa; margin-bottom: 0.5rem; }
+.weather-stat strong { display: block; font-size: 1.5rem; color: #e2e8f0; }
+.weather-stat span { font-size: 0.85rem; color: #94a3b8; }
+.weather-stat.full-span { grid-column: span 2; display: flex; align-items: center; justify-content: center; gap: 0.75rem; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 12px; }
+.weather-stat.full-span svg { margin-bottom: 0; font-size: 1.1rem; color: #94a3b8; }
+.weather-stat.full-span span { font-size: 0.9rem; color: #cbd5e1; }
+
+.sun-protection-grade { display: flex; align-items: center; justify-content: center; gap: 2rem; width: 100%; }
+.sun-protection-notes { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: #cbd5e1; }
+
+@media (min-width: 1024px) {
+  .glass-analysis-grid { grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(260px, auto); }
+  .span-col-2-lg { grid-column: span 2; }
+  .span-col-4-lg { grid-column: span 4; }
+  .span-row-2-lg { grid-row: span 2; }
+}
+
+
+/* --- 9. Ingredients Tab --- */
+.sticky-filter-container {
+  position: sticky;
+  top: 0; /* Stick to top of container */
+  z-index: 10; /* Float above cards */
+  margin: 0 -1.5rem 1.5rem -1.5rem; /* Negative margin to stretch full width */
+  padding: 0.1rem 1.5rem; /* Restore padding */
+  
+  /* Gradient fade at the bottom of the sticky header */
+  background: linear-gradient(
+    to bottom, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0) 80%, 
+    transparent 100%
+  );
+}
+
+.glass-filter-rail {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto; /* Horizontal Scroll */
+  padding-bottom: 0.5rem; /* Space for scrollbar (hidden) */
+  padding: 5px;
+  /* Hide Scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  
+  /* Momentum Scrolling for Mobile */
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.glass-filter-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-family: inherit;
+  font-size: 0.9rem;
+  white-space: nowrap; /* Keep text on one line */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  scroll-snap-align: start; /* Snap to start when scrolling */
+  flex-shrink: 0; /* Don't squash buttons */
+}
+
+.rail-filter-btn svg {
+  font-size: 1rem;
+}
+
+.rail-filter-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+.rail-filter-btn.active {
+  background: #059669;
+  color: #fff;
+  border-color: #059669;
+  font-weight: 600;
+}
+
+/* Stats Row (New Compact Design) */
+.ingredient-stats-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stat-pill {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-pill strong {
+    color: #059669;
+    margin-left: 0.4rem;
+    font-size: 1rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .sticky-filter-container {
+    top: 0; /* Ensure it sticks on mobile */
+    margin: 0 -1rem 1rem -1rem; /* Adjust negative margins for mobile padding */
+    padding: 0.5rem 1rem;
+  }
+  
+  .rail-filter-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+.ingredient-stats-bar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.ingredientstat-item { background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: 16px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.05); }
+.ingredientstat-item strong { display: block; font-size: 2rem; font-weight: 700; color: #059669; }
+.ingredientstat-item span { font-size: 0.9rem; color: #94a3b8; }
+
+.ingredient-controls { margin-bottom: 1.5rem; }
+
+.ingredient-filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+.filter-btn { font-family: inherit; font-size: 0.9rem; font-weight: 500; color: #94a3b8; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.5rem 1rem; cursor: pointer; border-radius: 50px; transition: all 0.2s ease; }
+.filter-btn:hover { color: #e2e8f0; background: rgba(255,255,255,0.1); }
+.filter-btn.active { color: #fff; background: #059669; border-color: #059669; font-weight: 600; }
+
+.ingredient-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
+.ingredient-card-new { background: rgba(30, 41, 59, 0.05); border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.25rem; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: pointer; display: flex; flex-direction: column; backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); }
+.ingredient-card-new:hover { transform: translateY(-5px); border-color: rgba(5, 150, 105, 0.5); box-shadow: 0 6px 20px rgba(0,0,0,0.25); background: rgba(30, 41, 59, 0.1); }
+.ingredient-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+.ingredient-card-header h4 { margin: 0; font-size: 1.2rem; color: #e2e8f0; }
+.blacklist-flag-icon { color: #dc2626; font-size: 1rem; flex-shrink: 0; }
+.ingredient-card-products { font-size: 0.8rem; color: #94a3b8; margin: 0 0 1rem 0; flex-grow: 1; line-height: 1.5; }
+.benefit-pill { background: rgba(5, 150, 105, 0.15); color: #10b981; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.75rem; font-weight: 500; align-self: flex-start; }
+
+.personalization-badges { display: flex; gap: 0.5rem; }
+.personalization-badges span svg, .blacklist-flag-icon { font-size: 1rem; }
+
+@media (min-width: 640px) {
+  .ingredient-stats-bar { grid-template-columns: repeat(4, 1fr); }
+}
+
+.ingredients-reel-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* The Hint Styling */
+.horizontal-swipe-hint {
+  display: none; /* Hidden on desktop */
+}
+
+/* --- Mobile Transformation --- */
+@media (max-width: 768px) {
+  
+  /* 1. The Horizontal Reel */
+  .ingredient-card-grid {
+    display: flex;
+    grid-template-columns: none; /* Disable grid */
+    flex-wrap: nowrap; /* Force single line */
+    overflow-x: auto; /* Enable horizontal scroll */
+    gap: 1rem;
+    
+    /* Padding ensures cards aren't cut off at edges */
+    padding: 0.5rem 0.5rem 1.5rem 0.5rem;
+    margin: 0 -1rem; /* Negative margin to stretch full width */
+    
+    /* Physics */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Fix rendering issues with blur */
+    transform: translateZ(0);
+  }
+
+  /* 2. The Card Sizing */
+  .ingredient-card-new {
+    flex: 0 0 85%; /* Shows 85% of one card, peeking the next */
+    min-width: 85%;
+    max-width: 85%;
+    scroll-snap-align: center; /* Snap card to center of screen */
+    cursor: none; 
+    /* Ensure height consistency */
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* 3. The Hint Animation */
+  .horizontal-swipe-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(7px);
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    
+    color: #34d399;
+    font-weight: 600;
+    font-size: 0.9rem;
+    pointer-events: none; /* Allow clicking through */
+    
+    animation: pulseHint 2s infinite;
+  }
+}
+
+@keyframes pulseHint {
+  0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 rgba(52, 211, 153, 0); }
+  50% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 20px rgba(52, 211, 153, 0.2); }
+  100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+/* --- 10. Migration Tab --- */
+.migration-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+@media (min-width: 1024px) { .migration-grid { grid-template-columns: repeat(2, 1fr); } }
+.migration-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.eco-swap-card {
+  display: grid;
+  grid-template-columns: 1fr auto 1.2fr; /* Left - Arrow - Right */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.eco-swap-card:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* --- Shared Side Styles --- */
+.swap-side {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.swap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.swap-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* --- Synthetic Side (Left) --- */
+.swap-side.synthetic {
+  background: rgba(236, 237, 241, 0.05); /* Darker */
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.swap-side.synthetic h3 {
+  color: #fca5a5; /* Light Red */
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.swap-function {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  margin-bottom: 1rem;
+}
+
+.swap-products .mini-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 0.3rem;
+}
+
+.swap-products ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.swap-products li {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+/* --- Connector (Arrow) --- */
+.swap-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(252, 253, 255, 0.05);
+  position: relative;
+  width: 40px;
+}
+
+.arrow-circle {
+  width: 32px;
+  height: 32px;
+  background: #f3f4f56b;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  border: 2px solid rgba(30, 41, 59, 1);
+  z-index: 2;
+}
+
+/* --- Natural Side (Right) --- */
+.swap-side.natural {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%);
+}
+
+.swap-side.natural .swap-header {
+  color: #34d399; /* Green */
+}
+
+.alternatives-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.alt-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  text-align: right;
+  transition: all 0.2s;
+  color: inherit;
+}
+
+.alt-card:hover {
+  background: #059669;
+  border-color: #059669;
+  color: white;
+}
+
+.alt-info h4 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1rem;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.alt-card:hover h4 { color: white; }
+
+.heritage-icon {
+  color: #fbbf24; /* Gold */
+  font-size: 0.9rem;
+}
+
+.match-badge {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.alt-card:hover .match-badge {
+  color: white !important;
+  border-color: white !important;
+}
+
+.go-icon {
+  font-size: 0.9rem;
+  opacity: 0.5;
+  transform: rotate(180deg); /* Point right (forward in RTL) */
+}
+
+/* --- Mobile Responsive --- */
+@media (max-width: 768px) {
+  .eco-swap-card {
+    grid-template-columns: 1fr; /* Stack vertically */
+    grid-template-rows: auto auto auto;
+  }
+  
+  .swap-connector {
+    width: 100%;
+    height: 20px;
+  }
+  
+  .arrow-circle {
+    transform: rotate(90deg); /* Point down */
+  }
+  
+  .swap-side.synthetic {
+    border-left: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* --- 11. Settings Tab --- */
+/* ========================================= */
+/*   Fixed & Responsive Settings CSS         */
+/* ========================================= */
+
+.settings-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.settings-header-area {
+    margin-bottom: 0.5rem;
+    padding: 0 0.5rem;
+}
+
+.settings-header-area h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --- Accordion Container --- */
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.settings-accordion-item {
+  /* This ensures when we scrollIntoView, it leaves space at the top */
+  scroll-margin-top: 20px; 
+  background: rgba(255, 255, 255, 0.034);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.settings-accordion-item.open {
+  background: rgba(255, 255, 255, 0.068);
+}
+
+/* Trigger Button */
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #e2e8f0;
+  font-family: inherit;
+}
+
+.accordion-trigger:hover {
+  background: transparent;
+}
+
+/* Remove blue highlight on mobile tap */
+.accordion-trigger:focus, .option-card:focus, .toggle-tag:focus {
+    outline: none;
+    background: transparent;
+}
+
+.trigger-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: none;
+}
+.trigger-title:hover { 
+ background: transparent;
+}
+
+
+.trigger-title svg { color: #34d399; font-size: 1.2rem; }
+.chevron { color: #94a3b8; font-size: 0.9rem; transition: transform 0.3s ease; }
+.chevron.rotated { transform: rotate(180deg); color: #34d399; }
+
+/* Content Animation Fix */
+.accordion-content {
+  overflow: hidden;
+  /* No padding or margin here! It ruins the height calculation. */
+  padding: 0;
+  margin: 0;
+}
+
+/* Ensure padding doesn't cause layout thrashing */
+.accordion-inner-padding {
+  padding: 0 1.2rem 1.5rem 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  /* Use opacity for the separator so it fades in with content */
+  transition: opacity 0.3s; 
+}
+
+.sub-label {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+  margin-top: 0.5rem;
+  font-weight: 500;;
+}
+
+/* ========================================= */
+/*   Responsive Grids                        */
+/* ========================================= */
+
+/* 1. Single Select Cards */
+.cards-grid {
+  display: grid;
+  /* Auto-fit keeps it responsive without media queries */
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.8rem;
+}
+
+.option-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  height: 100px;
+  color: #cbd5e1;
+  transition: transform 0.1s;
+}
+
+.option-card:hover {
+  background: transparent;
+  border-color: rgba(5, 150, 105, 0.5);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.card-icon { font-size: 1.5rem; z-index: 1; }
+.card-label { font-size: 0.95rem; z-index: 1; text-align: center; }
+
+.option-card.selected {
+  border-color: #059669;
+  background: rgba(5, 150, 105, 0.1);
+  color: white;
+}
+
+.card-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(5, 150, 105, 0.3) 0%, transparent 70%);
+  z-index: 0;
+}
+
+/* 2. Multi Select Tags */
+.tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.toggle-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  padding: 0.6rem 1rem; /* Larger touch target */
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.toggle-tag:hover {
+  background: transparent;
+}
+
+.toggle-tag.selected {
+  background: #059669;
+  border-color: #059669;
+  color: white;
+  font-weight: 500;
+}
+
+.tag-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #64748b;
+}
+
+.tag-check { font-size: 1rem; color: white; }
+
+/* --- Blacklist --- */
+.blacklist-input-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.add-blacklist-btn {
+    width: 50px;
+    border-radius: 12px;
+    border: none;
+    background: #f43f5e;
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blacklist-cloud {
+    background: rgba(0,0,0,0.2);
+    padding: 1rem;
+    border-radius: 12px;
+    min-height: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.blacklist-pill {
+    background: rgba(244, 63, 94, 0.15);
+    border: 1px solid rgba(244, 63, 94, 0.4);
+    color: #fca5a5;
+    padding: 6px 14px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+.blacklist-pill button {
+    background: transparent; border: none; color: #fca5a5; padding: 0; display: flex;
+}
+.empty-hint { color: #64748b; font-size: 0.85rem; font-style: italic; }
+
+/* --- Action Bar --- */
+.settings-actions-bar {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.save-btn {
+  flex-grow: 1;
+  height: 55px;
+  font-size: 1.1rem;
+  border-radius: 16px;
+}
+
+.secondary-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.icon-action-btn {
+    width: 55px;
+    height: 55px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #94a3b8;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Mobile Specific Tweaks --- */
+@media (max-width: 480px) {
+
+  .settings-layout,
+  .settings-layout button,
+  .settings-layout input,
+  .settings-layout label,
+  .accordion-trigger,
+  .option-card,
+  .toggle-tag {
+      cursor: none !important; /* Hides the cursor completely */
+      -webkit-tap-highlight-color: transparent; /* Removes the blue flash on tap (Android/iOS) */
+      user-select: none; /* Prevents text selection for a more "app-like" feel */
+  }
+
+  /* Exception: Allow text selection and cursor inside text inputs so users can edit */
+  .settings-layout input[type="text"] {
+      cursor: text !important; 
+      user-select: text;
+  }
+    .cards-grid {
+        /* Force 2 columns on very small screens */
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .option-card {
+        height: 90px;
+        padding: 0.8rem;
+    }
+    
+    .settings-actions-bar {
+        /* Keep button bar nice and tall for thumbs */
+        flex-direction: row; 
+      }
+    
+      .settings-layout {
+        /* Add extra padding at bottom so footer doesn't cover content when scrolling */
+        padding-bottom: 120px; 
+      }
+      
+      .accordion-trigger {
+        padding: 1.2rem 1rem; /* Slightly tighter on mobile */
+      }
+   
+}
+/* --- 12. Modals & Toasts --- */
+.undo-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: rgba(15, 42, 38, 0.863); color: #f1f5f9; padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); border: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; gap: 1rem; z-index: 2000; }
+.undo-toast button { background: none; border: none; color: #60a5fa; font-weight: bold; cursor: pointer; font-family: inherit; font-size: 1rem; }
+
+.glass-modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 42, 38, 0.5); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(7px); display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; }
+.glass-modal-content { background: rgba(15, 42, 38, 0.5); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); width: 100%; max-width: 550px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; }
+.glass-modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); flex-shrink: 0; }
+.glass-modal-header h3 { margin: 0; font-size: 1.4rem; color: #e2e8f0; }
+.glass-modal-close { background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; padding: 0; line-height: 1; transition: color 0.2s, transform 0.2s; }
+.glass-modal-close:hover { color: #fff; transform: rotate(90deg); }
+.glass-modal-body { padding: 1.5rem 2rem; color: #cbd5e1; }
+.sheet-handle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 8px;
+}
+
+/* The visual arrow hint */
+.sheet-swipe-hint {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.4); /* Subtle text color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: swipeHintBounce 2s infinite;
+}
+
+@keyframes swipeHintBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  40% {
+    transform: translateY(5px); /* Move down */
+    opacity: 1; /* Highlight */
+  }
+  60% {
+    transform: translateY(3px);
+    opacity: 0.7;
+  }
+}
+
+/* Adjust the handle bar height to accommodate the arrow */
+@media (max-width: 768px) {
+  .sheet-handle-bar {
+    height: 45px; /* Increased from 30px to fit the arrow */
+    align-items: flex-start; /* Align to top so padding works */
+  }
+  
+  /* Make the glass header sit a bit lower so it doesn't overlap the handle area */
+  .glass-modal-header {
+    padding-top: 0.5rem;
+  }
+
+  .glass-modal-close {
+    display: none;
+  }
+}
+.sheet-handle-bar {
+  display: none; /* Hidden on Desktop */
+  width: 100%;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+}
+
+.sheet-handle {
+  width: 50px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+/* Dial Center Text */
+.dial-center-text {
+  position: absolute !important;
+  top: 0 !important; 
+  left: 0 !important; 
+  width: 100% !important; 
+  height: 100% !important;
+  
+  /* Perfect Centering */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  
+  /* Font Styling */
+  color: #e2e8f0;
+  font-weight: 800; /* Extra bold looks better centered */
+  font-size: 1.6rem; /* Slightly larger */
+  line-height: 1; /* Removes invisible font spacing */
+  
+  z-index: 2; /* Ensure it sits on top of SVG */
+  pointer-events: none; /* Clicks pass through */
+}
+
+.score-text {
+  /* OPTICAL CORRECTION: 
+     Numbers usually sit a bit 'high'. This pushes them down 
+     slightly to look perfectly centered in the circle. 
+  */
+  transform: translateY(15px) translateX(-10px);
+
+  font-variant-numeric: tabular-nums; /* Prevents jumping while counting */
+}
+
+/* Custom Scrollbar for Modal Body */
+.custom-scrollbar {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+/* --- MOBILE SPECIFIC TRANSFORMATION --- */
+@media (max-width: 768px) {
+  
+  /* Align Backdrop to bottom */
+  .glass-modal-backdrop {
+    align-items: flex-end; /* Pushes modal to bottom */
+    padding: 0; /* Remove padding so it touches edges */
+  }
+
+  /* Transform Modal into Sheet */
+  .glass-modal-content.sheet-modal {
+    width: 100%;
+    max-width: 100%;
+    height: 85vh; /* Occupy 85% of screen height */
+    border-radius: 24px 24px 0 0; /* Top corners rounded only */
+    margin: 0;
+    
+    /* Reset any transform Y from desktop */
+    transform: none;
+    
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Show the Handle */
+  .sheet-handle-bar {
+    display: flex;
+    flex-shrink: 0; /* Prevent shrinking */
+  }
+
+  /* Adjust Header */
+  .glass-modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem 1.5rem;
+  }
+
+  /* Adjust Body to Scroll nicely within the sheet */
+  .glass-modal-body {
+    flex-grow: 1;
+    padding-bottom: 40px;
+    overflow-y: auto; /* Ensure it scrolls */
+    
+    /* --- THE MAGIC FIX --- */
+    overscroll-behavior: contain; /* Stops scroll from leaking to the background */
+    -webkit-overflow-scrolling: touch; /* Keeps momentum scrolling smooth on iOS */
+}
+}
+
+.modal-reliability-dial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto 1.5rem auto;
+  padding: 1rem;
+}
+
+.modal-reliability-dial .CircularProgressbar {
+  width: 120px;
+}
+
+.modal-reliability-status-text {
+  text-align: right;
+}
+
+.modal-reliability-status-text h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #e2e8f0; /* cool-gray-200 */
+}
+
+.modal-reliability-status-text p {
+  margin: 0;
+  font-size: 1rem;
+  color: #94a3b8; /* cool-gray-400 */
+  font-weight: 500;
+}
+
+.modal-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.modal-section:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.modal-details-toggle {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.modal-details-toggle button {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* --- Uniquely Scoped Alert Styles --- */
+.modal-alerts-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.modal-alert-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.modal-alert-item.conflict, .modal-alert-item.warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fcd34d;
+}
+
+.modal-alert-item.user, .modal-alert-item.danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.modal-alert-item.good {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
+}
+
+
+/* --- Uniquely Scoped Score Breakdown Styles --- */
+.modal-breakdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.modal-breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background-color: rgba(30, 41, 59, 0.4);
+  font-size: 0.9rem;
+}
+
+.modal-breakdown-text {
+  color: #e2e8f0;
+}
+
+.modal-breakdown-value {
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  min-width: 50px;
+  text-align: center;
+}
+
+.modal-breakdown-item.info .modal-breakdown-value {
+  color: #60a5fa;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.modal-breakdown-item.deduction .modal-breakdown-value {
+  color: #f87171;
+  background-color: rgba(248, 113, 113, 0.1);
+}
+
+.modal-breakdown-item.calculation .modal-breakdown-value {
+  color: #94a3b8;
+  background-color: rgba(148, 163, 184, 0.1);
+}
+
+.modal-breakdown-item.override {
+  background-color: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.modal-breakdown-item.override .modal-breakdown-text {
+  color: #fde047;
+  font-weight: 500;
+}
+
+
+
+.modal-breakdown-item.override .modal-breakdown-value {
+  color: #facc15;
+  background-color: rgba(251, 191, 36, 0.15);
+}
+
+.ingredient-pills-container { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.ingredient-pill { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.85rem; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.ingredient-pill:hover { color: #e2e8f0; border-color: rgba(5, 150, 105, 0.5); }
+.ingredient-pill.synergy { background: rgba(96, 165, 250, 0.1); border-color: #60a5fa; color: #60a5fa; }
+
+/* NEW: Styles for Insight & Ingredient Modals */
+.insight-header.good { background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.15)); border-bottom-color: #10b981; }
+.insight-header.warning { background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.15)); border-bottom-color: #f59e0b; }
+.insight-header.critical { background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.15)); border-bottom-color: #dc2626; }
+.insight-details-text { line-height: 1.8; color: #e2e8f0; white-space: pre-wrap; font-size: 1rem; }
+
+.ingredient-modal-title span { font-size: 0.9rem; color: #94a3b8; }
+.ingredient-modal-meta { display: flex; gap: 1rem; background: rgba(0,0,0,0.2); padding: 0.75rem 1rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.benefits-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+.benefit-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.benefit-name { font-size: 0.9rem; color: #cbd5e1; }
+.benefit-score-bar-bg { width: 100px; height: 8px; background: rgba(0,0,0,0.3); border-radius: 4px; }
+.benefit-score-bar-fill { height: 100%; background: #059669; border-radius: 4px; box-shadow: 0 0 8px rgba(5, 150, 105, 0.4); }
+
+/* --- 13. Loading & Fallback States --- */
+.loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 2rem; color: #94a3b8; min-height: 50vh; }
+.loading-state .spinner { font-size: 2.5rem; color: #059669; animation: spin 1s linear infinite; }
+.loading-state .icon { font-size: 3rem; margin-bottom: 1rem; color: #059669; }
+.loading-state h2 { color: #e2e8f0; }
+.empty-shelf-message { text-align: center; padding: 2rem; color: #94a3b8; }
+
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.add-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Style for raw ingredients to distinguish them */
+.routine-product-item.raw-ingredient {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.raw-icon {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* Make the simplified column layout look good */
+.routine-builder-column-simplified {
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+max-width: 600px;
+margin: 0 auto;
+}
+
+.routine-product-item.clickable {
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.routine-product-item.clickable:hover {
+  background-color: #038a3b; /* A slightly lighter shade on hover */
+}
+
+.weather-suggestion-badge {
+  position: absolute;
+  top: -1px; /* Adjust to align perfectly with the card edge */
+  left: -1px;
+  padding: 8px 12px 10px 12px; /* Top, Right, Bottom, Left */
+  display: flex;
+  border-radius: 50px;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff; /* White text for high contrast */
+  z-index: 2; /* Ensures the badge is on top of card content */
+  cursor: help; /* Changes cursor to a '?' on hover to indicate the tooltip */
+  max-width: 150px; /* Prevents the badge from getting too wide */
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds '...' if text is too long */
+}
+
+/* 
+  This ::before pseudo-element is the colored background.
+  We create a large skewed rectangle and position it behind the text.
+*/
+.weather-suggestion-badge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%; /* Make it much wider than the text */
+  height: 100%;
+  transform: skewX(-30deg) translateX(-25%); /* The magic: create the angle and shift it */
+  transform-origin: top left;
+  z-index: -1; /* Place it behind the icon and text */
+  opacity: 0.95; /* A slight transparency for a modern look */
+  border-bottom-right-radius: 12px; /* Softens the sharp corner */
+}
+
+.skeleton-card {
+  pointer-events: none;
+  /* Slightly darker glass base */
+  background: rgba(165, 165, 165, 0.3); 
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* The Shimmer Animation Keyframes */
+@keyframes glassShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* The Base Skeleton Element */
+.skeleton-box {
+  /* The Magic Gradient: Transparent -> Faint White -> Transparent */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%, /* The "Highlight" */
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: glassShimmer 2s infinite linear; /* Smooth infinite loop */
+  border-radius: 8px;
+}
+
+/* --- Specific Shapes --- */
+
+/* Title Bar */
+.title-bar {
+  height: 24px;
+  width: 65%;
+  margin-bottom: 12px;
+  border-radius: 6px;
+}
+
+/* Tags */
+.skeleton-tags-row {
+  display: flex;
+  gap: 8px;
+}
+
+.pill {
+  height: 26px;
+  width: 80px;
+  border-radius: 50px;
+}
+
+.pill.short {
+  width: 60px;
+}
+
+/* Actions Footer */
+.skeleton-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.circle {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%; /* Circular buttons */
+}
+
+.drag-handle {
+  height: 20px;
+  width: 10px;
+  border-radius: 4px;
+  opacity: 0.5;
+}
+
+/* For 'good' suggestions (e.g., sunscreen on a sunny day) */
+.product-card-elegant .weather-suggestion-badge.good::before {
+  background: linear-gradient(135deg, #059669, #10b981); /* Green gradient */
+}
+.product-card-elegant .weather-suggestion-badge.good svg {
+  color: #a7f3d0; /* Light green icon color for harmony */
+}
+
+/* ========================================= */
+/*   Mobile: The Clean Levitating Dock       */
+/* ========================================= */
+
+@media (max-width: 768px) {
+  /* 1. The Container */
+
+  .profile-tabs-container {
+    position: fixed;
+    bottom: -10px;
+    left: 15px;
+    right: 15px;
+    height: 60px; /* Increased height for more breathing room */
+    z-index: 990;
+    cursor: none;
+    
+    /* Dark Glass Background - NO BORDER */
+    background: rgba(15, 20, 35, 0); 
+    backdrop-filter: blur(7px);
+    -webkit-sbackdrop-filter: blur(7px);
+    
+    /* Shape & Depth */
+    border-radius: 24px;
+    border: 0.5px solid rgba(255, 255, 255, 0.308) !important; /* FORCE REMOVE GRAY BORDER */
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6); /* Deep shadow instead of border */
+    
+    /* Layout */
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    overflow: visible; 
+  }
+
+  /* 2. The Scroll Track */
+  .profile-tabs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: none;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    padding: 0 10px; /* Safe padding inside */
+    scroll-behavior: smooth;
+    border: none !important; /* Ensure no internal borders */
+    
+    /* Hide Scrollbars */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .profile-tabs::-webkit-scrollbar { display: none; }
+
+  /* 3. Inactive Tabs (Clean & Minimal) */
+  .tab-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    height: 45px; /* Small & Compact */
+    padding: 0 14px;
+    border-radius: 14px;
+    
+    background: transparent;
+    color: #64748b;
+    border: none; /* Remove any default button borders */
+    
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+  }
+
+  .tab-btn span {
+    display: none; 
+    font-size: 0.85rem;
+    margin-right: 8px;
+    font-weight: 600;
+  }
+
+  .tab-btn svg {
+    font-size: 1.4rem;
+    margin: 0 !important;
+  }
+
+  /* 4. Active Tab (The "Pop-Up" Effect) */
+  .tab-btn.active {
+    height: 56px; /* Taller than inactive, but smaller than container (80px) */
+    background: #059669;
+    color: #ffffff;
+    padding: -10px 10px;
+    border-radius: 18px;
+    height: 50px;
+    /* Soft Glow instead of border */
+    box-shadow: 0 8px 20px rgba(5, 150, 105, 0.35); 
+    transform: translateY(0); /* Ensure it sits perfectly centered */
+  }
+  
+  .tab-btn.active span {
+    display: inline-block;
+    animation: slideInText 0.3s ease forwards;
+  }
+  
+  .tab-btn.active svg {
+    color: #ffffff;
+    font-size: 1.2rem; /* Slightly smaller icon to balance text */
+  }
+
+  /* 5. The Floating Arrow Hint */
+  .swipe-arrow-hint {
+    position: absolute;
+    bottom: 7px;
+    left: 30px;
+    color: #34d399;
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 10px rgba(5, 150, 105, 0.6));
+    animation: bounceHint 1.5s infinite;
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* 6. Cleanup */
+  .swipe-indicator { display: none !important; }
+  .profile-email { display: none; }
+  .profile-container { padding-bottom: 150px; }
+
+  .product-card-elegant {
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+  /* 7. Performance Optimization for Mobile Scrolling */
+.tab-content-container,
+.ingredients-reel-wrapper,
+.glass-modal-body,
+.login-page-container {
+    /* Tells the browser to promote this to a new layer */
+    will-change: transform, scroll-position;
+    /* Enables momentum scrolling on iOS (if you target it later) */
+    -webkit-overflow-scrolling: touch;
+}
+}
+
+/* Animation for text reveal */
+@keyframes slideInText {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes bounceHint {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-8px); }
+}
+
+/* --- ENHANCED NOTIFICATION SETTINGS --- */
+
+.notif-settings-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.2rem !important;
+  padding: 0.5rem 0 !important;
+}
+
+.notif-row {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 16px !important;
+  padding: 15px !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.notif-info {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.notif-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  font-weight: 600 !important;
+  font-size: 1.05rem !important;
+  color: #e2e8f0 !important;
+}
+
+.notif-status {
+  font-size: 0.75rem !important;
+  padding: 2px 8px !important;
+  border-radius: 4px !important;
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #6ee7b7 !important;
+}
+
+.notif-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-top: 5px !important;
+}
+
+/* Styled Time Input - Dark & Clean */
+.profile-time-input {
+  flex-grow: 1 !important;
+  background: rgba(254, 254, 255, 0.11) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 10px !important;
+  color: #ffffff !important;
+  padding: 10px !important;
+  font-family: 'Tajawal', sans-serif !important;
+  font-size: 1.1rem !important;
+  text-align: center !important;
+  outline: none !important;
+  
+  margin: 0 !important;
+  /* Custom color-scheme property for supported browsers */
+  color-scheme: dark !important; 
+}
+
+.profile-time-input:focus {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Toggle Buttons */
+.notif-toggle-btn {
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  border: none !important;
+  font-size: 0.9rem !important;
+  transition: transform 0.2s !important;
+}
+
+.notif-toggle-btn:active {
+  transform: scale(0.95) !important;
+}
+
+.notif-toggle-btn.on {
+  background: #10b981 !important;
+  color: white !important;
+  width: 100% !important;
+}
+
+.notif-toggle-btn.off {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+}

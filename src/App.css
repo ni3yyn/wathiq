@@ -1,0 +1,602 @@
+html {
+  height: 100%;
+  background-color: radial-gradient(circle at center, #3e5e56 0%, #29403b 100%);
+}
+
+/* 2. BODY: Scrollable Content Wrapper */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  
+  /* Standard Scrolling enabled */
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  /* Text Rendering */
+  font-family: 'Tajawal', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  
+  /* Interaction Tweaks */
+  overscroll-behavior-y: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 3. THE FIX: Dedicated Background Layer */
+/* This puts the image on a fixed layer BEHIND the body. */
+body::before {
+  content: "";
+  position: fixed; /* Locks it to the viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Always fills screen */
+  
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover; /* Scales nicely */
+  
+  z-index: -1; /* Puts it behind your app content */
+  background-color: radial-gradient(circle at center, #3e5e56 0%, #29403b 100%);
+}
+
+/* 4. ROOT: Transparent wrapper */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  position: relative; /* Stacks on top of ::before */
+}
+
+h2 {
+  font-size: 24px;
+  color: #b3b7b9;
+  margin-bottom: 16px;
+  font-weight: 700;
+  align-content: center;
+  text-align: center;
+}
+
+@keyframes gradientMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.app-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.app-container {
+  backdrop-filter: blur(7px);
+  background: rgba(255, 255, 255, 0.062);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Tajawal', sans-serif;
+  border: 0.1px solid rgba(255, 255, 255, 0.274);
+  border-radius: 50px;
+  padding: 20px 20px;
+  width: fit-content;
+  max-width: 300px;
+  animation: fadeSlideUp 1s ease forwards;
+  margin: 10px auto;
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #b3b7b9;
+  direction: rtl;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  
+  background: rgba(255, 255, 255, 0);
+  border: none;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.orderr {
+  display: flex;
+  padding: 20px 30px;
+  flex-direction: column;
+  align-items: center;
+  color: #b3b7b9;
+  direction: rtl;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0);
+  
+  background: rgba(255, 255, 255, 0);
+  border: none;
+  font-family: 'Tajawal', sans-serif;
+}
+
+.order-form input,
+.order-form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 50px;
+  text-align: right;
+  background: rgba(255, 255, 255, 0.3);
+  color: #b3b7b9;
+  direction: rtl;
+  font-family: 'Tajawal', sans-serif;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  opacity: 0;
+  animation: fadeSlideUp 0.6s ease forwards;
+}
+
+.form-input.error {
+  border: .9px solid red !important;
+}
+
+label {
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  margin-bottom: 8px;
+  color: #b3b7b9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  border-radius: 50px;
+  animation: fadeSlideUp 0.6s ease forwards;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Tajawal', sans-serif;
+  align-items: center;
+}
+
+select, input, textarea {
+  width: 100%;
+  font-family: 'Tajawal', sans-serif;
+  max-width: 200px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.027);
+  border: none;
+  color: #b3b7b9;
+ 
+  
+  direction: rtl;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  font-family: 'Tajawal', sans-serif;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeSlideUp 0.6s ease forwards;
+  cursor: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #807e7e;
+  font-family: 'Tajawal', sans-serif;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+select:focus, input:focus, textarea:focus {
+  outline: none; /* Removes the default browser outline */
+  background: rgba(255, 255, 255, 0.3); /* Keeps the background change */
+  /* You can add other focus-specific styles here, like a border or box-shadow */
+  /* For example: box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); */
+}
+
+.price-summary {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  color: #b3b7b9 !important;
+}
+
+.blendname {
+  width: 100%;
+  font-family: 'Tajawal', sans-serif;
+  max-width: 200px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 15px;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  color: #b3b7b9;
+  
+ 
+  direction: rtl;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  font-family: 'Tajawal', sans-serif;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeSlideUp 0.6s ease forwards;
+  cursor: none;
+  
+}
+
+h3, p {
+  color: #b3b7b9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0);
+  font-family: 'Tajawal', sans-serif;
+  
+  animation: fadeSlideUp 0.6s ease forwards;
+
+}
+
+button {
+  background: rgba(255, 255, 255, 0.02);
+  border: none;
+  color: #b3b7b9;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Tajawal', sans-serif;
+  border-radius: 50px;
+  cursor: none;
+  transition: all 0.25s ease;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* CLICK EFFECT */
+button:active {
+  box-shadow:
+    inset 0 3px 6px rgba(0, 0, 0, 0.12),
+    0 0 0 rgba(0, 0, 0, 0);
+  transform: translateY(1px);
+  cursor: none;
+  font-family: 'Tajawal', sans-serif;
+}
+
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.3s; }
+.stagger-3 { animation-delay: 0.6s; }
+
+.animate-fade-slide {
+  opacity: 0;
+  color: #b3b7b9;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  transform: translateY(20px);
+  animation: fadeInSlideUp 0.6s forwards ease;
+}
+
+@keyframes fadeInSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  box-shadow: #22222200;
+  color: #b3b7b9;
+  padding: 10px 10px;
+  border-radius: 90px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: none;
+}
+
+
+/* Enhanced glass effect */
+.glass-panel {
+  background: rgba(30, 30, 30, 0.6);
+  
+  
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+
+/* Add these animations to your CSS */
+@keyframes pulse-gold {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.price-highlight {
+  animation: pulse-gold 2s infinite;
+}
+
+.sparkle {
+  animation: sparkle 1.5s infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(45deg, #ff6b35, #ff8e53, #ffd700);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.shiny-text {
+  position: relative;
+  color: #DDE4D2; /* اللون الأساسي */
+  background: linear-gradient(
+    90deg,
+    #DDE4D2 0%,
+    #DDE4D2 20%,
+    #fff 30%,   /* أول لمعة */
+    #DDE4D2 40%,
+    #DDE4D2 60%,
+    #fff 70%,   /* ثاني لمعة */
+    #DDE4D2 80%,
+    #DDE4D2 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: -200% center;
+  }
+}
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  /* This tells the main content area to expand and take up all
+     available space between the header/nav and the footer. */
+}
+/* Elegant Splash Screen */
+.app-splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); /* Deep Green Theme */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  color: white;
+  text-align: center;
+}
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Animated Logo/Icon */
+.splash-logo-container {
+  font-size: 4rem;
+  color: #fbbf24; /* Gold */
+  filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));
+  animation: splashPulse 2s infinite ease-in-out;
+}
+
+.splash-title {
+  font-family: 'Amiri', 'Tajawal', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #f0fdf4;
+  margin: 0;
+}
+
+.splash-subtitle {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.1rem;
+  color: #a7f3d0;
+  opacity: 0.9;
+}
+
+/* Custom Loader Bar */
+.splash-loader-bar {
+  width: 200px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.splash-loader-progress {
+  width: 50%;
+  height: 100%;
+  background: #fbbf24; /* Gold */
+  border-radius: 10px;
+  animation: loadingSlide 1.5s infinite ease-in-out;
+}
+
+@keyframes splashPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+@keyframes loadingSlide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+html, body {
+  /* Prevent "Rubber Band" bouncing effect on scroll */
+  overscroll-behavior-y: none;
+  /* Disable text selection (Native apps don't let you select UI text) */
+  -webkit-user-select: none;
+  user-select: none;
+  /* Use system font stack for speed */
+  font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Match background to theme to prevent white flashes */
+}
+
+/* Allow text selection ONLY in input fields */
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+  /* Prevent auto-zoom on focus (needs font-size >= 16px) */
+  font-size: 16px !important; 
+}
+
+/* Remove the blue highlight when tapping buttons on Android/iOS */
+* {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* Hide Scrollbars completely (but keep scrolling functionality) */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+  display: none;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ========================================= */
+/*   PERFORMANCE BOOST & GPU ACCELERATION    */
+/* ========================================= */
+
+/* 1. Force GPU Layer Creation for ALL Modals */
+/* This moves these elements to a separate composite layer */
+.glass-modal-content,
+.sheet-modal,
+.auth-modal-content,
+.w-admin-modal,
+.goodbye-content,
+.loading-content,
+.modal-content {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0); /* Forces Hardware Acceleration */
+    will-change: transform, opacity; /* Tells browser to prep for animation */
+    backface-visibility: hidden;     /* Prevents flickering */
+    perspective: 1000px;
+}
+
+/* 2. Optimize Lists & Warnings */
+/* Prevents lag when lists (like products or warnings) animate in */
+.comp-warnings-list,
+.alert-item,
+.w-admin-product-item,
+.ingredient-card {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+
+/* ========================================= */
+/*   MOBILE SPECIFIC OPTIMIZATIONS           */
+/*   (Critical for Android WebViews)         */
+/* ========================================= */
+
+@media (max-width: 768px) {
+    
+    /* Backdrop-filter is extremely heavy on mobile GPUs. 
+       We replace it with a solid, slightly transparent background. */
+    .glass-modal-backdrop,
+    .w-admin-modal-backdrop,
+    .auth-modal-backdrop,
+    
+    .comp-v3-glass-card,
+    .glass-modal-content {
+        backdrop-filter: blur(2px) !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: rgba(15, 42, 38, 0.5);
+
+    }
+
+    /* Special case for light-theme admin modal */
+    .w-admin-modal {
+        backdrop-filter: none !important;
+        background: #ffffff !important; /* Solid White */
+    }
+
+    /* B. REDUCE SHADOWS */
+    /* Large spread radius shadows cause lag on scroll */
+    .product-card-elegant,
+    .w-admin-stat-card,
+    .glass-modal-content {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.0) !important; /* Simpler shadow */
+    }
+
+    /* C. OPTIMIZE IMAGES & ICONS */
+    /* Prevent layout thrashing */
+    img {
+        content-visibility: auto; /* Browser skips rendering off-screen images */
+    }
+}

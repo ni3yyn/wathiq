@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "whatheeq"
+  },
+  "targets": {
+    "whatheeq": {
+      "hosting": {
+        "wathiq-site": [
+          "wathiq"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
