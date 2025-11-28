@@ -1,5 +1,25 @@
 {
   "appId": "com.wathiq.app",
   "appName": "Wathiq",
-  "webDir": "dist"
-}
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+	"plugins": {
+	  "PushNotifications": {
+		"presentationOptions": ["badge", "sound", "alert"]
+	  },
+	  "SplashScreen": {
+		"launchAutoHide": false,
+		"backgroundColor": "#29403b", 
+		"androidScaleType": "CENTER_CROP",
+		"showSpinner": false,
+		"splashFullScreen": false,
+		"splashImmersive": false
+	  },
+	  "Keyboard": {
+		"resize": "body",
+		"style": "dark",
+		"resizeOnFullScreen": true
+	  }
+	}
+  }
+
