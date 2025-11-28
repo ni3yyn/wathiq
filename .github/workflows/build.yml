@@ -19,6 +19,15 @@ jobs:
         with:
           node-version: 20
 
+      # NEW: Cache Node Modules
+      - name: Cache Node Modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       # Upgraded to v4
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -27,6 +36,7 @@ jobs:
           java-version: '21'
 
       - name: Install Dependencies
+        # This step will be much faster if a cache hit occurred above
         run: npm ci --legacy-peer-deps
 
       - name: Build Web Assets
