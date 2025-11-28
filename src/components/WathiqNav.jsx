@@ -33,7 +33,7 @@ const WathiqNav = () => {
 
   const menuItems = [
     { icon: <FaFlask />, text: 'محقق المكونات', path: '/oil-guard' },
-    { icon: <FaExchangeAlt />, text: 'وضع المقارنة', path: '/comparison' },
+    { icon: <FaExchangeAlt />, text: 'وضع المقارنة', path: '/compare' },
     { icon: <FaUser />, text: 'ملفي الشخصي', path: '/profile' },
   ];
 
