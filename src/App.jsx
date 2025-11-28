@@ -5,7 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import { HelmetProvider } from 'react-helmet-async';
 
 // --- Firebase Imports ---
-import { db, auth } from './firebase';
+import { db } from './firebase'; 
 import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 
 // --- Context & Utils ---
@@ -37,11 +37,10 @@ const WathiqRoutes = () => {
   // State for the APK Link (Web only)
   const [apkLink, setApkLink] = useState(null);
 
-  // --- CHANGE 1: Splash State ---
-  // Only enable Splash initially if we are on Native (Mobile)
+  // --- 1. Splash State ---
   const [showSplash, setShowSplash] = useState(isNative);
 
-  // 1. Fetch APK Link (Web Only)
+  // 2. Fetch APK Link (Web Only)
   useEffect(() => {
     if (!isNative) {
       const q = query(collection(db, "releases"), orderBy("createdAt", "desc"), limit(1));
@@ -55,46 +54,27 @@ const WathiqRoutes = () => {
     }
   }, [isNative]);
 
-  // --- CHANGE 2: Splash Timeout ---
-  // Only run the timeout logic if we are on Native
+  // --- 3. Splash Timeout ---
   useEffect(() => {
     if (isNative && !loading) {
-      // Small delay to ensure smooth transition
       setTimeout(() => setShowSplash(false), 2000);
     }
   }, [loading, isNative]);
 
-  // --- CRITICAL FIX START: CHANGE 3: Splash Guard ---
-  // Only block rendering if on Native AND (Splash is active OR Data is loading)
-  // The check for (user && !userProfile) has been removed, as that state
-  // should be handled by a generic in-app loader or the destination component,
-  // not by the full-screen native splash guard.
+  // --- 4. Splash Guard ---
   if (isNative && (showSplash || loading)) {
     return <AnimatedSplash />;
   }
-  // --- CRITICAL FIX END ---
 
-
-  // --- 4. Routing Logic ---
+  // --- 5. Routing Logic (FIXED) ---
+  // If user has a profile AND onboarding is explicitly true -> Go to OilGuard (Home)
+  // Otherwise (New user, Profile loading, or Onboarding incomplete) -> Go to Welcome
   const isProfileComplete = userProfile?.onboardingComplete === true;
-  let appHomeRoute = "/oil-guard"; // Default for all existing users
+  
+  const appHomeRoute = isProfileComplete ? "/oil-guard" : "/welcome";
 
-  if (isProfileComplete) {
-      // User is fully onboarded.
-      appHomeRoute = "/oil-guard";
-  } else if (user && !userProfile) {
-      // User is logged in, but NO userProfile exists yet.
-      // This is the strongest indicator of a BRAND NEW sign-up.
-      appHomeRoute = "/welcome";
-  } else {
-      // User is logged in, and a userProfile *exists* but onboardingComplete is false.
-      // This is an EXISTING user who quit the onboarding flow.
-      // We send them to the main app (/oil-guard) to break the infinite /welcome loop.
-      // The /oil-guard page should handle displaying a prompt/banner to complete the profile.
-      appHomeRoute = "/oil-guard";
-  }
-
-  // --- 5. Navigation Visibility ---
+  // --- 6. Navigation Visibility ---
+  // Hide Nav on Login, Welcome, and Landing pages
   const showNav = user && 
                   location.pathname !== '/' && 
                   location.pathname !== '/login' && 
@@ -118,7 +98,6 @@ const WathiqRoutes = () => {
               isNative ? (
                 user ? <Navigate to={appHomeRoute} replace /> : <Navigate to="/login" replace />
               ) : (
-                // PASS THE LINK HERE!
                 <LandingPage downloadLink={apkLink} />
               )
             } 
@@ -131,7 +110,8 @@ const WathiqRoutes = () => {
           
           <Route 
             path="/welcome" 
-            element={user ? <Welcome /> : <Navigate to="/login" replace />} 
+            // If profile is already complete, redirect to home. Otherwise show Welcome.
+            element={user ? (isProfileComplete ? <Navigate to="/oil-guard" replace /> : <Welcome />) : <Navigate to="/login" replace />} 
           />
 
           <Route 

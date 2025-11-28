@@ -96,7 +96,7 @@ const Welcome = () => {
                 'settings.allergies': formData.allergies,   
                 onboardingComplete: true,
             });
-            navigate('/profile');
+            navigate('/oil-guard');
         } catch (error) {
             console.error("Failed to complete onboarding:", error);
         } finally {
