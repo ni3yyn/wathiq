@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700;800;900&display=swap');
 :root {
   /* --- Brand Identity (Forest/Nature/Trust) --- */
   --primary: #10b981;        /* Emerald Mint (Highlights/Safe) */
@@ -76,9 +75,11 @@ body {
    ========================================= */
 
 .brand-name {
-  font-size: 1.5rem;
+  font-size: 2.2rem;
+  font-family: 'Amiri', serif;
   font-weight: 800;
-  color: #fff;
+  color: rgb(218, 212, 212);
+  margin-top: 13px;
   
 }
 .nav-fixed {
@@ -554,7 +555,7 @@ body {
 }
 .top-fade { background: linear-gradient(to bottom, var(--bg-deep), transparent); height: 100px; }
 .brand-logo-large img { height: 80px; width: auto; margin-bottom: 1.5rem; filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.3)); }
-.cta-headline { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; }
+.cta-headline { font-size: 2.5rem; font-weight: 900; margin-bottom: 1rem; color: rgb(231, 229, 229); }
 .cta-sub { color: #94a3b8; margin-bottom: 3rem; font-size: 1.1rem; }
 .cta-btn-glow { box-shadow: 0 0 40px rgba(16, 185, 129, 0.4); }
 .icon-bounce { animation: bounce 2s infinite; }
@@ -600,10 +601,10 @@ body {
   .ticker-content { font-size: 0.9rem; gap: 1.5rem; }
   .step-card { flex-basis: 100%; }
   .brand-name {
-    font-size: 1.5rem;
+    font-size: 2rem;
+    font-family: 'Amiri', serif;
     font-weight: 800;
-    color: #fff;
-    margin-top: 7px;
+    margin-top: 15px;
   }
   
 }
