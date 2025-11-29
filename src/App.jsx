@@ -1,7 +1,7 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect } from 'react'; // Removed Suspense/lazy
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { FaSpinner, FaLock, FaExclamationTriangle } from 'react-icons/fa';
+import { FaLock, FaExclamationTriangle } from 'react-icons/fa'; // Removed FaSpinner
 
 // --- Authentication and Data Hooks ---
 import { AppProvider, useAppContext } from './components/AppContext'; 
@@ -19,6 +19,7 @@ import OilGuard from './components/OilGuard';
 import ComparisonPage from './components/ComparisonPage';
 import WathiqAdmin from './components/WathiqAdmin';
 import AdminPortal from './components/AdminPortal'; 
+import LandingPage from './components/LandingPage'; // <--- MOVED TO STATIC IMPORT
 
 // --- UI & UX Components ---
 import LoadingOverlay from './components/LoadingOverlay'; 
@@ -40,9 +41,6 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import './App.css';
 import 'react-circular-progressbar/dist/styles.css';
 import { AnimatePresence } from 'framer-motion';
-
-// --- LAZY IMPORTS (Web Only) ---
-const LandingPage = lazy(() => import('./components/LandingPage'));
 
 // =============================================================================
 // HELPER COMPONENTS
@@ -130,23 +128,18 @@ const WathiqRoutes = () => {
   const [apkLink, setApkLink] = useState(null);
   const [showSplash, setShowSplash] = useState(isNative);
 
-  // --- FIX: Handle Body Background for Landing Page ---
-  // This ensures that when we are on the Landing Page, the global App.css 
-  // background image is removed immediately, preventing the "flash".
+  // --- Styles Fix for Landing Page ---
+  // Keeps the background clean for the main page
   useEffect(() => {
     if (!isNative && location.pathname === '/') {
-        // Force body to be plain for Landing Page
         document.body.style.backgroundImage = 'none';
-        document.body.style.backgroundColor = '#ffffff'; // Or your landing page background color
-        document.body.style.overflowY = 'auto'; // Ensure scroll works
+        document.body.style.backgroundColor = '#ffffff'; 
+        document.body.style.overflowY = 'auto'; 
     } else {
-        // Reset to default (App.css control) when leaving landing page
         document.body.style.backgroundImage = '';
         document.body.style.backgroundColor = '';
         document.body.style.overflowY = '';
     }
-    
-    // Cleanup
     return () => {
         document.body.style.backgroundImage = '';
         document.body.style.backgroundColor = '';
@@ -250,20 +243,12 @@ const WathiqRoutes = () => {
              ------------------------------------
              1. WEB BROWSER (LANDING PAGE)
              ------------------------------------
+             NO SUSPENSE / NO SPINNER. LOADS INSTANTLY.
           */}
           {!isNative && (
             <Route 
                 path="/" 
-                element={
-                    <Suspense fallback={
-                        // FIX: Solid background loader to hide App.css background image while lazy loading
-                        <div className="fullscreen-loader" style={{ backgroundColor: '#fff', position: 'fixed', zIndex: 9999, inset: 0 }}>
-                            <FaSpinner className="spinning" style={{ color: '#000' }} />
-                        </div>
-                    }>
-                        <LandingPage downloadLink={apkLink} />
-                    </Suspense>
-                } 
+                element={<LandingPage downloadLink={apkLink} />} 
             />
           )}
 
