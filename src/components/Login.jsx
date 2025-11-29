@@ -249,7 +249,7 @@ const Login = ({ onRegisterSuccess }) => {
                         animate="visible"
                         custom={2}
                     >
-                        <motion.h3 variants={itemVariants}>{isLoginView ? 'مرحبا بعودتك!' : 'حسابك المجاني في انتظارك'}</motion.h3>
+                        <motion.h3 className="welcomeheading" variants={itemVariants}>{isLoginView ? 'مرحبا بعودتك!' : 'حسابك المجاني في انتظارك'}</motion.h3>
                         <motion.p variants={itemVariants} className="login-form-subtitle">
                             {isLoginView ? 'سجل دخولك للوصول إلى تحليلاتك وروتينك.' : 'أنشئ حسابك وابدأ فورا في اتخاذ قرارات أكثر ذكاء.'}
                         </motion.p>

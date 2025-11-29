@@ -10,7 +10,7 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  background-image: url('lolo.jpg');
+
   /* Standard Scrolling enabled */
   overflow-y: auto;
   overflow-x: hidden;

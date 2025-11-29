@@ -4,7 +4,11 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 2rem 0; /* Add vertical padding for scroll spacing */
+    padding: 2rem 0;
+}
+
+.welcomeheading {
+    color: #EAEAEA;
 }
 
 /* ---------------------------------- */
@@ -169,9 +173,9 @@
 
 .login-input-group { margin-bottom: 20px; position: relative; }
 .login-input-group input {
-    width: 100%; padding: 14px 18px; background-color: rgba(0, 0, 0, 0.25);
-    border: 0.01px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
-    color: #EAEAEA; font-size: 1rem; transition: all 0.3s;
+    width: 100% !important; padding: 14px 18px !important; background-color: rgba(0, 0, 0, 0.25) !important;
+    border: 0.01px solid rgba(255, 255, 255, 0.15) !important; border-radius: 12px !important;
+    color: #EAEAEA !important; font-size: 1rem !important; transition: all 0.3s !important;
 }
 .login-input-group input::placeholder { color: rgba(234, 234, 234, 0.5); }
 .login-input-group input:focus { outline: none; border-color: #B2D8B4; }
