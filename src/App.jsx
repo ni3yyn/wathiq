@@ -208,20 +208,40 @@ const WathiqRoutes = () => {
         };
         registerPush();
 
-        CapacitorApp.addListener('backButton', ({ canGoBack }) => {
-            if (['/', '/login', '/oil-guard', '/welcome'].includes(location.pathname)) {
+        // ------------------------------------------------------------
+        // UPDATED BACK BUTTON LOGIC
+        // ------------------------------------------------------------
+        const backListener = CapacitorApp.addListener('backButton', async ({ canGoBack }) => {
+            
+            // 1. Hash Check (For Modals/Overlays using useModalBack)
+            // If URL has a hash (e.g., #tips, #camera), pop the history to close it.
+            if (window.location.hash) {
+                window.history.back();
+                return;
+            }
+
+            // 2. Root Route Check
+            // We use window.location.pathname to get the live path
+            const currentPath = window.location.pathname;
+            const exitRoutes = ['/', '/login', '/oil-guard', '/welcome'];
+            
+            if (exitRoutes.includes(currentPath)) {
+                 // On main pages, exit the app
                  CapacitorApp.exitApp();
             } else {
+                // Otherwise, go back one page in history
                 navigate(-1);
             }
         });
+
+        // Cleanup listener on unmount
+        return () => {
+            backListener.then(f => f.remove());
+        };
     }
   }, [user, navigate, isNative]);
 
   // Routing Constants
-  // FIX: Only determine appHomeRoute if profile is actually loaded.
-  // If profile is null but user exists (edge case), default to oil-guard to avoid loop,
-  // unless explicit false is present.
   const isProfileComplete = userProfile ? userProfile.onboardingComplete === true : true;
   const appHomeRoute = isProfileComplete ? "/oil-guard" : "/welcome";
 
