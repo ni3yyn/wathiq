@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { FaLock, FaExclamationTriangle } from 'react-icons/fa';
+import { FaLock, FaExclamationTriangle, FaSpinner } from 'react-icons/fa';
 
 // --- Authentication and Data Hooks ---
 import { AppProvider, useAppContext } from './components/AppContext'; 
@@ -19,7 +19,6 @@ import OilGuard from './components/OilGuard';
 import ComparisonPage from './components/ComparisonPage';
 import WathiqAdmin from './components/WathiqAdmin';
 import AdminPortal from './components/AdminPortal'; 
-import LandingPage from './components/LandingPage';
 
 // --- UI & UX Components ---
 import LoadingOverlay from './components/LoadingOverlay'; 
@@ -35,12 +34,16 @@ import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { FirebaseAnalytics } from '@capacitor-firebase/analytics';
 import { App as CapacitorApp } from '@capacitor/app';
+import { Toast } from '@capacitor/toast';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 // --- CSS Imports ---
 import './App.css';
 import 'react-circular-progressbar/dist/styles.css';
 import { AnimatePresence } from 'framer-motion';
+
+// --- LAZY IMPORTS (Web Only) ---
+const LandingPage = lazy(() => import('./components/LandingPage'));
 
 // =============================================================================
 // HELPER COMPONENTS
@@ -128,6 +131,9 @@ const WathiqRoutes = () => {
   const [apkLink, setApkLink] = useState(null);
   const [showSplash, setShowSplash] = useState(isNative);
 
+  // Ref to track back button press time for double-tap exit
+  const lastBackPressTime = useRef(0);
+
   // --- Styles Fix for Landing Page ---
   useEffect(() => {
     if (!isNative && location.pathname === '/') {
@@ -209,32 +215,46 @@ const WathiqRoutes = () => {
         registerPush();
 
         // ------------------------------------------------------------
-        // UPDATED BACK BUTTON LOGIC
+        // UPDATED BACK BUTTON LOGIC (Handles Modals Correctly)
         // ------------------------------------------------------------
         const backListener = CapacitorApp.addListener('backButton', async ({ canGoBack }) => {
             
-            // 1. Hash Check (For Modals/Overlays using useModalBack)
-            // If URL has a hash (e.g., #tips, #camera), pop the history to close it.
-            if (window.location.hash) {
-                window.history.back();
+            // 1. Modal/Overlay Check
+            // We check 'window.history.state.modalOpen' which is set by useModalBack.
+            // We also check 'window.location.hash' as a fallback.
+            const isModalOpen = (window.history.state && window.history.state.modalOpen) || window.location.hash;
+
+            if (isModalOpen) {
+                // IMPORTANT: We must use the Native History API here to pop the manual state
+                // React Router's navigate(-1) might skip this manual entry.
+                window.history.back(); 
                 return;
             }
 
-            // 2. Root Route Check
-            // We use window.location.pathname to get the live path
+            // 2. Root Route Check (Exit App)
+            // Use 'window.location.pathname' to ensure we have the live path
             const currentPath = window.location.pathname;
             const exitRoutes = ['/', '/login', '/oil-guard', '/welcome'];
             
             if (exitRoutes.includes(currentPath)) {
-                 // On main pages, exit the app
-                 CapacitorApp.exitApp();
+                 const now = Date.now();
+                 // Double tap to exit (2 seconds tolerance)
+                 if (now - lastBackPressTime.current < 2000) {
+                     CapacitorApp.exitApp();
+                 } else {
+                     lastBackPressTime.current = now;
+                     await Toast.show({
+                         text: 'اضغط مرة أخرى للخروج',
+                         duration: 'short',
+                         position: 'bottom',
+                     });
+                 }
             } else {
-                // Otherwise, go back one page in history
+                // 3. Standard Navigation (Go back one page)
                 navigate(-1);
             }
         });
 
-        // Cleanup listener on unmount
         return () => {
             backListener.then(f => f.remove());
         };
