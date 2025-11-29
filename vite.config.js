@@ -3,41 +3,27 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  base: '/', 
   build: {
-    // 1. Minify using 'terser' (slightly slower build, better result) or 'esbuild' (default)
-    minify: 'esbuild', 
-    
-    // 2. CSS Code Splitting
-    cssCodeSplit: true,
-
-    // 3. Rollup Options to split large libraries into separate chunks
+    minify: 'esbuild',
+    sourcemap: true, // Helps debugging (keeps code readable in DevTools)
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // Put Firebase in its own chunk
-          if (id.includes('firebase')) {
-            return 'firebase';
-          }
-          // Put Framer Motion in its own chunk
-          if (id.includes('framer-motion')) {
-            return 'framer-motion';
-          }
-          // Put Icons in their own chunk (they are huge)
-          if (id.includes('react-icons')) {
-            return 'react-icons';
-          }
-          // Put your heavy Database in its own chunk
+          // 1. Keep your large custom databases separate (Safe)
           if (id.includes('alloilsdb') || id.includes('marketingclaimsdb')) {
             return 'db-assets';
           }
-          // Put node_modules in vendor
+
+          // 2. FORCE all node_modules (React, Firebase, etc.) into ONE file.
+          // This fixes the "Cannot set properties of undefined" error
+          // by ensuring React loads in the correct order.
           if (id.includes('node_modules')) {
             return 'vendor';
           }
         }
       }
     },
-    // 4. Increase chunk size warning limit (suppress noise)
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 2000,
   }
 })
