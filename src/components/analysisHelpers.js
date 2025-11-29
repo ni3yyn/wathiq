@@ -131,7 +131,7 @@ export const createGenerativePartFromFile = (file) => {
 };
 
 export const processWithGemini = async (imagePart) => {
-    const apiKey = "AIzaSyC3jsmipIbuGRFdPDmsNyIiA5dsn_XBpew";
+    const apiKey = "AIzaSyCgc_5GsGp4untYezK_GOP8RLikmIp6xOE";
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 

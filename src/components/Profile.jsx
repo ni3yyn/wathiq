@@ -1663,11 +1663,16 @@ const Profile = () => {
         }
     }, [userProfile]);
     // FIX: 'allIngredientsDB' is now declared FIRST
-    const allIngredientsDB = useMemo(() => {
-        const dbMap = new Map();
-        combinedOilsDB.ingredients.forEach(ing => { if (ing && ing.id) dbMap.set(ing.id, ing); });
-        return dbMap;
-    }, []);
+    // Ensure this is inside the component
+const allIngredientsDB = useMemo(() => {
+    // This is a heavy operation (looping 1000s of items)
+    // It should ONLY run once.
+    const dbMap = new Map();
+    combinedOilsDB.ingredients.forEach(ing => { 
+        if (ing && ing.id) dbMap.set(ing.id, ing); 
+    });
+    return dbMap;
+}, []); // Empty dependency array = Runs once on mount only
 
     // 'weatherRoutineInsight' is now declared AFTER, so it can safely access allIngredientsDB
     const weatherRoutineInsight = useMemo(() => {

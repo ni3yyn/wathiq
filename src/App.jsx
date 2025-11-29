@@ -1,19 +1,17 @@
-// --- START OF FILE src/App.js ---
-
-import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate, Outlet, Link } from 'react-router-dom';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { FaHome, FaSpinner } from 'react-icons/fa';
+import { FaSpinner, FaLock, FaExclamationTriangle } from 'react-icons/fa';
 
 // --- Authentication and Data Hooks ---
 import { AppProvider, useAppContext } from './components/AppContext'; 
 import { db } from './firebase';
-import { doc, updateDoc, Timestamp, collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore'; 
+import { doc, updateDoc, collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore'; 
 
 // --- Analytics ---
-import { initAnalytics, trackPageView, trackEvent } from './analytics';
+import { initAnalytics } from './analytics';
 
-// --- CORE STATIC IMPORTS (Instant Load) ---
+// --- CORE STATIC IMPORTS (Instant Load for App) ---
 import AuthenticationPage from './components/AuthenticationPage';
 import Welcome from './components/Welcome';
 import Profile from './components/Profile';
@@ -36,9 +34,7 @@ import { PushNotifications } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { FirebaseAnalytics } from '@capacitor-firebase/analytics';
 import { App as CapacitorApp } from '@capacitor/app';
-import { Toast } from '@capacitor/toast';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { LocalNotifications } from '@capacitor/local-notifications';
 
 // --- CSS Imports ---
 import './App.css';
@@ -49,36 +45,81 @@ import { AnimatePresence } from 'framer-motion';
 const LandingPage = lazy(() => import('./components/LandingPage'));
 
 // =============================================================================
-// HELPER COMPONENTS (Protected Routes)
+// HELPER COMPONENTS
 // =============================================================================
 
-// 1. Generic Protected Route (Waits for Auth)
+// 1. Access Denied Page
+const AccessDenied = ({ email }) => (
+  <div style={{
+      height: '100vh', display: 'flex', flexDirection: 'column', 
+      alignItems: 'center', justifyContent: 'center', color: '#fff', textAlign: 'center', padding: '20px'
+  }}>
+      <FaLock style={{ fontSize: '4rem', color: '#ef4444', marginBottom: '1rem' }} />
+      <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>تم رفض الوصول</h2>
+      <p style={{ opacity: 0.8 }}>أنت مسجل الدخول بـ: <br/> <strong>{email}</strong></p>
+      <div style={{ background: 'rgba(239, 68, 68, 0.2)', padding: '10px', borderRadius: '8px', margin: '20px 0', border: '1px solid #ef4444' }}>
+          <FaExclamationTriangle style={{ marginLeft: '5px' }}/>
+          هذه الصفحة مخصصة للمسؤولين فقط.
+      </div>
+      <a href="/" style={{ color: '#fff', textDecoration: 'underline' }}>العودة للصفحة الرئيسية</a>
+  </div>
+);
+
+// 2. Generic Protected Route
 const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAppContext();
+  const { user, userProfile, loading } = useAppContext();
   
   if (loading) return <LoadingOverlay text="جاري التحميل..." />;
-  if (!user) return <Navigate to="/login" replace />;
+  
+  const activeAccount = user || userProfile;
+
+  if (!activeAccount) {
+      return <AuthenticationPage />;
+  }
   
   return children;
 };
 
-// 2. Admin Route (Strict Email Check)
+// 3. Admin Route
 const AdminRoute = ({ children }) => {
-  const { user, loading } = useAppContext();
+  const { user, userProfile, loading } = useAppContext();
   const ALLOWED_ADMIN = "ni3yyn@gmail.com";
 
-  if (loading) return <LoadingOverlay text="جاري التحقق من الصلاحيات..." />;
-  if (!user) return <Navigate to="/login" replace />;
+  if (loading) return <LoadingOverlay text="جاري التحقق..." />;
+  
+  const activeAccount = user || userProfile;
 
-  if (user.email?.toLowerCase() !== ALLOWED_ADMIN.toLowerCase()) {
-      return <Navigate to="/oil-guard" replace />;
+  if (!activeAccount) {
+      return <AuthenticationPage />;
+  }
+
+  const email = activeAccount.email;
+
+  if (!email || email.toLowerCase() !== ALLOWED_ADMIN.toLowerCase()) {
+      return <AccessDenied email={email} />;
   }
 
   return children;
 };
 
+// 4. Main Layout
+const MainLayout = ({ children }) => {
+    const location = useLocation();
+    
+    // Define routes that use the bottom WathiqNav
+    const appRoutes = ['/profile', '/oil-guard', '/compare'];
+    const isAppRoute = appRoutes.some(path => location.pathname.startsWith(path));
+
+    return (
+        <div className="app-root">
+            {isAppRoute && <WathiqNav />}
+            <main className="main-content">{children}</main>
+        </div>
+    );
+};
+
 // =============================================================================
-// MAIN ROUTING LOGIC COMPONENT
+// MAIN ROUTING LOGIC
 // =============================================================================
 const WathiqRoutes = () => {
   const { user, userProfile, loading, isLoggingOut } = useAppContext();
@@ -86,40 +127,53 @@ const WathiqRoutes = () => {
   const navigate = useNavigate();
   const isNative = Capacitor.isNativePlatform();
   
-  // State
   const [apkLink, setApkLink] = useState(null);
   const [showSplash, setShowSplash] = useState(isNative);
 
-  // --- 1. Fetch APK Link (Web Only) ---
+  // --- FIX: Handle Body Background for Landing Page ---
+  // This ensures that when we are on the Landing Page, the global App.css 
+  // background image is removed immediately, preventing the "flash".
+  useEffect(() => {
+    if (!isNative && location.pathname === '/') {
+        // Force body to be plain for Landing Page
+        document.body.style.backgroundImage = 'none';
+        document.body.style.backgroundColor = '#ffffff'; // Or your landing page background color
+        document.body.style.overflowY = 'auto'; // Ensure scroll works
+    } else {
+        // Reset to default (App.css control) when leaving landing page
+        document.body.style.backgroundImage = '';
+        document.body.style.backgroundColor = '';
+        document.body.style.overflowY = '';
+    }
+    
+    // Cleanup
+    return () => {
+        document.body.style.backgroundImage = '';
+        document.body.style.backgroundColor = '';
+    };
+  }, [location.pathname, isNative]);
+
+  // --- 1. Web: Fetch APK Link (Non-blocking) ---
   useEffect(() => {
     if (!isNative) {
       const q = query(collection(db, "releases"), orderBy("createdAt", "desc"), limit(1));
       const unsubscribe = onSnapshot(q, (snapshot) => {
-        if (!snapshot.empty) {
-          const latestRelease = snapshot.docs[0].data();
-          setApkLink(latestRelease.fileUrl);
-        }
+        if (!snapshot.empty) setApkLink(snapshot.docs[0].data().fileUrl);
       });
       return () => unsubscribe();
     }
   }, [isNative]);
 
-  // --- 2. Splash Screen Logic ---
+  // --- 2. Native: Splash Screen Logic ---
   useEffect(() => {
     const handleSplash = async () => {
-        // Remove HTML curtain immediately once React mounts
         const curtain = document.getElementById('html-splash-curtain');
         if (curtain) curtain.remove();
 
         if (isNative) {
-            // Buffer time for React to settle
             await new Promise(resolve => setTimeout(resolve, 1500));
-            // Hide Native Splash
             await SplashScreen.hide({ fadeOutDuration: 500 });
-            // Wait for Custom Splash Animation
-            if (!loading) {
-                setTimeout(() => setShowSplash(false), 2000);
-            }
+            if (!loading) setTimeout(() => setShowSplash(false), 2000);
         } else {
             setShowSplash(false);
         }
@@ -127,35 +181,34 @@ const WathiqRoutes = () => {
     handleSplash();
   }, [isNative, loading]);
 
-  // --- 3. Analytics & Notifications ---
+  // --- 3. Native: Analytics & Onboarding ---
   useEffect(() => {
-    if (loading) return;
+    if (loading || !isNative) return;
 
     if (userProfile) {
-        // Check Onboarding
         if (userProfile.onboardingComplete === false && location.pathname !== '/welcome') {
             navigate('/welcome', { replace: true });
         }
-
-        // Native Analytics Setup
-        if (isNative && user) {
-             const setupAnalytics = async () => {
-                try {
-                    await FirebaseAnalytics.setUserId({ userId: user.uid });
-                    await FirebaseAnalytics.setUserProperty({ name: "gender", value: userProfile.settings?.gender || "unknown" });
-                    await FirebaseAnalytics.logEvent({ name: 'session_start', params: { user_type: 'registered' } });
-                } catch (err) { console.warn("Analytics Error", err); }
-            };
-            setupAnalytics();
-        }
+        const setupAnalytics = async () => {
+            try {
+                await FirebaseAnalytics.setUserId({ userId: user.uid });
+                await FirebaseAnalytics.logEvent({ name: 'session_start', params: { user_type: 'registered' } });
+            } catch (err) { console.warn("Analytics Error", err); }
+        };
+        setupAnalytics();
     }
   }, [userProfile, user, loading, navigate, location.pathname, isNative]);
 
-  // --- 4. Push Notifications ---
+  // --- 4. Native: Notifications & Back Button ---
   useEffect(() => {
     if (isNative) {
-        PushNotifications.createChannel({ id: 'default', name: 'General', importance: 5, visibility: 1, vibration: true }).catch(console.error);
-        
+        PushNotifications.createChannel({ id: 'default', name: 'General', importance: 5, visibility: 1 }).catch(console.error);
+        PushNotifications.addListener('registration', token => {
+            if (user) updateDoc(doc(db, 'profiles', user.uid), { fcmToken: token.value, platform: 'android' }).catch(console.error);
+        });
+        PushNotifications.addListener('pushNotificationActionPerformed', notification => {
+            if (notification.notification.data.route) navigate(notification.notification.data.route);
+        });
         const registerPush = async () => {
             let perm = await PushNotifications.checkPermissions();
             if (perm.receive === 'prompt') perm = await PushNotifications.requestPermissions();
@@ -163,46 +216,21 @@ const WathiqRoutes = () => {
         };
         registerPush();
 
-        const tokenListener = PushNotifications.addListener('registration', token => {
-            if (user) updateDoc(doc(db, 'profiles', user.uid), { fcmToken: token.value, platform: 'android' }).catch(console.error);
+        CapacitorApp.addListener('backButton', ({ canGoBack }) => {
+            if (['/', '/login', '/oil-guard', '/welcome'].includes(location.pathname)) {
+                 CapacitorApp.exitApp();
+            } else {
+                navigate(-1);
+            }
         });
-
-        const actionListener = PushNotifications.addListener('pushNotificationActionPerformed', notification => {
-            if (notification.notification.data.route) navigate(notification.notification.data.route);
-        });
-
-        return () => { tokenListener.then(f=>f.remove()); actionListener.then(f=>f.remove()); };
     }
   }, [user, navigate, isNative]);
 
-  // --- 5. Back Button Handler ---
-  useEffect(() => {
-      if (isNative) {
-          CapacitorApp.addListener('backButton', ({ canGoBack }) => {
-              if (['/', '/login', '/oil-guard', '/welcome'].includes(location.pathname)) {
-                   CapacitorApp.exitApp();
-              } else {
-                  navigate(-1);
-              }
-          });
-      }
-  }, [navigate, location.pathname, isNative]);
-
-
-  // --- 6. Routing Constants ---
+  // Routing Constants
   const isProfileComplete = userProfile?.onboardingComplete === true;
   const appHomeRoute = isProfileComplete ? "/oil-guard" : "/welcome";
-  
-  // Navigation Visibility
-  const showNav = user && 
-                  location.pathname !== '/' && 
-                  location.pathname !== '/login' && 
-                  location.pathname !== '/welcome' &&
-                  !location.pathname.includes('admin');
 
-  // --- 7. Render ---
-  
-  // Force Splash if Native and (Splash True OR Loading)
+  // Native Splash Guard
   if (isNative && (showSplash || loading)) {
     return <AnimatedSplash />;
   }
@@ -212,84 +240,89 @@ const WathiqRoutes = () => {
       <OfflineIndicator />
       <UpdateManager />
       
-      {/* Global Overlays */}
       <AnimatePresence>
         {isLoggingOut && <GoodbyeOverlay />}
       </AnimatePresence>
       
-      {showNav && <WathiqNav />}
-
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
+      <Routes location={location} key={location.pathname}>
           
-          {/* Root Route */}
-          <Route 
-            path="/" 
-            element={
-              isNative ? (
-                // Mobile: Redirect based on auth
-                user ? <Navigate to={appHomeRoute} replace /> : <Navigate to="/login" replace />
-              ) : (
-                // Web: Show Landing Page (Lazy Loaded)
-                <Suspense fallback={<LoadingOverlay text="جاري التحميل..." />}>
-                  <LandingPage downloadLink={apkLink} />
-                </Suspense>
-              )
-            } 
-          />
+          {/* 
+             ------------------------------------
+             1. WEB BROWSER (LANDING PAGE)
+             ------------------------------------
+          */}
+          {!isNative && (
+            <Route 
+                path="/" 
+                element={
+                    <Suspense fallback={
+                        // FIX: Solid background loader to hide App.css background image while lazy loading
+                        <div className="fullscreen-loader" style={{ backgroundColor: '#fff', position: 'fixed', zIndex: 9999, inset: 0 }}>
+                            <FaSpinner className="spinning" style={{ color: '#000' }} />
+                        </div>
+                    }>
+                        <LandingPage downloadLink={apkLink} />
+                    </Suspense>
+                } 
+            />
+          )}
 
-          {/* Auth Route */}
-          <Route 
-            path="/login" 
-            element={
-                // If loading auth state, show overlay
-                loading ? <LoadingOverlay text="جاري التحقق..." /> : 
-                // If logged in, go home. Else show login.
-                user ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
-            } 
-          />
-          
-          {/* Protected App Routes */}
-          <Route 
-            path="/welcome" 
-            element={
-              <ProtectedRoute>
-                 {/* Redirect if profile complete to avoid loop */}
-                 {isProfileComplete ? <Navigate to="/oil-guard" replace /> : <Welcome />}
-              </ProtectedRoute>
-            } 
-          />
+          {/* 
+             ------------------------------------
+             2. AUTH & LOGIN
+             ------------------------------------
+          */}
+          <Route path="/login" element={
+              loading ? <LoadingOverlay text="جاري التحقق..." /> : 
+              (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
+          } />
 
-          <Route 
-            path="/oil-guard" 
-            element={<ProtectedRoute><OilGuard /></ProtectedRoute>} 
-          />
-          
-          <Route 
-            path="/profile" 
-            element={<ProtectedRoute><Profile /></ProtectedRoute>} 
-          />
-          
-          <Route 
-            path="/compare" 
-            element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} 
-          />
+          {/* 
+             ------------------------------------
+             3. ADMIN ROUTES
+             ------------------------------------
+          */}
+          <Route path="/admin" element={
+              <AdminRoute>
+                  <AdminPortal user={user} />
+              </AdminRoute>
+          } />
 
-          {/* Admin Routes */}
-          <Route 
-            path="/admin" 
-            element={<AdminRoute><AdminPortal user={user} /></AdminRoute>} 
-          />
+          <Route path="/wathiq-admin" element={
+              <AdminRoute>
+                  <WathiqAdmin />
+              </AdminRoute>
+          } />
 
-          <Route 
-            path="/wathiq-admin" 
-            element={<AdminRoute><WathiqAdmin /></AdminRoute>} 
-          />
+          {/* 
+             ------------------------------------
+             4. MAIN APP ROUTES (Protected)
+             Wrapped in MainLayout for Navigation
+             ------------------------------------
+          */}
+          <Route path="/*" element={
+            <MainLayout>
+                <Routes>
+                    
+                    {/* Native Root: Redirects based on Auth */}
+                    {isNative && (
+                        <Route path="/" element={
+                            (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
+                        } />
+                    )}
+                    
+                    <Route path="/welcome" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
+                    <Route path="/oil-guard" element={<ProtectedRoute><OilGuard /></ProtectedRoute>} />
+                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                    <Route path="/compare" element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
+                    {/* Catch-all */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+            </MainLayout>
+          } />
 
-        </Routes>
-      </AnimatePresence>
+      </Routes>
     </>
   );
 };
@@ -298,10 +331,7 @@ const WathiqRoutes = () => {
 // APP WRAPPER
 // =============================================================================
 function App() {
-  // Global Analytics Init
-  useEffect(() => {
-    initAnalytics();
-  }, []);
+  useEffect(() => { initAnalytics(); }, []);
 
   return (
     <ErrorBoundary>
