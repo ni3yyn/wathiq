@@ -806,7 +806,7 @@ const ShelfTab = ({ loading, savedProducts, handleDragEnd, setSelectedProduct, h
             <div className="shelf-controls">
                 <div className="search-bar">
                     <FaSearch />
-                    <input type="text" className="elegant-input" placeholder="ابحث في منتجاتك..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+                    <input type="text" className="elegantt-inputt" placeholder="ابحث في منتجاتك..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                     {searchTerm && <button onClick={() => setSearchTerm('')} className="clear-search-btn"><FaTimes /></button>}
                 </div>
                 <Link to="/oil-guard" className="elegant-btn primary">
@@ -1513,7 +1513,7 @@ const RoutineAddModal = ({ isOpen, onClose, mode, savedProducts, allIngredientsD
                         <FaSearch />
                         <input 
                             type="text" 
-                            className="elegant-input" 
+                            className="elegantt-inputt" 
                             placeholder={mode === 'product' ? "ابحث في منتجاتك..." : "ابحث عن مكون (سدر، طين...)"}
                             value={searchTerm} 
                             onChange={(e) => setSearchTerm(e.target.value)} 
@@ -2524,7 +2524,7 @@ const allIngredientsDB = useMemo(() => {
                         <label htmlFor="skinGoal"><FaBullseye /> التركيز على الهدف:</label>
                         <select 
                             id="skinGoal" 
-                            className="elegant-input"
+                            className="elegantt-inputt"
                             value={formData.skinGoals?.[0] || 'general'}
                             onChange={(e) => setFormData(prev => ({...prev, skinGoals: [e.target.value]}))}
                         >
@@ -2602,7 +2602,7 @@ const allIngredientsDB = useMemo(() => {
                         <div className="ingredient-controls">
                           <div className="search-bar">
                             <FaSearch />
-                            <input type="text" className="elegant-input" placeholder="ابحث عن مكون..." value={searchTermIngredients} onChange={(e) => setSearchTermIngredients(e.target.value)} />
+                            <input type="text" className="elegantt-inputt" placeholder="ابحث عن مكون..." value={searchTermIngredients} onChange={(e) => setSearchTermIngredients(e.target.value)} />
                             {searchTermIngredients && (<button onClick={() => setSearchTermIngredients("")} className="clear-search-btn"><FaTimes /></button>)}
                           </div>
                         </div>
@@ -2820,7 +2820,7 @@ const allIngredientsDB = useMemo(() => {
                                     <div className="blacklist-input-wrapper">
                                         <input 
                                             type="text" 
-                                            className="elegant-input" 
+                                            className="elegantt-inputt" 
                                             placeholder="أكتب اسم المكون..." 
                                             value={newBlacklistIngredient} 
                                             onChange={(e) => setNewBlacklistIngredient(e.target.value)} 

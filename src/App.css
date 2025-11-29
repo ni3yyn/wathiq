@@ -565,6 +565,84 @@ input, textarea {
 /*   (Critical for Android WebViews)         */
 /* ========================================= */
 
+.glass-modal-backdrop,
+.modal-backdrop,
+.w-admin-modal-backdrop {
+  position: fixed;   /* This is critical! Takes it out of page flow */
+  inset: 0;          /* Modern shorthand for top:0, right:0, bottom:0, left:0 */
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;     /* Ensure it's on top of everything */
+  
+  /* Centering Logic */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: flex-end;   /* Sheets stick to bottom */
+  
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* 2. Admin & Alert Modals should be centered in the MIDDLE */
+.w-admin-modal-backdrop,
+.modal-backdrop {
+  align-items: center; /* Center vertically */
+}
+
+/* 3. The Modal Card/Sheet Itself */
+.glass-modal-content,
+.sheet-modal,
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  
+  /* Reset margins to prevent shifting */
+  margin: 0; 
+  
+  background: rgba(30, 41, 59, 0.95);
+  border-radius: 20px 20px 0 0; /* Rounded top corners for sheets */
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+/* 4. Fix for the "Save Product" and Admin Modals (Fully Rounded) */
+.modal-content.elegant-card,
+.w-admin-modal {
+  border-radius: 20px; /* Full rounded corners */
+  margin: 20px;        /* Gap from screen edges */
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff; /* Or your dark theme color */
+  color: #333;
+}
+
+/* 5. Ensure scrollbars work inside the modal, not the body */
+.glass-modal-body,
+.w-admin-tab-content {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px;
+}
+
+/* 6. Handle Bar for Sheets */
+.sheet-handle-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+  cursor: grab;
+}
+.sheet-handle {
+  width: 50px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
 @media (max-width: 768px) {
     
     /* Backdrop-filter is extremely heavy on mobile GPUs. 
