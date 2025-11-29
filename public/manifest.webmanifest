@@ -1,4 +1,12 @@
 {
+  "name": "وثيق - Wathiq",
+  "short_name": "وثيق",
+  "description": "محلل مكونات مواد العناية بالبشرة و الشعر بالذكاء",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait",
+  "start_url": "/",
   "icons": [
     {
       "src": "../icons/icon-48.webp",
