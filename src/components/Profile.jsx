@@ -1618,21 +1618,46 @@ const Profile = () => {
         if (userProfile) {
             setProfile(userProfile);
             
-            // --- UPDATED: Merge defaults if values are undefined ---
             setFormData(prev => ({
                 ...prev,
                 ...(userProfile.settings || {}),
-                // Use '??' to allow empty string "" (disabled) to persist, 
-                // but default to time if undefined (new user)
                 reminderAM: userProfile.settings?.reminderAM ?? '08:00',
                 reminderPM: userProfile.settings?.reminderPM ?? '21:00'
             }));
 
-            setRoutines(userProfile.routines || { 
-                am: [ { name: 'الخطوة 1: غسول', productIds: [] }, { name: 'الخطوة 2: علاج/تونر', productIds: [] }, { name: 'الخطوة 3: سيروم', productIds: [] }, { name: 'الخطوة 4: مرطب', productIds: [] }, { name: 'الخطوة 5: واقي شمسي', productIds: [] }],
-                pm: [ { name: 'الخطوة 1: غسول زيتي', productIds: [] }, { name: 'الخطوة 2: غسول مائي', productIds: [] }, { name: 'الخطوة 3: مقشر/علاج', productIds: [] }, { name: 'الخطوة 4: سيروم', productIds: [] }, { name: 'الخطوة 5: مرطب/زيت', productIds: [] }],
-                weekly: [ { name: 'أقنعة الشعر', productIds: [] }, { name: 'أقنعة الوجه', productIds: [] } ]
-            });
+            // --- 🛠️ FIX: ROBUST ROUTINE INITIALIZATION ---
+            // If DB has routines, use them. If they are empty/missing, use Defaults.
+            const defaultStructure = { 
+                am: [ 
+                    { name: 'الخطوة 1: غسول', productIds: [] }, 
+                    { name: 'الخطوة 2: علاج/تونر', productIds: [] }, 
+                    { name: 'الخطوة 3: سيروم', productIds: [] }, 
+                    { name: 'الخطوة 4: مرطب', productIds: [] }, 
+                    { name: 'الخطوة 5: واقي شمسي', productIds: [] }
+                ],
+                pm: [ 
+                    { name: 'الخطوة 1: غسول زيتي', productIds: [] }, 
+                    { name: 'الخطوة 2: غسول مائي', productIds: [] }, 
+                    { name: 'الخطوة 3: مقشر/علاج', productIds: [] }, 
+                    { name: 'الخطوة 4: سيروم', productIds: [] }, 
+                    { name: 'الخطوة 5: مرطب/زيت', productIds: [] }
+                ],
+                weekly: [ 
+                    { name: 'أقنعة الشعر', productIds: [] }, 
+                    { name: 'أقنعة الوجه', productIds: [] } 
+                ]
+            };
+
+            const dbRoutines = userProfile.routines || {};
+
+            const finalRoutines = {
+                // Check if 'am' exists AND has items. If not, use default.
+                am: (dbRoutines.am && dbRoutines.am.length > 0) ? dbRoutines.am : defaultStructure.am,
+                pm: (dbRoutines.pm && dbRoutines.pm.length > 0) ? dbRoutines.pm : defaultStructure.pm,
+                weekly: (dbRoutines.weekly && dbRoutines.weekly.length > 0) ? dbRoutines.weekly : defaultStructure.weekly,
+            };
+
+            setRoutines(finalRoutines);
         }
     }, [userProfile]);
     
