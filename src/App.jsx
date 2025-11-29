@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'; // Removed Suspense/lazy
+import React, { useState, useEffect } from 'react'; 
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { FaLock, FaExclamationTriangle } from 'react-icons/fa'; // Removed FaSpinner
+import { FaLock, FaExclamationTriangle } from 'react-icons/fa';
 
 // --- Authentication and Data Hooks ---
 import { AppProvider, useAppContext } from './components/AppContext'; 
@@ -19,7 +19,7 @@ import OilGuard from './components/OilGuard';
 import ComparisonPage from './components/ComparisonPage';
 import WathiqAdmin from './components/WathiqAdmin';
 import AdminPortal from './components/AdminPortal'; 
-import LandingPage from './components/LandingPage'; // <--- MOVED TO STATIC IMPORT
+import LandingPage from './components/LandingPage';
 
 // --- UI & UX Components ---
 import LoadingOverlay from './components/LoadingOverlay'; 
@@ -129,7 +129,6 @@ const WathiqRoutes = () => {
   const [showSplash, setShowSplash] = useState(isNative);
 
   // --- Styles Fix for Landing Page ---
-  // Keeps the background clean for the main page
   useEffect(() => {
     if (!isNative && location.pathname === '/') {
         document.body.style.backgroundImage = 'none';
@@ -220,7 +219,10 @@ const WathiqRoutes = () => {
   }, [user, navigate, isNative]);
 
   // Routing Constants
-  const isProfileComplete = userProfile?.onboardingComplete === true;
+  // FIX: Only determine appHomeRoute if profile is actually loaded.
+  // If profile is null but user exists (edge case), default to oil-guard to avoid loop,
+  // unless explicit false is present.
+  const isProfileComplete = userProfile ? userProfile.onboardingComplete === true : true;
   const appHomeRoute = isProfileComplete ? "/oil-guard" : "/welcome";
 
   // Native Splash Guard
@@ -243,7 +245,6 @@ const WathiqRoutes = () => {
              ------------------------------------
              1. WEB BROWSER (LANDING PAGE)
              ------------------------------------
-             NO SUSPENSE / NO SPINNER. LOADS INSTANTLY.
           */}
           {!isNative && (
             <Route 

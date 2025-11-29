@@ -1,4 +1,4 @@
-// --- START OF FILE AppContext.js ---
+// --- START OF FILE src/components/AppContext.jsx ---
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -49,7 +49,7 @@ export const AppProvider = ({ children }) => {
             // Variable to track if we have manual data (prevents Firebase from wiping it offline)
             let manualDataLoadedCount = 0;
 
-            // 1. LOAD CACHE
+            // 1. LOAD CACHE (Do not stop loading here to prevent premature redirection)
             try {
                 // A. Load Profile
                 const { value: cachedProfile } = await Preferences.get({ key: 'wathiq_cache_profile' });
@@ -63,9 +63,9 @@ export const AppProvider = ({ children }) => {
                     const p = JSON.parse(cachedProds);
                     if (p.length > 0) {
                         setSavedProducts(p);
-                        manualDataLoadedCount = p.length; // <--- Mark that we have data
-                        
-                        setGlobalLoading(false); // Stop loading immediately
+                        manualDataLoadedCount = p.length; 
+                        // FIX: Do NOT setGlobalLoading(false) here. 
+                        // We must wait for Auth to confirm user status to avoid the "Welcome" redirect bug.
                     }
                 }
             } catch (e) {
@@ -75,13 +75,15 @@ export const AppProvider = ({ children }) => {
             // 2. FIREBASE
             unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
                 if (!currentUser) {
+                    // User is strictly logged out
                     setUser(null);
                     setUserProfile(null);
                     setSavedProducts([]);
-                    setGlobalLoading(false);
+                    setGlobalLoading(false); // Safe to stop loading
                     return;
                 }
 
+                // User is logged in
                 setUser(currentUser);
 
                 // Profile Sync
@@ -92,18 +94,20 @@ export const AppProvider = ({ children }) => {
                         setUserProfile(data);
                         await Preferences.set({ key: 'wathiq_cache_profile', value: JSON.stringify(data) });
                     }
+                    // Only stop loading once we actually have the profile (or know it doesn't exist)
+                    setGlobalLoading(false);
+                }, (err) => {
+                    console.error("Profile Sync Error", err);
+                    // Even on error, we must stop loading so the app doesn't hang
                     setGlobalLoading(false);
                 });
 
                 // Products Sync
                 const q = collection(db, 'profiles', currentUser.uid, 'savedProducts');
                 
-                // Added includeMetadataChanges to detect if data is from cache or server
                 unsubscribeProducts = onSnapshot(q, { includeMetadataChanges: true }, async (snapshot) => {
                     try {
-                        // 🛑 THE FIX: PREVENT OVERWRITE
-                        // If Firestore returns empty list, AND it's from cache (not server verified),
-                        // AND we have manual data loaded... IGNORE this update.
+                        // Offline protection
                         if (snapshot.empty && snapshot.metadata.fromCache && manualDataLoadedCount > 0) {
                             console.log("Offline protection: Keeping manual cache instead of empty Firestore cache.");
                             return; 
@@ -117,11 +121,8 @@ export const AppProvider = ({ children }) => {
                         productsList.sort((a, b) => (a.order || 0) - (b.order || 0));
 
                         setSavedProducts(productsList);
-
-                        // Update our tracker so future updates work normally
                         manualDataLoadedCount = productsList.length;
 
-                        // Save to Cache (Syncing)
                         if (productsList.length > 0) {
                             const jsonString = JSON.stringify(productsList);
                             await Preferences.set({ key: 'wathiq_cache_products', value: jsonString });
@@ -130,10 +131,6 @@ export const AppProvider = ({ children }) => {
                     } catch (err) {
                         showDebugToast("❌ فشل تخزين منتوجاتك في الهاتف: " + err.message);
                     }
-                }, (err) => {
-                    // If Firestore fails (permissions/offline), ensure we stop loading
-                    console.error("Firestore Error", err);
-                    setGlobalLoading(false);
                 });
             });
         };
@@ -149,20 +146,30 @@ export const AppProvider = ({ children }) => {
 
     const logout = async () => {
         setIsLoggingOut(true);
+        
+        // 1. Clear Device Storage
         await Preferences.clear();
+        
+        // 2. Remove FCM Token from DB if possible
         if (user) {
             try {
                 const userRef = doc(db, 'profiles', user.uid);
                 await updateDoc(userRef, { fcmToken: deleteField() });
-            } catch (e) {}
+            } catch (e) { console.log("Logout cleanup non-critical error", e); }
         }
+
+        // 3. Visual Delay for UX, then Sign Out
         setTimeout(() => {
             signOut(auth).then(() => {
-                navigate('/');
+                // FIX: Navigate explicitly to /login instead of /
+                navigate('/login', { replace: true });
+                setUser(null);
+                setUserProfile(null);
+                setSavedProducts([]);
                 setIsLoggingOut(false);
                 setGlobalLoading(false);
             });
-        }, 1000);
+        }, 1500);
     };
 
     const value = { user, userProfile, loading: globalLoading, isLoggingOut, logout, savedProducts, setSavedProducts };
