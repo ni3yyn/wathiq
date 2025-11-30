@@ -76,30 +76,21 @@ const itemVariants = {
 const pageVariants = {
     initial: { 
         opacity: 0, 
-        y: 15, 
-        scale: 0.98,
-        // Start with no blur
-        backdropFilter: "blur(0px)",
-        WebkitBackdropFilter: "blur(0px)" 
+        y: 10,  // Reduced movement for snappier feel
+        scale: 0.99
     },
     animate: { 
         opacity: 1, 
         y: 0, 
         scale: 1, 
-        // Animate to full blur
-        backdropFilter: "blur(7px)",
-        WebkitBackdropFilter: "blur(7px)",
         transition: { 
-            duration: 0.4, 
-            ease: [0.25, 1, 0.5, 1] 
+            duration: 0.3, 
+            ease: "easeOut" 
         } 
     },
     exit: { 
         opacity: 0, 
-        y: 15, 
-        // Fade blur out
-        backdropFilter: "blur(0px)",
-        WebkitBackdropFilter: "blur(0px)",
+        y: -10, // Slight movement up on exit
         transition: { duration: 0.2, ease: "easeIn" } 
     } 
 };
@@ -2311,6 +2302,34 @@ const allIngredientsDB = useMemo(() => {
         return suggestions;
     }, [savedProducts, allIngredientsDB, naturalIngredients]);
 
+    // 1. First, memoize the list of valid products (Cheap)
+const validProducts = useMemo(() => 
+savedProducts.filter(p => p?.analysisData?.detected_ingredients), 
+[savedProducts]);
+
+// 2. Memoize Ingredients In Use (Medium Cost)
+// Only runs if product list changes
+const ingredientsInUse = useMemo(() => {
+return validProducts.flatMap(p => 
+    p.analysisData.detected_ingredients.map(ing => ({ ...ing, product: p }))
+);
+}, [validProducts]);
+
+// 3. Memoize The Ingredient Library (Expensive - Sorting)
+// This is what makes the Ingredients tab slow. 
+// We separate it so it doesn't run when you just change a Setting or Routine.
+const ingredientLibrary = useMemo(() => {
+const lib = Object.values(ingredientsInUse.reduce((acc, ing) => { 
+    if (!acc[ing.id]) acc[ing.id] = { ...ing, products: new Set() }; 
+    acc[ing.id].products.add(ing.product.productName); 
+    return acc; 
+}, {})).map(ing => ({ ...ing, products: Array.from(ing.products) }));
+
+// Sort logic moved here
+return lib.sort((a, b) => a.name.localeCompare(b.name));
+}, [ingredientsInUse]);
+
+
 // --- HELPER COMPONENTS (Defined OUTSIDE Profile to prevent re-renders) ---
 
 
@@ -2493,74 +2512,82 @@ const allIngredientsDB = useMemo(() => {
 
     const renderTabContent = () => {
         switch (activeTab) {
-            case 'shelf': return <ShelfTab 
-                                    loading={loading} // This 'loading' must be false from Context
-                                    savedProducts={savedProducts} // This must be the array from Context
-                                    handleDragEnd={handleDragEnd} 
-                                    setSelectedProduct={setSelectedProduct} 
-                                    handleDeleteProduct={handleDeleteProduct} 
-                                    searchTerm={searchTerm} 
-                                    setSearchTerm={setSearchTerm} 
-                                    weatherData={weatherData} 
-                                />;
-            case 'routine': return <RoutineBuilderTab 
-                                        savedProducts={savedProducts} 
-                                        routines={routines} 
-                                        setRoutines={setRoutines} 
-                                        onSave={handleSaveSettings}
-                                        isSaving={isSaving}
-                                        isDirty={isRoutineDirty}
-                                        setIsDirty={setIsRoutineDirty}
-                                        allIngredientsDB={allIngredientsDB}
-                                        onSelectMask={setSelectedMask}
-                                        // Pass the opener function
-                                        onOpenAddModal={(mode, routine, stepIndex) => {
-                                            setRoutineModalConfig({ isOpen: true, mode, targetRoutine: routine, targetStepIndex: stepIndex });
-                                        }}
-                                    />;
-            case 'analysis': return (
-                <div className="tab-content-container">
-                    <div className="focus-area-selector">
-                        <label htmlFor="skinGoal"><FaBullseye /> التركيز على الهدف:</label>
-                        <select 
-                            id="skinGoal" 
-                            className="elegantt-inputt"
-                            value={formData.skinGoals?.[0] || 'general'}
-                            onChange={(e) => setFormData(prev => ({...prev, skinGoals: [e.target.value]}))}
-                        >
-                            <option value="general">تحليل عام</option>
-                            <option value="brightening">التفتيح وتوحيد اللون</option>
-                            <option value="acne">مكافحة حب الشباب</option>
-                            <option value="anti-aging">مكافحة الشيخوخة</option>
-                            <option value="hydration">الترطيب ودعم الحاجز</option>
-                        </select>
-                    </div>
-                    <AnalysisTab 
-                        loading={loading} 
-                        savedProducts={savedProducts} 
-                        analysisResults={analysisResults} 
-                        setSelectedInsight={setSelectedInsight}
-                        weatherRoutineInsight={weatherRoutineInsight}
-                        dismissedInsightIds={dismissedInsightIds}
-                        handleDismissPraise={handleDismissPraise}
-                    />
-                    {savedProducts.length > 0 && 
-                        <motion.div className="glass-card span-col-2-lg" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                            <div className="glass-card-header"><FaShieldAlt /> <span>درجة الحماية من الشمس</span></div>
-                            <div className="glass-card-content">
-                                <div className="sun-protection-grade">
-                                    <div style={{width: '120px', margin: '0 auto'}}>
-                                        <CircularProgressbar value={analysisResults.sunProtectionGrade.score} text={`${analysisResults.sunProtectionGrade.score}%`} styles={buildStyles({ pathColor: `rgba(252, 211, 77, ${analysisResults.sunProtectionGrade.score / 100 + 0.1})`, textColor: '#fde047', trailColor: 'rgba(255,255,255,0.1)' })} />
+            case 'shelf': 
+                // ShelfTab already has .tab-content-container inside it? 
+                // If yes, ensure the CSS above makes it transparent.
+                return <ShelfTab 
+                            loading={loading}
+                            savedProducts={savedProducts}
+                            handleDragEnd={handleDragEnd} 
+                            setSelectedProduct={setSelectedProduct} 
+                            handleDeleteProduct={handleDeleteProduct} 
+                            searchTerm={searchTerm} 
+                            setSearchTerm={setSearchTerm} 
+                            weatherData={weatherData} 
+                        />;
+            
+            case 'routine': 
+                return <RoutineBuilderTab 
+                            savedProducts={savedProducts} 
+                            routines={routines} 
+                            setRoutines={setRoutines} 
+                            onSave={handleSaveSettings}
+                            isSaving={isSaving}
+                            isDirty={isRoutineDirty}
+                            setIsDirty={setIsRoutineDirty}
+                            allIngredientsDB={allIngredientsDB}
+                            onSelectMask={setSelectedMask}
+                            onOpenAddModal={(mode, routine, stepIndex) => {
+                                setRoutineModalConfig({ isOpen: true, mode, targetRoutine: routine, targetStepIndex: stepIndex });
+                            }}
+                        />;
+            
+            case 'analysis': 
+                return (
+                    // KEPT: This is needed for layout padding, but now it is transparent
+                    <div className="tab-content-container">
+                        <div className="focus-area-selector">
+                            <label htmlFor="skinGoal"><FaBullseye /> التركيز على الهدف:</label>
+                            <select 
+                                id="skinGoal" 
+                                className="profile-elegantt-inputt" // Fixed class name typo from your CSS
+                                value={formData.skinGoals?.[0] || 'general'}
+                                onChange={(e) => setFormData(prev => ({...prev, skinGoals: [e.target.value]}))}
+                            >
+                                <option value="general">تحليل عام</option>
+                                <option value="brightening">التفتيح وتوحيد اللون</option>
+                                <option value="acne">مكافحة حب الشباب</option>
+                                <option value="anti-aging">مكافحة الشيخوخة</option>
+                                <option value="hydration">الترطيب ودعم الحاجز</option>
+                            </select>
+                        </div>
+                        <AnalysisTab 
+                            loading={loading} 
+                            savedProducts={savedProducts} 
+                            analysisResults={analysisResults} 
+                            setSelectedInsight={setSelectedInsight}
+                            weatherRoutineInsight={weatherRoutineInsight}
+                            dismissedInsightIds={dismissedInsightIds}
+                            handleDismissPraise={handleDismissPraise}
+                        />
+                        {savedProducts.length > 0 && 
+                            <motion.div className="glass-card span-col-2-lg" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                                <div className="glass-card-header"><FaShieldAlt /> <span>درجة الحماية من الشمس</span></div>
+                                <div className="glass-card-content">
+                                    <div className="sun-protection-grade">
+                                        <div style={{width: '120px', margin: '0 auto'}}>
+                                            <CircularProgressbar value={analysisResults.sunProtectionGrade.score} text={`${analysisResults.sunProtectionGrade.score}%`} styles={buildStyles({ pathColor: `rgba(252, 211, 77, ${analysisResults.sunProtectionGrade.score / 100 + 0.1})`, textColor: '#fde047', trailColor: 'rgba(255,255,255,0.1)' })} />
+                                        </div>
+                                        <ul className="sun-protection-notes">
+                                            {analysisResults.sunProtectionGrade.notes.map((note, i) => <li key={i}>{note}</li>)}
+                                        </ul>
                                     </div>
-                                    <ul className="sun-protection-notes">
-                                        {analysisResults.sunProtectionGrade.notes.map((note, i) => <li key={i}>{note}</li>)}
-                                    </ul>
                                 </div>
-                            </div>
-                        </motion.div>
-                    }
-                </div>
-            );
+                            </motion.div>
+                        }
+                    </div>
+                );
+
             case 'migration': return <MigrationTab loading={loading} suggestions={migrationSuggestions.map(s => ({...s, naturalAlternatives: s.naturalAlternatives.map(alt => ({...alt, isHeritage: heritageIngredients.has(alt.id)}))}))} onSelectIngredient={setSelectedIngredientDb} />;
             case "ingredients":
                 // Define Filter Options with Icons
@@ -2645,12 +2672,13 @@ const allIngredientsDB = useMemo(() => {
                                 </AnimatePresence>
 
                                 <div 
-                                    className="ingredient-card-grid"
-                                    // Hide hint once user scrolls
-                                    onScroll={() => setHasScrolledIngredients(true)}
-                                    // Also hide on touch to be responsive immediately
-                                    onTouchStart={() => setHasScrolledIngredients(true)}
-                                >
+    className="ingredient-card-grid"
+    // Remove onScroll entirely.
+    // Just use onTouchStart - it fires once when the user touches to scroll.
+    onTouchStart={() => {
+        if (!hasScrolledIngredients) setHasScrolledIngredients(true);
+    }}
+>
                                     {processedIngredientLibrary.map(ing => { 
                                         const dbIng = allIngredientsDB.get(ing.id);
                                         const topBenefit = dbIng?.benefits ? Object.keys(dbIng.benefits)[0] : null;
