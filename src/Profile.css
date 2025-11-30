@@ -360,8 +360,8 @@
 
 /* --- 6. Shelf Tab & Product Card --- */
 .shelf-controls { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-.search-bar { position: relative !important; }
-.search-bar svg { position: absolute; top: 43%; right: 1rem; transform: translateY(-50%); color: #94a3b8; }
+.search-bar { position: relative; }
+.search-bar svg { position: absolute; top: 50%; right: 1.25rem; transform: translateY(-50%); color: #94a3b8; }
 .search-bar .clear-search-btn {
     position: absolute;
     top: 50%;
@@ -2488,17 +2488,4 @@ margin: 0 auto;
   background: rgba(239, 68, 68, 0.2) !important;
   color: #fca5a5 !important;
   border: 1px solid rgba(239, 68, 68, 0.4) !important;
-}
-.elegantt-inputt {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-radius: 14px !important;
-  color: #DDE4D2 !important;
-  padding: 13x !important;
-  font-size: 1.05rem !important;
-  font-family: inherit !important;
-  width: 100%;
-
-  align-items: center;
-  transition: all 0.3s ease;
 }

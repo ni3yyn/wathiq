@@ -242,13 +242,13 @@
 
 /* Input Fields */
 .elegant-input {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-radius: 14px !important;
-  color: #DDE4D2 !important;
-  padding: 18px !important;
-  font-size: 1.05rem !important;
-  font-family: inherit !important;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  color: #DDE4D2;
+  padding: 18px;
+  font-size: 1.05rem;
+  font-family: inherit;
   width: 100%;
   resize: vertical;
   transition: all 0.3s ease;

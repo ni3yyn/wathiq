@@ -7,7 +7,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  overscroll-behavior-y: none;
+  
   /* Background Image Logic */
   background-image: url('lolo.webp'); 
   background-repeat: no-repeat; 
