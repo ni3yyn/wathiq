@@ -466,7 +466,7 @@ const SaveProductModal = ({ show, onClose, onSave, productName, setProductName, 
           onClick={onClose}
       >
           <motion.div 
-              className="modal-content elegant-card"
+              className="elegant-card"
               initial={{ y: 50, opacity: 0 }} 
               animate={{ y: 0, opacity: 1 }} 
               exit={{ y: 50, opacity: 0 }} 
@@ -474,7 +474,7 @@ const SaveProductModal = ({ show, onClose, onSave, productName, setProductName, 
           >
               <div className="save-routine-prompt">
                   <h4>حفظ المنتج في ملفكِ الشخصي</h4>
-                  <p>أعطِ هذا المنتج اسما يسهل تذكره (مثال: سيروم فيتامين سي XYZ).</p>
+                  <p>أعطِ هذا المنتج اسما يسهل تذكره.</p>
                   
                   <input
                       type="text"
@@ -2178,7 +2178,10 @@ const analyzeIngredientInteractions = (ingredients) => {
             <span className="v-score-card__verdict-label">الخلاصة:</span>
             <strong className="v-score-card__verdict-text">{analysisData.finalVerdict}</strong>
         </motion.div>
+        
     </div>
+    <motion.button className="elegant-btn primary" onClick={() => setShowNamePrompt(true)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>حفظ في ملفي</motion.button>
+                 
   </div>
 
   {/* Efficacy and Safety Pillars */}
@@ -2275,8 +2278,7 @@ const analyzeIngredientInteractions = (ingredients) => {
 {/* --- END: Replacement block --- */}
                   {analysisData.sunscreen_analysis && ( <motion.div className="section-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}> <h3 className="sectiontitle"><FaSun className="section-icon" /> تحليل واقي الشمس</h3> <div className="sunscreen-analysis-card elegant-card"> <h4>مستوى الفعالية: <span style={{ color: getReliabilityColor(analysisData.sunscreen_analysis.efficacyScore) }}>{analysisData.sunscreen_analysis.protectionLevel} ({analysisData.sunscreen_analysis.efficacyScore}%)</span></h4> {analysisData.sunscreen_analysis.boosters.length > 0 && ( <div className="sunscreen-boosters">{analysisData.sunscreen_analysis.boosters.map((booster, i) => (<div key={i} className="sunscreen-item booster"><FaPlusCircle /> {booster}</div>))}</div> )} {analysisData.sunscreen_analysis.issues.length > 0 && ( <div className="sunscreen-issues">{analysisData.sunscreen_analysis.issues.map((issue, i) => (<div key={i} className="sunscreen-item issue"><FaExclamationTriangle /> {issue}</div>))}</div>)} </div> </motion.div> )}
                   {(analysisData.conflicts && analysisData.conflicts.length > 0) && ( <motion.div className="section-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}> <h3 className="sectiontitle"><FaExclamationCircle className="section-icon" /> تفاعلات سلبية بين المكونات</h3> <div className="alerts-container"> {analysisData.conflicts.map((conflict, index) => ( <motion.div key={index} className="alert-item warning elegant-card" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 + index * 0.05 }}> <FaExclamationTriangle className="alert-icon" /> <p><strong>{conflict.pair.join(' + ')}:</strong> {conflict.reason}</p> </motion.div> ))} </div> </motion.div> )}
-                  <motion.button className="savetoroutine" onClick={() => setShowNamePrompt(true)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>حفظ في ملفي</motion.button>
-                  <motion.div className="section-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+                   <motion.div className="section-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
                     <h3 className="sectiontitle">المكونات المكتشفة ({analysisData.detected_ingredients.length})</h3>
                     <div className="ingredients-grid">
                       {analysisData.detected_ingredients.map((ingredient, index) => {
@@ -2370,7 +2372,7 @@ const analyzeIngredientInteractions = (ingredients) => {
               >
                 <motion.div 
                     key="save-content" // <--- CRITICAL FIX: Stable Key
-                    className="modal-content elegant-card" 
+                    className="elegant-card" 
                     initial={{ y: 50, opacity: 0 }} 
                     animate={{ y: 0, opacity: 1 }} 
                     exit={{ y: 50, opacity: 0 }} 
@@ -2379,7 +2381,7 @@ const analyzeIngredientInteractions = (ingredients) => {
                     <div className="save-routine-prompt">
                         <h4>{t('حفظ المنتج في ملفكِ الشخصي', 'حفظ المنتج في ملفكَ الشخصي')}</h4>
                         
-                        <p>{t('أعطِ هذا المنتج اسما يسهل تذكره', 'أعط هذا المنتج اسما يسهل تذكره')} (مثال: سيروم فيتامين سي XYZ).</p>
+                        <p>{t('أعطِ هذا المنتج اسما يسهل تذكره', 'أعط هذا المنتج اسما يسهل تذكره')} .</p>
                         
                         <input
                             type="text"

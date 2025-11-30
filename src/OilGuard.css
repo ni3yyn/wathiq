@@ -180,14 +180,13 @@
 }
 
 .savetoroutine {
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(45deg, rgba(62, 220, 129, 0.4) 0%, rgba(34, 197, 94, 0.4) 100%);
+  border-color: rgba(62, 220, 129, 0.6);
   color: #fff;
   border-radius: 50px;
   font-size: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1241,7 +1240,7 @@
 .product-name-container h4 { margin-top: 0; color: #DDE4D2; font-size: 1.3rem; }
 .product-name-container p { color: rgba(221, 228, 210, 0.85); margin-bottom: 20px; }
 .product-name-container .elegant-input { margin-bottom: 20px; text-align: center; }
-.prompt-actions { display: flex; justify-content: center; gap: 15px; }
+.prompt-actions { display: flex; justify-content: center; gap: 15px; margin-top: 25px; }
 
 .ingredient-category-tags {
   display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0;
@@ -1328,7 +1327,6 @@
 
 @media (max-width: 480px) {
   .oilguard-content { padding: 15px 10px; }
-  .elegant-btn { padding: 12px 20px; font-size: 14px; width: auto; flex-grow: 1; }
   .navigation-buttons { flex-direction: column; }
   .navigation-buttons .elegant-btn { width: 100%; }
   .selection-grid { grid-template-columns: 1fr; }
@@ -2748,4 +2746,10 @@ img {
   font-size: large;
   
   color: #DDE4D2;
+}
+
+.save-routine-prompt p {
+  color: #b9b2b2;
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
