@@ -248,7 +248,7 @@ async function createGenerativePartFromFile(file) {
  * Processes the image with Gemini. Now accepts a pre-made `imagePart` object.
  */
 const processWithGemini = async (imagePart, setOcrDebug, setProgress) => {
-  const apiKey = "AIzaSyCgc_5GsGp4untYezK_GOP8RLikmIp6xOE";
+  const apiKey = "AIzaSyBsz06vv0fo2VMTx0jCNctjQoCFhRxPe_4";
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" }); // Use 1.5 Flash for JSON speed
 
