@@ -116,6 +116,11 @@ export const commonAllergies = [
         avoidIngredients: ['عطر', 'Fragrance', 'Parfum', 'كحول مشوه', 'Alcohol Denat.', 'منثول', 'Menthol', 'زيت النعناع', 'Peppermint Oil', 'بندق الساحرة', 'Witch Hazel', 'حمض الجليكوليك', 'Glycolic Acid'],
         beneficialIngredients: ['حمض الأزيليك', 'Azelaic Acid', 'نياسيناميد', 'Niacinamide', 'مستخلص عرق السوس', 'Glycyrrhiza Glabra Root Extract', 'مستخلص السنتيلا اسياتيكا', 'Centella Asiatica Extract']
     },
+    {
+        id: 'eczema', category: 'skin_concern', name: 'الأكزيما', description: 'التهاب الجلد التأتبي، يتميز بجفاف وحكة، يحتاج لترميم حاجز البشرة وتجنب المهيجات.',
+        avoidIngredients: ['عطر', 'Fragrance', 'Parfum', 'كحول مشوه', 'Alcohol Denat.', 'Sodium Lauryl Sulfate', 'SLS', 'Limonene', 'Linalool', 'Propylene Glycol', 'Lanolin', 'حمض الجليكوليك', 'Glycolic Acid', 'زيوت عطرية', 'Essential Oils'],
+        beneficialIngredients: ['دقيق الشوفان الغروي', 'Colloidal Oatmeal', 'Avena Sativa Kernel Flour', 'السيراميدات', 'Ceramide NP', 'Ceramide AP', 'جليسرين', 'Glycerin', 'البانثينول', 'Panthenol', 'نياسيناميد', 'Niacinamide', 'زبدة الشيا', 'Butyrospermum Parkii Butter', 'بترولاتوم', 'Petrolatum', 'مستخلص السنتيلا اسياتيكا', 'Centella Asiatica Extract']
+    },
     
     // Scalp Concerns
     {

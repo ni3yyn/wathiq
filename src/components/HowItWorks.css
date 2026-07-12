@@ -1,0 +1,400 @@
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   HowItWorks.css â€” Styles for the How It Works page
+   Extends LandingPage.css design system
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+/* â”€â”€ Wrapper â”€â”€ */
+.hiw-wrapper {
+  background: var(--bg-radial);
+}
+
+/* â”€â”€ Hero â”€â”€ */
+.hiw-hero {
+  padding-top: 150px;
+  padding-bottom: 4rem;
+  text-align: right;
+}
+
+.hiw-hero-inner {
+  max-width: 860px;
+}
+
+.hiw-hero-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.25;
+  margin-bottom: 1.25rem;
+  color: #f1f5f9;
+  letter-spacing: -0.5px;
+}
+
+.hiw-hero-sub {
+  font-size: 1.15rem;
+  color: #cbd5e1;
+  line-height: 1.7;
+  max-width: 680px;
+  margin-bottom: 2.5rem;
+}
+
+.hiw-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.hiw-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hiw-stat-num {
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.hiw-stat-label {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.hiw-stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* â”€â”€ Steps Section â”€â”€ */
+.hiw-steps-section {
+  padding-top: 5rem;
+  padding-bottom: 2rem;
+}
+
+.hiw-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* â”€â”€ Step Item Row â”€â”€ */
+.hiw-step-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  direction: rtl; /* RTL: badge on right, card on left by default */
+}
+
+/* Even steps: badge right, card takes rest â†’ default RTL flow */
+.hiw-step-right {
+  flex-direction: row;
+}
+
+/* Odd steps: flip to put badge on left of card */
+.hiw-step-left {
+  flex-direction: row-reverse;
+}
+
+/* ── Step Number Badge ── */
+.hiw-step-badge {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.hiw-step-badge-num {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--primary);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Tajawal', sans-serif;
+  flex-shrink: 0;
+}
+
+/* Mobile inline number inside card header */
+.hiw-step-badge-num-mobile {
+  display: none;
+  font-size: 0.9rem;
+  width: 32px;
+  height: 32px;
+}
+
+/* ── Step Card ── */
+.hiw-step-item-card {
+  flex: 1;
+  text-align: right;
+  padding: 1.25rem 1.5rem !important;
+  border-radius: 16px !important;
+}
+
+.hiw-step-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-bottom: 0.6rem;
+  flex-direction: row;
+}
+
+.hiw-step-subtitle {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.9;
+}
+
+.hiw-step-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+
+.hiw-step-desc {
+  color: #cbd5e1;
+  line-height: 1.7;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+.hiw-step-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hiw-step-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  justify-content: flex-end;
+  text-align: right;
+  flex-direction: row-reverse;
+}
+
+.hiw-check-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* â”€â”€ Arrow Connectors â”€â”€ */
+.hiw-arrow-connector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.hiw-arrow-desktop {
+  display: none;
+}
+
+.hiw-arrow-mobile {
+  display: block;
+  width: 70px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+/* â”€â”€ Desktop Layout (â‰¥900px) â”€â”€ */
+@media (min-width: 900px) {
+  .hiw-step-item {
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 2rem;
+  }
+
+  .hiw-arrow-mobile {
+    display: none;
+  }
+
+  .hiw-arrow-desktop {
+    display: block;
+    width: 140px;
+    height: 150px;
+    flex-shrink: 0;
+    margin: 0 auto;
+  }
+}
+
+/* â”€â”€ Pillars Grid â”€â”€ */
+.hiw-pillars-section {
+}
+
+.hiw-pillars-grid {
+  gap: 1.5rem !important;
+}
+
+/* â”€â”€ Compare Table â”€â”€ */
+.hiw-compare-section {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.hiw-compare-table-wrap {
+  overflow-x: auto;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.hiw-compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.hiw-compare-table th,
+.hiw-compare-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+.hiw-compare-table thead th {
+  background: rgba(16, 185, 129, 0.06);
+  font-weight: 700;
+  color: #e2e8f0;
+  font-size: 1rem;
+}
+
+.hiw-compare-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.hiw-compare-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.hiw-compare-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.hiw-col-wathiq {
+  text-align: center;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.hiw-col-others {
+  text-align: center;
+  color: #6b7280;
+}
+
+.hiw-compare-table td:first-child {
+  color: #cbd5e1;
+}
+
+/* â”€â”€ Trust Section â”€â”€ */
+.hiw-trust-section {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hiw-trust-card {
+  padding: 2.5rem !important;
+}
+
+.hiw-trust-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.hiw-trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: right;
+  justify-content: flex-start;
+}
+
+.hiw-trust-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.hiw-trust-text {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+/* â”€â”€ Footer Nav â”€â”€ */
+.hiw-footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.hiw-footer-nav a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  opacity: 0.8;
+}
+
+.hiw-footer-nav a:hover {
+  color: var(--primary);
+  opacity: 1;
+}
+
+/* â”€â”€ Responsive â”€â”€ */
+@media (max-width: 900px) {
+  .hiw-hero-title { font-size: 2.5rem; }
+  .hiw-pillars-grid .col-span-6 { grid-column: span 12 !important; }
+
+  /* On mobile, both step variants look the same */
+  .hiw-step-item,
+  .hiw-step-right,
+  .hiw-step-left {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hiw-step-badge {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 0 0.5rem;
+  }
+
+  .hiw-icon-wrap-desktop { display: none; }
+  .hiw-icon-wrap-mobile  { display: flex; }
+
+  .hiw-arrow-connector {
+    margin: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .hiw-hero-title { font-size: 1.9rem; }
+  .hiw-hero { padding-top: 110px; }
+  .hiw-trust-grid { grid-template-columns: 1fr; }
+  .hiw-hero-stats { gap: 1rem; }
+  .hiw-stat-num { font-size: 1.5rem; }
+  .hiw-compare-table th,
+  .hiw-compare-table td { padding: 0.75rem; font-size: 0.85rem; }
+}

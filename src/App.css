@@ -10,12 +10,8 @@ body {
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  background-image: url('lolo.webp'); 
-  background-repeat: no-repeat; 
-  background-size: cover; 
-  background-position: center center;
-  background-attachment: fixed; 
-  background-color: radial-gradient(circle at center, #3e5e56 0%, #29403b 100%);
+  background: radial-gradient(circle at center, #3e5e56 0%, #29403b 100%);
+  background-attachment: fixed;
 
   -webkit-font-smoothing: antialiased;
   
@@ -34,7 +30,7 @@ body {
 }
 
 /* 3. THE FIX: Dedicated Background Layer */
-/* This puts the image on a fixed layer BEHIND the body. */
+/* This puts the background layer BEHIND the body. */
 body::before {
   content: "";
   position: fixed; /* Locks it to the viewport */
@@ -43,13 +39,8 @@ body::before {
   width: 100%;
   height: 100%; /* Always fills screen */
   
-
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover; /* Scales nicely */
-  
   z-index: -1; /* Puts it behind your app content */
-  background-color: radial-gradient(circle at center, #3e5e56 0%, #29403b 100%);
+  background: radial-gradient(circle at center, #3e5e56 0%, #29403b 100%);
 }
 
 /* 4. ROOT: Transparent wrapper */

@@ -8,13 +8,9 @@ body {
   padding: 0;
   min-height: 100vh;
   
-  /* Background Image Logic */
-  background-image: url('lolo.webp'); 
-  background-repeat: no-repeat; 
-  background-size: cover; 
-  background-position: center center;
-  background-attachment: fixed; 
-  background-color: radial-gradient(circle at center, #3e5e56 0%, #29403b 100%);
+  /* Background Color Logic */
+  background: radial-gradient(circle at center, #3e5e56 0%, #29403b 100%);
+  background-attachment: fixed;
 
   -webkit-font-smoothing: antialiased;
   

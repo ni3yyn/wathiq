@@ -1,0 +1,909 @@
+{
+  "url": "https://wathiq.web.app",
+  "scores": {
+    "overall": 80,
+    "categories": {
+      "security": 100,
+      "social": 77,
+      "robots": 100,
+      "article": 0,
+      "broken_links": 100,
+      "internal_links": 60,
+      "redirects": 100,
+      "llms_txt": 90,
+      "pagespeed": 0,
+      "onpage": 100,
+      "readability": 59,
+      "entity": 5,
+      "link_profile": 55,
+      "hreflang": 0,
+      "duplicate_content": 100
+    },
+    "weights": {
+      "security": 8,
+      "social": 5,
+      "robots": 8,
+      "broken_links": 10,
+      "internal_links": 8,
+      "redirects": 3,
+      "llms_txt": 5,
+      "pagespeed": 13,
+      "onpage": 10,
+      "readability": 8,
+      "entity": 5,
+      "link_profile": 7,
+      "hreflang": 5,
+      "duplicate_content": 5
+    },
+    "scoring_version": 1
+  },
+  "data": {
+    "url": "https://wathiq.web.app",
+    "domain": "wathiq.web.app",
+    "timestamp": "2026-06-06T12:58:12.009044",
+    "sections": {
+      "robots": {
+        "url": "https://wathiq.web.app/robots.txt",
+        "status": 200,
+        "user_agents": {
+          "*": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "GPTBot": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "ChatGPT-User": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "ClaudeBot": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "anthropic-ai": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "PerplexityBot": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "Google-Extended": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "Applebot-Extended": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "Bytespider": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "CCBot": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "FacebookBot": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          },
+          "Amazonbot": {
+            "allow": [
+              "/"
+            ],
+            "disallow": []
+          }
+        },
+        "sitemaps": [
+          "https://wathiq.web.app/sitemap.xml"
+        ],
+        "crawl_delays": {},
+        "ai_crawler_status": {
+          "GPTBot": "explicitly allowed",
+          "ChatGPT-User": "explicitly allowed",
+          "ClaudeBot": "explicitly allowed",
+          "PerplexityBot": "explicitly allowed",
+          "Google-Extended": "explicitly allowed",
+          "Applebot-Extended": "explicitly allowed",
+          "Bytespider": "explicitly allowed",
+          "CCBot": "explicitly allowed",
+          "anthropic-ai": "explicitly allowed",
+          "FacebookBot": "explicitly allowed",
+          "Amazonbot": "explicitly allowed"
+        },
+        "issues": [],
+        "error": null
+      },
+      "security": {
+        "url": "https://wathiq.web.app",
+        "score": 100,
+        "https": true,
+        "headers_present": {
+          "HSTS (Strict-Transport-Security)": "max-age=31556926; includeSubDomains; preload",
+          "Content-Security-Policy (CSP)": "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval';",
+          "X-Frame-Options": "SAMEORIGIN",
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "strict-origin-when-cross-origin",
+          "Permissions-Policy": "camera=(self), microphone=(), geolocation=()"
+        },
+        "headers_missing": {},
+        "header_values": {
+          "strict-transport-security": "max-age=31556926; includeSubDomains; preload",
+          "content-security-policy": "default-src 'self' https: data: blob: 'unsafe-inline' 'unsafe-eval';",
+          "x-frame-options": "SAMEORIGIN",
+          "x-content-type-options": "nosniff",
+          "referrer-policy": "strict-origin-when-cross-origin",
+          "permissions-policy": "camera=(self), microphone=(), geolocation=()"
+        },
+        "issues": [],
+        "recommendations": [],
+        "error": null
+      },
+      "social": {
+        "url": "https://wathiq.web.app",
+        "score": 77,
+        "og_tags": {
+          "og:title": "\u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 - \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644",
+          "og:description": "\u062d\u0645\u0644\u064a \u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 \u0627\u0644\u0622\u0646\u060c \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0645\u0633\u062a\u062d\u0636\u0631\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644. \u0627\u0643\u062a\u0634\u0641\u064a \u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0636\u0627\u0631\u0629\u060c \u0648\u0642\u0627\u0631\u0646\u064a \u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a\u060c \u0648\u0627\u0635\u0646\u0639\u064a \u0631\u0648\u062a\u064a\u0646 \u0627\u0644\u0639\u0646\u0627\u064a\u0629 \u0627\u0644\u0645\u062b\u0627\u0644\u064a \u0644\u0643\u0650.",
+          "og:image": "https://wathiq.web.app/og-image.png",
+          "og:type": "website",
+          "og:site_name": "\u0648\u062b\u064a\u0642",
+          "og:image:width": "1200",
+          "og:image:height": "630",
+          "og:url": "http://localhost:3000/"
+        },
+        "twitter_tags": {
+          "twitter:card": "summary_large_image",
+          "twitter:title": "\u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 - \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644",
+          "twitter:description": "\u062d\u0645\u0644\u064a \u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 \u0627\u0644\u0622\u0646\u060c \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0645\u0633\u062a\u062d\u0636\u0631\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644. \u0627\u0643\u062a\u0634\u0641\u064a \u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0636\u0627\u0631\u0629\u060c \u0648\u0642\u0627\u0631\u0646\u064a \u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a\u060c \u0648\u0627\u0635\u0646\u0639\u064a \u0631\u0648\u062a\u064a\u0646 \u0627\u0644\u0639\u0646\u0627\u064a\u0629 \u0627\u0644\u0645\u062b\u0627\u0644\u064a \u0644\u0643\u0650.",
+          "twitter:image": "https://wathiq.web.app/og-image.png"
+        },
+        "og_present": [
+          "og:title",
+          "og:description",
+          "og:image",
+          "og:url",
+          "og:type",
+          "og:site_name"
+        ],
+        "og_missing": [],
+        "twitter_present": [
+          "twitter:card",
+          "twitter:title",
+          "twitter:description",
+          "twitter:image"
+        ],
+        "twitter_missing": [],
+        "issues": [],
+        "recommendations": [],
+        "preview": {
+          "title": "\u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 - \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644",
+          "description": "\u062d\u0645\u0644\u064a \u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 \u0627\u0644\u0622\u0646\u060c \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0645\u0633\u062a\u062d\u0636\u0631\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644. \u0627\u0643\u062a\u0634\u0641\u064a \u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0636\u0627\u0631\u0629\u060c \u0648\u0642\u0627\u0631\u0646\u064a \u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a\u060c \u0648\u0627\u0635\u0646\u0639\u064a \u0631\u0648\u062a\u064a\u0646 \u0627\u0644\u0639\u0646\u0627\u064a\u0629 \u0627\u0644\u0645\u062b\u0627\u0644\u064a \u0644\u0643\u0650.",
+          "image": "https://wathiq.web.app/og-image.png",
+          "site_name": "\u0648\u062b\u064a\u0642"
+        },
+        "error": null
+      },
+      "redirects": {
+        "url": "https://wathiq.web.app",
+        "final_url": "https://wathiq.web.app",
+        "chain": [
+          {
+            "step": 1,
+            "url": "https://wathiq.web.app",
+            "status": 200,
+            "time_ms": 460,
+            "final": true
+          }
+        ],
+        "total_hops": 0,
+        "total_time_ms": 460,
+        "has_loop": false,
+        "has_mixed_protocol": false,
+        "issues": [],
+        "error": null
+      },
+      "llms_txt": {
+        "url": "https://wathiq.web.app/llms.txt",
+        "full_url": "https://wathiq.web.app/llms-full.txt",
+        "exists": true,
+        "full_exists": true,
+        "status": 200,
+        "full_status": 200,
+        "parsed": {
+          "title": "Wathiq",
+          "description": "Wathiq is an AI-powered smart assistant designed for analyzing cosmetic ingredients, detecting harmful substances, and creating personalized skincare routines. It helps users avoid marketing gimmicks and match products to their unique skin types using the OilGuard AI Engine.",
+          "sections": [
+            {
+              "name": "Features",
+              "links": []
+            },
+            {
+              "name": "Target Audience",
+              "links": []
+            },
+            {
+              "name": "Key Pages",
+              "links": [
+                {
+                  "title": "Home",
+                  "url": "https://wathiq.web.app/",
+                  "description": "Main landing page and app download links."
+                },
+                {
+                  "title": "Privacy Policy",
+                  "url": "https://wathiq.web.app/privacy",
+                  "description": "Information on data collection and user privacy."
+                },
+                {
+                  "title": "FAQ",
+                  "url": "https://wathiq.web.app/faq",
+                  "description": "Frequently asked questions about how to use the Wathiq app."
+                }
+              ]
+            }
+          ],
+          "links": [
+            {
+              "title": "Home",
+              "url": "https://wathiq.web.app/",
+              "description": "Main landing page and app download links."
+            },
+            {
+              "title": "Privacy Policy",
+              "url": "https://wathiq.web.app/privacy",
+              "description": "Information on data collection and user privacy."
+            },
+            {
+              "title": "FAQ",
+              "url": "https://wathiq.web.app/faq",
+              "description": "Frequently asked questions about how to use the Wathiq app."
+            }
+          ]
+        },
+        "quality": {
+          "score": 90,
+          "issues": [],
+          "suggestions": []
+        },
+        "error": null
+      },
+      "broken_links": {
+        "page_url": "https://wathiq.web.app",
+        "total_links": 2,
+        "checked": 2,
+        "broken": [],
+        "redirected": [
+          {
+            "url": "https://wathiq.web.app/privacy",
+            "anchor_text": "\u0627\u0642\u0631\u0623 \u0633\u064a\u0627\u0633\u0629 \u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629",
+            "is_internal": true,
+            "status": 200,
+            "error": null,
+            "redirect": {
+              "from": "https://wathiq.web.app/privacy",
+              "to": "https://wathiq.web.app/privacy/",
+              "hops": 1,
+              "codes": [
+                301
+              ]
+            },
+            "response_time_ms": 325
+          },
+          {
+            "url": "https://wathiq.web.app/faq",
+            "anchor_text": "\u0627\u0644\u0623\u0633\u0626\u0644\u0629 \u0627\u0644\u0634\u0627\u0626\u0639\u0629 (FAQ)",
+            "is_internal": true,
+            "status": 200,
+            "error": null,
+            "redirect": {
+              "from": "https://wathiq.web.app/faq",
+              "to": "https://wathiq.web.app/faq/",
+              "hops": 1,
+              "codes": [
+                301
+              ]
+            },
+            "response_time_ms": 396
+          }
+        ],
+        "timeout": [],
+        "healthy": 0,
+        "summary": {
+          "total": 2,
+          "healthy": 0,
+          "broken": 0,
+          "redirected": 2,
+          "timeout": 0
+        },
+        "issues": [],
+        "error": null
+      },
+      "internal_links": {
+        "start_url": "https://wathiq.web.app",
+        "domain": "wathiq.web.app",
+        "pages_crawled": 3,
+        "total_internal_links": 4,
+        "unique_pages_found": 3,
+        "max_depth_reached": 1,
+        "pages": {
+          "https://wathiq.web.app": {
+            "outgoing_links": 2,
+            "incoming_links": 0
+          },
+          "https://wathiq.web.app/faq": {
+            "outgoing_links": 1,
+            "incoming_links": 1
+          },
+          "https://wathiq.web.app/privacy": {
+            "outgoing_links": 1,
+            "incoming_links": 1
+          }
+        },
+        "anchor_texts": {
+          "\u0648\u062b\u064a\u0642": 2,
+          "\u0627\u0642\u0631\u0623 \u0633\u064a\u0627\u0633\u0629 \u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629": 1,
+          "\u0627\u0644\u0623\u0633\u0626\u0644\u0629 \u0627\u0644\u0634\u0627\u0626\u0639\u0629 (FAQ)": 1
+        },
+        "link_distribution": {
+          "min": 1,
+          "max": 2,
+          "avg": 1.3
+        },
+        "orphan_candidates": [
+          {
+            "url": "https://wathiq.web.app/privacy",
+            "incoming_links": 1
+          },
+          {
+            "url": "https://wathiq.web.app/faq",
+            "incoming_links": 1
+          }
+        ],
+        "nofollow_links": [],
+        "issues": [
+          "\u26a0\ufe0f 2 potential orphan page(s) (\u22641 internal link pointing to them)",
+          "\u26a0\ufe0f 3 page(s) have fewer than 3 internal links"
+        ],
+        "recommendations": [
+          "Add internal links pointing to orphan pages from related content",
+          "Increase internal linking \u2014 aim for 3-5 relevant links per 1000 words"
+        ],
+        "error": null
+      },
+      "pagespeed": {
+        "url": "https://wathiq.web.app",
+        "strategy": "mobile",
+        "performance_score": null,
+        "metrics": {},
+        "opportunities": [],
+        "diagnostics": [],
+        "field_data_available": false,
+        "error": "Rate limited by Google API. Wait a few minutes or add an API key."
+      },
+      "entity": {
+        "url": "https://wathiq.web.app",
+        "entity_name": "\u0648\u062b\u064a\u0642",
+        "entities_in_schema": [
+          {
+            "type": "Organization",
+            "name": "\u0648\u062b\u064a\u0642",
+            "url": "https://wathiq.web.app/",
+            "sameAs": [
+              "https://facebook.com/wathiqai",
+              "https://instagram.com/wathiq.ai"
+            ],
+            "logo": "https://wathiq.web.app/wathiq-logo-512.png",
+            "description": "",
+            "identifier": ""
+          },
+          {
+            "type": "Organization",
+            "name": "\u0648\u062b\u064a\u0642",
+            "url": "https://wathiq.web.app/",
+            "sameAs": [
+              "http://facebook.com/wathiqa",
+              "http://instagram.com/wathiq.ai"
+            ],
+            "logo": "https://wathiq.web.app/wathiq-logo-512.png",
+            "description": "",
+            "identifier": ""
+          }
+        ],
+        "sameas_analysis": {
+          "found": {
+            "Facebook": {
+              "url": "http://facebook.com/wathiqa",
+              "priority": "Low",
+              "kg_signal": "Weak"
+            },
+            "Instagram": {
+              "url": "http://instagram.com/wathiq.ai",
+              "priority": "Low",
+              "kg_signal": "Weak"
+            }
+          },
+          "missing": {
+            "Wikipedia": {
+              "domain": "wikipedia.org",
+              "priority": "Critical",
+              "kg_signal": "Primary"
+            },
+            "Wikidata": {
+              "domain": "wikidata.org",
+              "priority": "Critical",
+              "kg_signal": "Primary"
+            },
+            "LinkedIn": {
+              "domain": "linkedin.com",
+              "priority": "High",
+              "kg_signal": "Strong"
+            },
+            "Twitter/X": {
+              "domain": "x.com",
+              "priority": "High",
+              "kg_signal": "Strong"
+            }
+          },
+          "issues": [],
+          "total_found": 2,
+          "total_missing_critical": 4
+        },
+        "wikidata": {
+          "found": true,
+          "qid": "Q49848",
+          "label": "document",
+          "description": "form for preservation of structured and identified information",
+          "url": "https://www.wikidata.org/wiki/Q49848",
+          "confidence": "Medium"
+        },
+        "wikipedia": {
+          "found": false,
+          "url": null
+        },
+        "google_kg": {
+          "checked": false,
+          "found": false,
+          "result": null
+        },
+        "nap_issues": [],
+        "issues": [
+          {
+            "severity": "Info",
+            "area": "Wikipedia",
+            "finding": "No Wikipedia article found for '\u0648\u062b\u064a\u0642'.",
+            "fix": "Only pursue Wikipedia if the entity meets independent notability standards. Otherwise, strengthen official schema, sameAs profiles, citations, and About/Contact signals."
+          },
+          {
+            "severity": "Warning",
+            "area": "sameAs",
+            "finding": "Missing sameAs link to Wikipedia (Primary KG signal).",
+            "fix": "Add the existing official 'wikipedia.org' URL to sameAs; do not create this profile solely for SEO."
+          },
+          {
+            "severity": "Warning",
+            "area": "sameAs",
+            "finding": "Missing sameAs link to Wikidata (Primary KG signal).",
+            "fix": "Add the existing official 'wikidata.org' URL to sameAs; do not create this profile solely for SEO."
+          },
+          {
+            "severity": "Info",
+            "area": "sameAs",
+            "finding": "Missing sameAs link to LinkedIn (Strong KG signal).",
+            "fix": "Add 'linkedin.com' profile URL to sameAs array in your entity schema."
+          },
+          {
+            "severity": "Info",
+            "area": "sameAs",
+            "finding": "Missing sameAs link to Twitter/X (Strong KG signal).",
+            "fix": "Add 'x.com' profile URL to sameAs array in your entity schema."
+          }
+        ],
+        "summary": {
+          "entities_found": 2,
+          "sameas_count": 4,
+          "sameas_missing_critical": 4,
+          "wikidata_found": true,
+          "wikipedia_found": false,
+          "google_kg_checked": false,
+          "google_kg_found": false,
+          "total_issues": 5
+        }
+      },
+      "link_profile": {
+        "pages_crawled": 4,
+        "total_internal_links": 10,
+        "total_external_links": 0,
+        "unique_internal_targets": 3,
+        "unique_external_domains": 0,
+        "avg_internal_links_per_page": 2.5,
+        "orphan_pages": {
+          "count": 0,
+          "urls": []
+        },
+        "dead_end_pages": {
+          "count": 0,
+          "urls": []
+        },
+        "top_linked_pages": [
+          {
+            "url": "https://wathiq.web.app/privacy",
+            "inbound_links": 4
+          },
+          {
+            "url": "https://wathiq.web.app/",
+            "inbound_links": 4
+          },
+          {
+            "url": "https://wathiq.web.app/faq",
+            "inbound_links": 2
+          }
+        ],
+        "top_external_domains": [],
+        "issues": [
+          {
+            "type": "low_internal_linking",
+            "severity": "High",
+            "finding": "Average internal links per page is only 2.5 (target: 5-10).",
+            "fix": "Increase internal linking by adding contextual links within content."
+          }
+        ],
+        "site_url": "https://wathiq.web.app"
+      },
+      "hreflang": {
+        "url": "https://wathiq.web.app/",
+        "implementation_method": "none",
+        "hreflang_tags_found": 0,
+        "tags": [],
+        "sitemap": {
+          "found": false,
+          "url": "https://wathiq.web.app/sitemap.xml",
+          "has_xhtml_namespace": false,
+          "language_variants_found": [],
+          "note": "No hreflang found in sitemap."
+        },
+        "checks": {
+          "hreflang_present": {
+            "passed": false,
+            "severity": "Info",
+            "finding": "No hreflang tags found (HTML, HTTP headers, or sitemap).",
+            "fix": "If this is a single-language site, hreflang is not needed. For multi-language sites, implement hreflang via HTML link tags or sitemap."
+          }
+        },
+        "language_code_issues": [],
+        "return_tag_checks": [],
+        "summary": {
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "passed": 0
+        }
+      },
+      "duplicate_content": {
+        "pages_analyzed": 3,
+        "exact_duplicates": [],
+        "near_duplicates": [],
+        "thin_content": [
+          {
+            "type": "thin_content",
+            "severity": "Critical",
+            "url": "https://wathiq.web.app/faq",
+            "word_count": 75,
+            "threshold": 300,
+            "finding": "Only 75 words (minimum: 300).",
+            "fix": "Expand content to at least 300 words of substantive, unique content, or noindex if low-value."
+          }
+        ],
+        "summary": {
+          "exact_duplicate_groups": 0,
+          "near_duplicate_pairs": 0,
+          "thin_pages": 1,
+          "avg_word_count": 356
+        }
+      },
+      "onpage": {
+        "title": "\u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 - \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644 | \u0648\u062b\u064a\u0642",
+        "meta_description": "\u062d\u0645\u0644\u064a \u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 \u0627\u0644\u0622\u0646\u060c \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0645\u0633\u062a\u062d\u0636\u0631\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644. \u0627\u0643\u062a\u0634\u0641\u064a \u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0636\u0627\u0631\u0629\u060c \u0648\u0642\u0627\u0631\u0646\u064a \u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a\u060c \u0648\u0627\u0635\u0646\u0639\u064a \u0631\u0648\u062a\u064a\u0646 \u0627\u0644\u0639\u0646\u0627\u064a\u0629 \u0627\u0644\u0645\u062b\u0627\u0644\u064a \u0644\u0643\u0650.",
+        "meta_robots": null,
+        "x_robots_tag": null,
+        "canonical": "http://localhost:3000/",
+        "lang": "ar",
+        "charset": "UTF-8",
+        "viewport": "width=device-width, initial-scale=1.0",
+        "favicon": "https://wathiq.web.app/wathiq-logo-512.png",
+        "h1": [
+          "\u0627\u0644\u0628\u0627\u0631\u0643\u0648\u062f \u0642\u062f \u064a\u062e\u062f\u0639\u0643.\u0627\u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0644\u0627 \u062a\u0643\u0630\u0628."
+        ],
+        "h2": [
+          "\u0648\u062b\u064a\u0642",
+          "\u0645\u062e\u062a\u0628\u0631 \u0643\u064a\u0645\u064a\u0627\u0626\u064a \u0641\u064a\u062c\u064a\u0628\u0643",
+          "\u0628\u0633\u0627\u0637\u0629 \u0627\u0644\u0627\u0633\u062a\u062e\u062f\u0627\u0645\u060c\u062f\u0642\u0629 \u0627\u0644\u0646\u062a\u0627\u0626\u062c",
+          "\u0648\u062b\u064a\u0642 \u0645\u062a\u0648\u0641\u0631 \u0627\u0644\u0622\u0646 \u0641\u064a \u0628\u0644\u0627\u064a \u0633\u062a\u0648\u0631!"
+        ],
+        "h3": [
+          "\u0643\u0627\u0634\u0641 \"\u0627\u0644\u063a\u0634 \u0627\u0644\u062a\u0633\u0648\u064a\u0642\u064a\"",
+          "\u062a\u062d\u0644\u064a\u0644 \u0645\u0644\u0641\u0643 \u0627\u0644\u0634\u062e\u0635\u064a",
+          "\u0633\u0627\u062d\u0629 \u0627\u0644\u0645\u0642\u0627\u0631\u0646\u0629",
+          "\u0645\u0646\u0638\u0645 \u0627\u0644\u0631\u0648\u062a\u064a\u0646 \u0627\u0644\u0630\u0643\u064a",
+          "\u0635\u0648\u0631\u064a \u0627\u0644\u0645\u0643\u0648\u0646\u0627\u062a",
+          "\u0627\u0644\u062a\u062d\u0644\u064a\u0644 \u0627\u0644\u0641\u0648\u0631\u064a",
+          "\u0627\u0644\u0642\u0631\u0627\u0631 \u0627\u0644\u062d\u0627\u0633\u0645"
+        ],
+        "h4": [],
+        "h5": [],
+        "h6": [],
+        "images": [
+          {
+            "src": "https://wathiq.web.app/assets/wathiq-logo-CFIU_z7o.png",
+            "alt": "Wathiq Logo",
+            "width": null,
+            "height": null,
+            "is_responsive_fill": false,
+            "loading": null
+          },
+          {
+            "src": "https://wathiq.web.app/assets/wathiq-logo-CFIU_z7o.png",
+            "alt": "Wathiq",
+            "width": null,
+            "height": null,
+            "is_responsive_fill": false,
+            "loading": null
+          }
+        ],
+        "links": {
+          "internal": [
+            {
+              "href": "https://wathiq.web.app/privacy",
+              "text": "\u0627\u0642\u0631\u0623 \u0633\u064a\u0627\u0633\u0629 \u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629",
+              "rel": []
+            },
+            {
+              "href": "https://wathiq.web.app/faq",
+              "text": "\u0627\u0644\u0623\u0633\u0626\u0644\u0629 \u0627\u0644\u0634\u0627\u0626\u0639\u0629 (FAQ)",
+              "rel": []
+            },
+            {
+              "href": "https://wathiq.web.app/privacy",
+              "text": "\u0633\u064a\u0627\u0633\u0629 \u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629",
+              "rel": []
+            }
+          ],
+          "external": []
+        },
+        "pagination": {
+          "prev": null,
+          "next": null
+        },
+        "resource_hints": {
+          "preload": [],
+          "preconnect": [],
+          "dns-prefetch": [],
+          "prefetch": [],
+          "prerender": []
+        },
+        "schema": [
+          {
+            "@type": "WebSite",
+            "@types": [
+              "WebSite"
+            ],
+            "@id": null,
+            "@context": "https://schema.org",
+            "status": "active",
+            "note": "",
+            "has_context": true,
+            "has_type": true,
+            "from_graph": true,
+            "raw": {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "\u0648\u062b\u064a\u0642",
+              "alternateName": [
+                "\u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642",
+                "Wathiq"
+              ],
+              "url": "https://wathiq.web.app/"
+            }
+          },
+          {
+            "@type": "Organization",
+            "@types": [
+              "Organization"
+            ],
+            "@id": null,
+            "@context": "https://schema.org",
+            "status": "active",
+            "note": "",
+            "has_context": true,
+            "has_type": true,
+            "from_graph": true,
+            "raw": {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "\u0648\u062b\u064a\u0642",
+              "url": "https://wathiq.web.app/",
+              "logo": "https://wathiq.web.app/wathiq-logo-512.png",
+              "sameAs": [
+                "https://facebook.com/wathiqai",
+                "https://instagram.com/wathiq.ai"
+              ]
+            }
+          },
+          {
+            "@type": "WebApplication",
+            "@types": [
+              "WebApplication"
+            ],
+            "@id": null,
+            "@context": "https://schema.org",
+            "status": "active",
+            "note": "",
+            "has_context": true,
+            "has_type": true,
+            "from_graph": true,
+            "raw": {
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "\u0648\u062b\u064a\u0642 | Wathiq",
+              "alternateName": "Wathiq App",
+              "url": "https://wathiq.web.app/",
+              "applicationCategory": "HealthApplication",
+              "operatingSystem": "Web, Android, iOS",
+              "description": "\u0645\u0633\u0627\u0639\u062f \u0630\u0643\u064a \u0645\u062f\u0639\u0648\u0645 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0644\u062a\u062d\u0644\u064a\u0644 \u0645\u0643\u0648\u0646\u0627\u062a \u0645\u0633\u062a\u062d\u0636\u0631\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644 \u0648\u062a\u0635\u0645\u064a\u0645 \u0631\u0648\u062a\u064a\u0646 \u0639\u0646\u0627\u064a\u0629 \u0634\u062e\u0635\u064a.",
+              "featureList": [
+                "OilGuard AI Engine",
+                "Ingredient Scanner (OCR)",
+                "Wathiq Score",
+                "Smart Routine Architect",
+                "Weather Intelligence",
+                "Skin Barrier Tracking"
+              ],
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "SAR"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "ratingCount": "150"
+              }
+            }
+          },
+          {
+            "@type": "Organization",
+            "@types": [
+              "Organization"
+            ],
+            "@id": null,
+            "@context": "https://schema.org",
+            "status": "active",
+            "note": "",
+            "has_context": true,
+            "has_type": true,
+            "from_graph": true,
+            "raw": {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "\u0648\u062b\u064a\u0642",
+              "url": "https://wathiq.web.app/",
+              "logo": "https://wathiq.web.app/wathiq-logo-512.png",
+              "sameAs": [
+                "http://facebook.com/wathiqa",
+                "http://instagram.com/wathiq.ai"
+              ]
+            }
+          }
+        ],
+        "open_graph": {
+          "og:title": "\u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 - \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644",
+          "og:description": "\u062d\u0645\u0644\u064a \u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 \u0627\u0644\u0622\u0646\u060c \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0645\u0633\u062a\u062d\u0636\u0631\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644. \u0627\u0643\u062a\u0634\u0641\u064a \u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0636\u0627\u0631\u0629\u060c \u0648\u0642\u0627\u0631\u0646\u064a \u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a\u060c \u0648\u0627\u0635\u0646\u0639\u064a \u0631\u0648\u062a\u064a\u0646 \u0627\u0644\u0639\u0646\u0627\u064a\u0629 \u0627\u0644\u0645\u062b\u0627\u0644\u064a \u0644\u0643\u0650.",
+          "og:image": "https://wathiq.web.app/og-image.png",
+          "og:type": "website",
+          "og:site_name": "\u0648\u062b\u064a\u0642",
+          "og:image:width": "1200",
+          "og:image:height": "630",
+          "og:url": "http://localhost:3000/"
+        },
+        "twitter_card": {
+          "twitter:card": "summary_large_image",
+          "twitter:title": "\u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 - \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644",
+          "twitter:description": "\u062d\u0645\u0644\u064a \u062a\u0637\u0628\u064a\u0642 \u0648\u062b\u064a\u0642 \u0627\u0644\u0622\u0646\u060c \u0627\u0644\u0645\u062d\u0644\u0644 \u0627\u0644\u0630\u0643\u064a \u0644\u0645\u0643\u0648\u0646\u0627\u062a \u0645\u0633\u062a\u062d\u0636\u0631\u0627\u062a \u0627\u0644\u062a\u062c\u0645\u064a\u0644. \u0627\u0643\u062a\u0634\u0641\u064a \u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0636\u0627\u0631\u0629\u060c \u0648\u0642\u0627\u0631\u0646\u064a \u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a\u060c \u0648\u0627\u0635\u0646\u0639\u064a \u0631\u0648\u062a\u064a\u0646 \u0627\u0644\u0639\u0646\u0627\u064a\u0629 \u0627\u0644\u0645\u062b\u0627\u0644\u064a \u0644\u0643\u0650.",
+          "twitter:image": "https://wathiq.web.app/og-image.png"
+        },
+        "word_count": 368,
+        "hreflang": []
+      },
+      "readability": {
+        "word_count": 2,
+        "sentence_count": 1,
+        "paragraph_count": 12,
+        "syllable_count": 4,
+        "avg_sentence_length": 2.0,
+        "avg_paragraph_length": 0.1,
+        "avg_syllables_per_word": 2.0,
+        "flesch_reading_ease": 35.6,
+        "flesch_kincaid_grade": 8.8,
+        "reading_level": "Very Difficult (college)",
+        "estimated_reading_time_min": 0.0,
+        "complex_words": 1,
+        "complex_word_pct": 50.0,
+        "issues": [
+          "\u26a0\ufe0f Content is difficult to read (Flesch: 35.6) \u2014 may reduce engagement",
+          "\u26a0\ufe0f 50.0% complex words (3+ syllables) \u2014 consider simplifying",
+          "\u26a0\ufe0f Thin content (2 words) \u2014 may rank poorly"
+        ],
+        "recommendations": [
+          "Simplify vocabulary and shorten sentences",
+          "Rewrite the flagged long sentences below using the suggested replacements."
+        ],
+        "sentence_rewrites": [
+          {
+            "current": "Homepage hero intro block is broad and hard to scan.",
+            "suggested": "Use a 2-3 sentence hero: who you help, what users can do here, and where to start. Example: \"Learn practical ethical hacking with step-by-step guides. Start with Wi-Fi security, Active Directory, or malware analysis using the tracks below.\"",
+            "current_word_count": "template",
+            "target_word_count": "40-60 total (split into 2-3 sentences)"
+          },
+          {
+            "current": "Section descriptions mix too many topics in one long paragraph.",
+            "suggested": "Replace with short blurbs per section (1 sentence each) and add a clear CTA link: \"Start Wi-Fi Security\", \"Explore AD Attack Paths\", \"View Red-Team Cheat Sheets\".",
+            "current_word_count": "template",
+            "target_word_count": "12-20 words per blurb"
+          }
+        ]
+      },
+      "article": {
+        "error": "[article_seo.py] Traceback (most recent call last):\n  File \"C:\\Users\\HP\\.claude\\skills\\seo\\scripts\\article_seo.py\", line 637, in <module>\n    main()\n    ~~~~^^\n  File \"C:\\Users\\HP\\.claude\\skills\\seo\\scripts\\article_seo.py\", line 537, in main\n    structured_data = extract_structured_data(soup)\n  File \"C:\\Users\\HP\\.claude\\skills\\seo\\scripts\\article_seo.py\", line 268, in extract_structured_data\n    schema_type = data.get(\"@type\", \"Unknown\")\n                  ^^^^^^^^\nAttributeError: 'list' object has no attribute 'get'"
+      }
+    },
+    "environment": {
+      "primary": "Unknown",
+      "runtime": "Unknown",
+      "confidence": "low",
+      "signals": [
+        "No strong CMS/framework markers were found in HTML source."
+      ],
+      "alternatives": []
+    },
+    "environment_fixes": [
+      {
+        "severity": "info",
+        "title": "Performance measurement incomplete",
+        "reason": "PageSpeed API returned an error, so CWV recommendations are less reliable.",
+        "fix": "Set `PAGESPEED_API_KEY` in your environment or `.env` file (see `.env.example`), then rerun. The CLI also accepts `--api-key`. Prioritize LCP/INP/CLS fixes from that output."
+      },
+      {
+        "severity": "warning",
+        "title": "Content readability is difficult",
+        "reason": "Long, complex text can reduce engagement and comprehension.",
+        "fix": "Rewrite key sections with shorter sentences (15-20 words), shorter paragraphs (2-4 sentences), and clearer subheadings."
+      }
+    ]
+  }
+}

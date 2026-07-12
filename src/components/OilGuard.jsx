@@ -21,11 +21,6 @@ import {
   basicScalpTypes   // <--- Added
 } from '../components/allergiesAndConditions.js';import { shareReportWithLoading } from './shareReport';
 import { downloadReportWithLoading } from './downloadReport';
-import goodImageClear from '../assets/good-clear.jpeg'; 
-import goodImageFlat from '../assets/good-flat.jpg';
-import badImageBlurry from '../assets/bad-blurry.jpeg';
-import badImageGlare from '../assets/bad-fullproduct.jpeg';
-import badImageAngle from '../assets/bad-angle.jpeg';
 import { db } from '../firebase'; 
 import { doc, getDoc, Timestamp, collection, addDoc, query, getDocs } from 'firebase/firestore';
 import { useAppContext } from './AppContext';
@@ -1737,7 +1732,6 @@ const analyzeIngredientInteractions = (ingredients) => {
     
     const handleDownloadReport = (event) => { downloadReportWithLoading(analysisData, event); };
     const handleShareReport = (event) => { shareReportWithLoading(analysisData, event); };
-    
     const highlightIngredientsInText = (text, extractionDetails) => {
         if (!text || !extractionDetails || extractionDetails.length === 0) return String(text || '');
         let highlightedText = text;
@@ -1925,10 +1919,10 @@ const analyzeIngredientInteractions = (ingredients) => {
 
 {currentStep === 1 && (
                 <motion.div key="step1" variants={stepVariants} initial="hidden" animate="visible" exit="exit" transition={{ duration: 0.4 }} className="step-content">
-                  <div className="elegant-cardd">
+                  <div className="elegant-card">
                     
                     {/* HEADER */}
-                    <h3 className="sectiontitle"><FaShoppingBag className="section-icon" /> تأكيد نوع المنتج</h3>
+                    <h3 className="sectiontitle">تأكيد نوع المنتج</h3>
                     
                     {/* AI PREDICTION CARD (Shows by default) */}
                     {!showManualTypeGrid ? (
@@ -1976,7 +1970,6 @@ const analyzeIngredientInteractions = (ingredients) => {
                                     whileHover={{ scale: 1.03 }} 
                                     whileTap={{ scale: 0.98 }}
                                   >
-                                    {type.icon}
                                     <h4>{type.name}</h4>
                                   </motion.div>
                               ))}
@@ -1993,8 +1986,8 @@ const analyzeIngredientInteractions = (ingredients) => {
 
 {currentStep === 2 && (
               <motion.div key="step2" variants={stepVariants} initial="hidden" animate="visible" exit="exit" transition={{ duration: 0.4 }} className="step-content">
-                <div className="elegant-cardd">
-                  <h3 className="sectiontitle"><FaBullhorn className="section-icon" /> تحديد الادعاءات</h3>
+                <div className="elegant-card">
+                  <h3 className="sectiontitle">تحديد الادعاءات</h3>
                   <p className="card-description">
         {productType 
           ? `ما هي الوعود التي يقدمها هذا الـ "${productTypes.find(p => p.id === productType)?.name}"؟`
@@ -2411,11 +2404,65 @@ const analyzeIngredientInteractions = (ingredients) => {
                   <p className="card-description">
         {t('.صوري قائمة المكونات فقط، تجنبي الصور المضببة والبعيدة', '.صور قائمة المكونات فقط، تجنب الصور المضببة والبعيدة')}
       </p><div className="examples-grid">
-                      <div className="example-card good"><div className="example-image"><img src={goodImageClear} alt="مثال جيد: صورة واضحة ومستقيمة" /></div><h4><FaCheckCircle /> صورة جيدة</h4></div>
-                      <div className="example-card good"><div className="example-image"><img src={goodImageFlat} alt="مثال جيد: إضاءة جيدة وكتابة واضحة" /></div><h4><FaCheckCircle /> إضاءة جيدة</h4></div>
-                      <div className="example-card bad"><div className="example-image"><img src={badImageBlurry} alt="مثال سيء: صورة ضبابية وغير واضحة" /></div><h4><FaTimesCircle /> ضبابية</h4></div>
-                      <div className="example-card bad"><div className="example-image"><img src={badImageGlare} alt="مثال سيء: صورة فيها المنتج كاملا" /></div><h4><FaTimesCircle />تصوير المنتج كاملا</h4></div>
-                      <div className="example-card bad"><div className="example-image"><img src={badImageAngle} alt="مثال سيء: صورة ملتقطة من زاوية مائلة" /></div><h4><FaTimesCircle /> زاوية مائلة</h4></div>
+                      <div className="example-card good">
+                        <div className="example-image">
+                          <div className="example-placeholder">
+                            <div className="focus-corner tl"></div><div className="focus-corner tr"></div>
+                            <div className="focus-corner bl"></div><div className="focus-corner br"></div>
+                            <div className="placeholder-text-lines">
+                              <div className="line active"></div>
+                              <div className="line active"></div>
+                              <div className="line active"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <h4><FaCheckCircle /> صورة جيدة</h4>
+                      </div>
+                      <div className="example-card good">
+                        <div className="example-image">
+                          <div className="example-placeholder">
+                            <FaSun className="sun-icon" />
+                            <div className="placeholder-text-lines">
+                              <div className="line active bright"></div>
+                              <div className="line active bright"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <h4><FaCheckCircle /> إضاءة جيدة</h4>
+                      </div>
+                      <div className="example-card bad">
+                        <div className="example-image">
+                          <div className="example-placeholder">
+                            <div className="placeholder-text-lines blurred">
+                              <div className="line"></div>
+                              <div className="line"></div>
+                              <div className="line"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <h4><FaTimesCircle /> ضبابية</h4>
+                      </div>
+                      <div className="example-card bad">
+                        <div className="example-image">
+                          <div className="example-placeholder">
+                            <FaSoap className="bottle-icon" />
+                            <div className="no-symbol">✕</div>
+                          </div>
+                        </div>
+                        <h4><FaTimesCircle />تصوير المنتج</h4>
+                      </div>
+                      <div className="example-card bad">
+                        <div className="example-image">
+                          <div className="example-placeholder">
+                            <div className="placeholder-text-lines angled">
+                              <div className="line"></div>
+                              <div className="line"></div>
+                              <div className="line"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <h4><FaTimesCircle /> زاوية مائلة</h4>
+                      </div>
                   </div>
                   <motion.button className="elegant-btn primary modal-action-btn" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => { setIsExamplesModalVisible(false); fileInputRef.current?.click(); }} >
                     <FaCamera /> متابعة واختيار صورة

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaUser, FaSignOutAlt, FaExchangeAlt, FaFlask, FaPlus } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaExchangeAlt, FaFlask, FaPlus, FaBookOpen } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppContext } from './AppContext';
 import '../WathiqNav.css';
@@ -14,6 +14,7 @@ const WathiqNav = () => {
     { icon: <FaUser />, text: 'ملفي الشخصي', path: '/profile' },
     { icon: <FaExchangeAlt />, text: 'مقارنة المنتجات', path: '/compare' },
     { icon: <FaFlask />, text: 'محقق المكونات', path: '/oil-guard' },
+    { icon: <FaBookOpen />, text: 'الأبحاث العلمية', path: '/research' },
   ];
 
   const isActive = (path) => location.pathname === path;

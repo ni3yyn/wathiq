@@ -9,7 +9,7 @@ import {
     basicSkinTypes, 
     basicScalpTypes 
 } from './allergiesAndConditions';
-import { FaArrowLeft, FaCheckCircle, FaSpinner, FaUser, FaHeartbeat, FaLeaf, FaTint, FaWind } from 'react-icons/fa';
+import { FaArrowRight, FaCheckCircle, FaSpinner, FaUser, FaHeartbeat, FaLeaf, FaTint, FaWind } from 'react-icons/fa';
 import { useAppContext } from './AppContext';
 import '../Welcome.css';
 
@@ -270,7 +270,7 @@ const Welcome = () => {
                 
                 <div className="welcome-navigation">
                     {currentStep > 0 && (
-                        <button className="welcome-nav-btn welcome-secondary" onClick={handleBack}><FaArrowLeft /> رجوع</button>
+                        <button className="welcome-nav-btn welcome-secondary" onClick={handleBack}><FaArrowRight /> رجوع</button>
                     )}
                     {currentStep < totalSteps - 1 ? (
                         <button className="welcome-nav-btn" onClick={handleNext} disabled={

@@ -1,0 +1,257 @@
+/* =============================================================================
+   WATHIQ HEADER NAVBAR — Modern floating glass pill / Full-width hamburger style
+   ============================================================================= */
+
+.wathiq-header-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  direction: rtl;
+  font-family: var(--font-main);
+  box-sizing: border-box;
+}
+
+.wathiq-header-nav.ltr {
+  direction: ltr;
+}
+
+/* ─── Desktop: Floating Glass Pill Aesthetic ─── */
+.wathiq-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  height: 64px;
+  margin: 16px auto;
+  padding: 0 24px;
+  background: rgba(20, 32, 29, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+/* ─── Scroll State: Compact Floating Pill ─── */
+.wathiq-header-nav.scrolled .wathiq-header-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 12px auto;
+  border-radius: 16px;
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  background: rgba(10, 20, 18, 0.92);
+  height: 56px;
+  padding: 0 20px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+}
+
+/* ─── Desktop Links & Actions ─── */
+.nav-desktop-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-ghost-link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  position: relative;
+  padding: 6px 0;
+}
+
+.nav-ghost-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transition: transform 0.25s ease;
+}
+
+.nav-ghost-link:hover {
+  color: #f1f5f9;
+}
+
+.nav-ghost-link:hover::after,
+.nav-ghost-link.active::after {
+  transform: scaleX(1);
+}
+
+.nav-ghost-link.active {
+  color: var(--primary);
+}
+
+.nav-divider-vertical {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.brand-name {
+  font-size: 1.8rem;
+  font-family: 'Amiri', serif;
+  font-weight: 800;
+  color: #f1f5f9;
+  margin-top: 9px;
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.3));
+}
+
+.nav-btn {
+  font-family: var(--font-main);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Play store download button */
+.play-store-nav {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+}
+
+/* ─── Mobile Hamburger Toggle ─── */
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  cursor: pointer;
+  padding: 6px;
+  transition: color 0.2s;
+  outline: none;
+}
+
+.nav-mobile-toggle:hover {
+  color: var(--primary);
+}
+
+/* ─── Mobile Styles & Hamburger Toggle breakpoint ─── */
+@media (max-width: 900px) {
+  .wathiq-header-container {
+    width: 92%;
+    max-width: 92%;
+    margin: 12px auto;
+    border-radius: 16px;
+    background: rgba(20, 32, 29, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    height: 58px;
+    padding: 0 16px;
+  }
+  
+  .wathiq-header-nav.scrolled .wathiq-header-container {
+    width: 92%;
+    max-width: 92%;
+    margin: 12px auto;
+    border-radius: 16px;
+    background: rgba(10, 20, 18, 0.95);
+    height: 58px;
+    padding: 0 16px;
+    border: 1px solid rgba(16, 185, 129, 0.22);
+  }
+
+  .nav-desktop-menu {
+    display: none;
+  }
+
+  .nav-mobile-toggle {
+    display: block;
+  }
+}
+
+/* ─── Mobile Drawer Panel Style (Floating Glass) ─── */
+.nav-mobile-drawer {
+  position: absolute;
+  top: 76px;
+  left: 4%;
+  right: 4%;
+  width: 92%;
+  background: rgba(14, 25, 22, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  box-sizing: border-box;
+}
+
+@keyframes slideDownMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.nav-mobile-link {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  transition: color 0.2s;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.wathiq-header-nav.ltr .nav-mobile-link {
+  /* text-align: left; no longer needed because flex-start respects direction */
+}
+
+.nav-mobile-link:hover,
+.nav-mobile-link.active {
+  color: var(--primary);
+}
+
+.nav-mobile-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 8px 0;
+}
+
+.nav-mobile-lang-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 600;
+}

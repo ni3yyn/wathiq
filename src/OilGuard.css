@@ -2753,3 +2753,157 @@ img {
   margin-top: 12px;
   margin-bottom: 12px;
 }
+
+/* --- CSS Example Placeholders for Examples Modal --- */
+.example-image .example-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #111e1b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.example-card.good .example-image {
+  border-color: #10b981;
+}
+
+.example-card.bad .example-image {
+  border-color: #ef4444;
+}
+
+.placeholder-text-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.placeholder-text-lines .line {
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.placeholder-text-lines .line:nth-child(2) {
+  width: 85%;
+}
+
+.placeholder-text-lines .line:nth-child(3) {
+  width: 65%;
+}
+
+.placeholder-text-lines .line.active {
+  background-color: #10b981;
+}
+
+.placeholder-text-lines .line.active.bright {
+  background-color: #34d399;
+  box-shadow: 0 0 5px rgba(52, 211, 153, 0.6);
+}
+
+.placeholder-text-lines.blurred .line {
+  filter: blur(3px);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.placeholder-text-lines.angled {
+  transform: rotate(-12deg) skewX(-8deg) scale(0.9);
+}
+
+/* Focus corners for Clear view */
+.focus-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #10b981;
+}
+.focus-corner.tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+.focus-corner.tr { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+.focus-corner.bl { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+.focus-corner.br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+/* Sun Icon for Light view */
+.example-placeholder .sun-icon {
+  font-size: 2.2rem;
+  color: #fbbf24;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.6));
+  animation: pulse-slow-anim 3s infinite ease-in-out;
+}
+
+/* Bottle and Cancel symbol for Product view */
+.example-placeholder .bottle-icon {
+  font-size: 3rem;
+  color: #94a3b8;
+  opacity: 0.6;
+}
+
+.example-placeholder .no-symbol {
+  position: absolute;
+  font-size: 4rem;
+  color: #ef4444;
+  font-weight: bold;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+@keyframes pulse-slow-anim {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* ========================================= */
+/*       Product Type Grid Styles            */
+/* ========================================= */
+
+.product-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
+.product-type-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.product-type-card h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.product-type-card:hover {
+  background: rgba(16, 185, 129, 0.05);
+  border-color: rgba(16, 185, 129, 0.3);
+  transform: translateY(-2px);
+}
+
+.product-type-card.selected {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.product-type-card.selected h4 {
+  color: #10b981;
+}

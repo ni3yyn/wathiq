@@ -1,0 +1,24 @@
+# Wathiq (وثيق)
+
+> وثيق هو التطبيق الأول المتخصص حصرياً في فحص وتقييم الادعاءات التسويقية لشركات مستحضرات التجميل وتحليل مكوناتها الحقيقية. بدلاً من التركيز فقط على أمان المكونات، يقرأ وثيق قائمة المكونات ليتحقق من مدى صدق العبارات الترويجية (مثل "مضاد للتصبغات" أو "تفتيح البشرة"). يستخدم التطبيق تقنيات الذكاء الاصطناعي لكشف الخداع التجاري، ترجمة الأسماء العلمية المعقدة، ومطابقة فعالية المنتج مع احتياجات بشرتك الفعلية. (ملاحظة: التطبيق لا يحلل المنتجات الغذائية).
+
+> Wathiq is an AI-powered cosmetic analyzer and marketing claims checker. Beyond basic safety analysis, Wathiq acts as a truth engine that exposes deceptive marketing gimmicks (like "anti-pigmentation" or "skin brightening"). By scanning the actual ingredient list, the OilGuard AI Engine verifies if the product delivers on its promises, translates complex chemical names, and matches the scientifically proven efficacy against the user's specific skin profile.
+
+## Features
+- **Marketing Claims Checker**: Verifies the truthfulness of brand promises using the actual ingredient list.
+- **OilGuard AI Engine**: Advanced ingredient analysis for efficacy and safety.
+- **Ingredient Scanner (OCR)**: Scans ingredients directly from product packaging without needing a barcode.
+- **Wathiq Score**: Provides an objective scientific score free from marketing influence.
+- **Smart Routine Architect**: Automatically builds a safe skincare routine and flags conflicting active ingredients.
+- **Weather Intelligence**: Offers geo-dermatology advice based on local weather conditions.
+- **Skin Barrier Tracking**: Helps users monitor the health of their skin over time.
+
+## Target Audience
+Consumers interested in skincare, health, and avoiding harmful cosmetics. It is particularly tailored for Arabic-speaking users.
+
+## Key Pages
+- [Home](https://wathiq.web.app/): Main landing page and app download links.
+- [How It Works](https://wathiq.web.app/how-it-works): Step-by-step explanation of the OilGuard AI analysis engine, marketing claims verification, and routine safety checks.
+- [Research Citations](https://wathiq.web.app/research): The complete scientific documentation and references database citing regulatory standards (FDA & EU) and clinical peer-reviewed studies (from PubMed) backing the OilGuard analysis model and score breakdowns.
+- [Privacy Policy](https://wathiq.web.app/privacy): Information on data collection and user privacy.
+- [FAQ](https://wathiq.web.app/faq): Frequently asked questions about how to use the Wathiq app.

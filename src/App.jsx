@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect, lazy, Suspense } from 'react'; 
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { FaLock, FaExclamationTriangle } from 'react-icons/fa';
+import { LangProvider } from './context/LangContext';
 
 // --- Authentication and Data Hooks ---
 import { AppProvider, useAppContext } from './components/AppContext'; 
@@ -9,17 +10,28 @@ import { db } from './firebase';
 import { doc, updateDoc, collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore'; 
 
 // --- Analytics ---
-import { initAnalytics } from './analytics';
+import analytics from './services/analytics'; // FIXED: Import the service instance
 
-// --- CORE STATIC IMPORTS (Instant Load for App) ---
-import AuthenticationPage from './components/AuthenticationPage';
-import Welcome from './components/Welcome';
-import Profile from './components/Profile';
-import OilGuard from './components/OilGuard';
-import ComparisonPage from './components/ComparisonPage';
-import WathiqAdmin from './components/WathiqAdmin';
-import AdminPortal from './components/AdminPortal'; 
+// --- CORE STATIC IMPORTS (Instant Load for Landing Page) ---
 import LandingPage from './components/LandingPage';
+
+// --- LAZY ROUTE IMPORTS (Loaded On-Demand for Performance) ---
+const AuthenticationPage = lazy(() => import('./components/AuthenticationPage'));
+const Welcome = lazy(() => import('./components/Welcome'));
+const Profile = lazy(() => import('./components/Profile'));
+const OilGuard = lazy(() => import('./components/OilGuard'));
+const ComparisonPage = lazy(() => import('./components/ComparisonPage'));
+const WathiqAdmin = lazy(() => import('./components/WathiqAdmin'));
+const AdminPortal = lazy(() => import('./components/AdminPortal')); 
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
+const TermsOfUse = lazy(() => import('./components/TermsOfUse'));
+const FAQPage = lazy(() => import('./components/FAQPage'));
+const HowItWorks = lazy(() => import('./components/HowItWorks'));
+const ContributionsManager = lazy(() => import('./components/ContributionsManager'));
+const ResearchCitations = lazy(() => import('./components/ResearchCitations'));
+const AnalyticsDashboard = lazy(() => import('./components/AnalyticsDashboard.jsx'));
+const BlogHome = lazy(() => import('./components/Blog/BlogHome'));
+const BlogArticle = lazy(() => import('./components/Blog/BlogArticle'));
 
 // --- UI & UX Components ---
 import LoadingOverlay from './components/LoadingOverlay'; 
@@ -29,6 +41,7 @@ import OfflineIndicator from './components/OfflineIndicator';
 import UpdateManager from './components/UpdateManager';
 import AnimatedSplash from './components/AnimatedSplash';
 import ErrorBoundary from './components/ErrorBoundary';
+
 
 // --- Capacitor Imports ---
 import { PushNotifications } from '@capacitor/push-notifications';
@@ -116,6 +129,18 @@ const MainLayout = ({ children }) => {
     );
 };
 
+// 5. Analytics Tracker (NEW: Tracks Page Views Automatically)
+const AnalyticsTracker = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // This fires every time the route changes
+    analytics.trackPageView(location.pathname);
+  }, [location]);
+
+  return null;
+};
+
 // =============================================================================
 // MAIN ROUTING LOGIC
 // =============================================================================
@@ -127,6 +152,13 @@ const WathiqRoutes = () => {
   
   const [apkLink, setApkLink] = useState(null);
   const [showSplash, setShowSplash] = useState(isNative);
+
+  // --- Initialize Analytics Session (NEW) ---
+  useEffect(() => {
+    // Initialize GA4 and Firebase Analytics Session on App Mount
+    analytics.init();
+    analytics.startSession();
+  }, []);
 
   // --- Styles Fix for Landing Page ---
   useEffect(() => {
@@ -209,19 +241,17 @@ const WathiqRoutes = () => {
         registerPush();
 
         // ------------------------------------------------------------
-        // UPDATED BACK BUTTON LOGIC
+        // BACK BUTTON LOGIC
         // ------------------------------------------------------------
         const backListener = CapacitorApp.addListener('backButton', async ({ canGoBack }) => {
             
             // 1. Hash Check (For Modals/Overlays using useModalBack)
-            // If URL has a hash (e.g., #tips, #camera), pop the history to close it.
             if (window.location.hash) {
                 window.history.back();
                 return;
             }
 
             // 2. Root Route Check
-            // We use window.location.pathname to get the live path
             const currentPath = window.location.pathname;
             const exitRoutes = ['/', '/login', '/oil-guard', '/welcome'];
             
@@ -253,82 +283,105 @@ const WathiqRoutes = () => {
   return (
     <>
       <OfflineIndicator />
+      <AnalyticsTracker /> {/* Tracks Page Views */}
       <UpdateManager />
       
       <AnimatePresence>
         {isLoggingOut && <GoodbyeOverlay />}
       </AnimatePresence>
       
-      <Routes location={location} key={location.pathname}>
-          
-          {/* 
-             ------------------------------------
-             1. WEB BROWSER (LANDING PAGE)
-             ------------------------------------
-          */}
-          {!isNative && (
-            <Route 
-                path="/" 
-                element={<LandingPage downloadLink={apkLink} />} 
-            />
-          )}
+      <Suspense fallback={<LoadingOverlay text="جاري التحميل..." />}>
+        <Routes location={location} key={location.pathname}>
+            
+        <Route path="/privacy" element={<PrivacyPolicy />} /> 
+        <Route path="/terms" element={<TermsOfUse />} /> 
+        <Route path="/faq" element={<FAQPage />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/guide" element={<Navigate to="/research" replace />} />
+        <Route path="/research" element={<ResearchCitations />} />
+        <Route path="/blog" element={<BlogHome />} />
+        <Route path="/blog/:slug" element={<BlogArticle />} />
+            {/* 
+               ------------------------------------
+               1. WEB BROWSER (LANDING PAGE)
+               ------------------------------------
+            */}
+            {!isNative && (
+              <Route 
+                  path="/" 
+                  element={<LandingPage downloadLink={apkLink} />} 
+              />
+            )}
 
-          {/* 
-             ------------------------------------
-             2. AUTH & LOGIN
-             ------------------------------------
-          */}
-          <Route path="/login" element={
-              loading ? <LoadingOverlay text="جاري التحقق..." /> : 
-              (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
-          } />
+            {/* 
+               ------------------------------------
+               2. AUTH & LOGIN
+               ------------------------------------
+            */}
+            <Route path="/login" element={
+                loading ? <LoadingOverlay text="جاري التحقق..." /> : 
+                (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
+            } />
 
-          {/* 
-             ------------------------------------
-             3. ADMIN ROUTES
-             ------------------------------------
-          */}
-          <Route path="/admin" element={
+            {/* 
+               ------------------------------------
+               3. ADMIN ROUTES
+               ------------------------------------
+            */}
+            <Route path="/admin" element={
+                <AdminRoute>
+                    <AdminPortal user={user} />
+                </AdminRoute>
+            } />
+
+            <Route path="/contributions" element={
+                <AdminRoute>
+                    <ContributionsManager />
+                </AdminRoute>
+            } />
+
+            <Route path="/wathiq-admin" element={
+                <AdminRoute>
+                    <WathiqAdmin />
+                </AdminRoute>
+            } />
+
+            <Route path="/analytics" element={
               <AdminRoute>
-                  <AdminPortal user={user} />
+                <AnalyticsDashboard />
               </AdminRoute>
-          } />
+            } />
 
-          <Route path="/wathiq-admin" element={
-              <AdminRoute>
-                  <WathiqAdmin />
-              </AdminRoute>
-          } />
+            {/* 
+               ------------------------------------
+               4. MAIN APP ROUTES (Protected)
+               Wrapped in MainLayout for Navigation
+               ------------------------------------
+            */}
+            <Route path="/*" element={
+              <MainLayout>
+                  <Routes>
+                      
+                      {/* Native Root: Redirects based on Auth */}
+                      {isNative && (
+                          <Route path="/" element={
+                              (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
+                          } />
+                      )}
+                      
+                      <Route path="/welcome" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
+                      <Route path="/oil-guard" element={<ProtectedRoute><OilGuard /></ProtectedRoute>} />
+                      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                      <Route path="/compare" element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} />
 
-          {/* 
-             ------------------------------------
-             4. MAIN APP ROUTES (Protected)
-             Wrapped in MainLayout for Navigation
-             ------------------------------------
-          */}
-          <Route path="/*" element={
-            <MainLayout>
-                <Routes>
-                    
-                    {/* Native Root: Redirects based on Auth */}
-                    {isNative && (
-                        <Route path="/" element={
-                            (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
-                        } />
-                    )}
-                    
-                    <Route path="/welcome" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
-                    <Route path="/oil-guard" element={<ProtectedRoute><OilGuard /></ProtectedRoute>} />
-                    <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                    <Route path="/compare" element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} />
+                      {/* Catch-all */}
+                      <Route path="*" element={<Navigate to="/" replace />} />
+                  </Routes>
+              </MainLayout>
+            } />
 
-                    {/* Catch-all */}
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-            </MainLayout>
-          } />
-
-      </Routes>
+        </Routes>
+      </Suspense>
     </>
   );
 };
@@ -337,15 +390,15 @@ const WathiqRoutes = () => {
 // APP WRAPPER
 // =============================================================================
 function App() {
-  useEffect(() => { initAnalytics(); }, []);
-
   return (
     <ErrorBoundary>
       <HelmetProvider>
         <Router>
-          <AppProvider>
-            <WathiqRoutes />
-          </AppProvider>
+          <LangProvider>
+            <AppProvider>
+              <WathiqRoutes />
+            </AppProvider>
+          </LangProvider>
         </Router>
       </HelmetProvider>
     </ErrorBoundary>
