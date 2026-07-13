@@ -4,8 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, ArrowRight, BookOpen, Clock, ChevronLeft, ChevronRight, CheckCircle2, Award } from 'lucide-react';
 import { useLang } from '../../context/LangContext';
 import { ProgressTracker } from '../../utils/ProgressTracker';
+import { motion, AnimatePresence } from 'framer-motion';
 import BlockRenderer from '../Blog/BlockRenderer';
-import WathiqHeader from '../WathiqHeader';
 import QuizEngine from './QuizEngine';
 import './Courses.css';
 
@@ -150,7 +150,7 @@ const LessonViewer = () => {
   return (
     <div className="landing-wrapper" style={{ backgroundColor: 'var(--bg-deep)', minHeight: '100vh', position: 'relative' }}>
       <Helmet>
-        <title>{lesson.title} | {course.meta.title}</title>
+        <title>{lang === 'ar' ? `وثيق | ${lesson.title} - ${course.meta.title}` : `Wathiq | ${lesson.title} - ${course.meta.title}`}</title>
         <meta name="description" content={lesson.title} />
       </Helmet>
 
@@ -159,9 +159,15 @@ const LessonViewer = () => {
         <div className="lesson-sticky-progress-bar" style={{ width: `${scrollProgress}%` }} />
       </div>
 
-      <WathiqHeader />
-
-      <div className="lesson-container" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+      <motion.div 
+        className="lesson-container" 
+        style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+        key={lesson.slug} // Ensures component remounts and re-animates on lesson change
+        initial={{ opacity: 0, x: isRTL ? -20 : 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: isRTL ? 20 : -20 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
         
         {/* Top bar with Breadcrumbs */}
         <div className="lesson-top-bar">
@@ -193,67 +199,91 @@ const LessonViewer = () => {
 
         {/* Quiz Section Trigger or Quiz Block */}
         <section style={{ marginTop: '50px' }} ref={quizRef}>
-          {!quizActive && !isCompleted && (
-            <button 
-              className="lesson-nav-btn primary-nav" 
-              style={{ width: '100%', padding: '16px', borderRadius: '16px', fontSize: '1.05rem' }}
-              onClick={handleStartQuiz}
-            >
-              <CheckCircle2 size={18} />
-              <span>{uiTexts.completeAndQuiz}</span>
-            </button>
-          )}
+          <AnimatePresence mode="wait">
+            {!quizActive && !isCompleted && (
+              <motion.div
+                key="start-btn"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+              >
+                <motion.button 
+                  className="lesson-nav-btn primary-nav" 
+                  style={{ width: '100%', padding: '16px', borderRadius: '16px', fontSize: '1.05rem', border: 'none', cursor: 'pointer' }}
+                  onClick={handleStartQuiz}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <CheckCircle2 size={18} />
+                  <span>{uiTexts.completeAndQuiz}</span>
+                </motion.button>
+              </motion.div>
+            )}
 
-          {(quizActive || isCompleted) && lesson.quiz && (
-            <div className="lesson-quiz-wrapper">
-              <QuizEngine 
-                quiz={lesson.quiz} 
-                onPass={handleQuizPass} 
-                initiallyCompleted={isCompleted}
-                onRetake={() => setQuizActive(true)}
-              />
-            </div>
-          )}
+            {(quizActive || isCompleted) && lesson.quiz && (
+              <motion.div 
+                key="quiz-block"
+                className="lesson-quiz-wrapper"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <QuizEngine 
+                  quiz={lesson.quiz} 
+                  onPass={handleQuizPass} 
+                  initiallyCompleted={isCompleted}
+                  onRetake={() => setQuizActive(true)}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </section>
 
         {/* Lesson Footer Navigation */}
-        <footer className="lesson-footer-nav">
+        <footer className="lesson-footer-nav" style={{ display: 'flex', gap: '12px' }}>
           {prevLesson ? (
-            <Link 
-              to={`/courses/${course.slug}/${prevLesson.slug}`} 
-              className="lesson-nav-btn"
-            >
-              {isRTL ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
-              <span>{uiTexts.prev}</span>
-            </Link>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.95 }} style={{ flex: 1 }}>
+              <Link 
+                to={`/courses/${course.slug}/${prevLesson.slug}`} 
+                className="lesson-nav-btn"
+                style={{ width: '100%', textDecoration: 'none' }}
+              >
+                {isRTL ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+                <span>{uiTexts.prev}</span>
+              </Link>
+            </motion.div>
           ) : (
             <div style={{ flex: 1 }} />
           )}
 
           {nextLesson ? (
-            <Link 
-              ref={nextBtnRef}
-              to={`/courses/${course.slug}/${nextLesson.slug}`} 
-              className={`lesson-nav-btn ${isCompleted ? 'primary-nav pulse-success' : ''}`}
-              style={{ opacity: ProgressTracker.isLessonUnlocked(course.slug, nextLesson.slug, course) ? 1 : 0.5, pointerEvents: ProgressTracker.isLessonUnlocked(course.slug, nextLesson.slug, course) ? 'auto' : 'none' }}
-            >
-              <span>{uiTexts.next}</span>
-              {isRTL ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
-            </Link>
+            <motion.div whileHover={ProgressTracker.isLessonUnlocked(course.slug, nextLesson.slug, course) ? { scale: 1.03 } : {}} whileTap={ProgressTracker.isLessonUnlocked(course.slug, nextLesson.slug, course) ? { scale: 0.95 } : {}} style={{ flex: 1 }}>
+              <Link 
+                ref={nextBtnRef}
+                to={`/courses/${course.slug}/${nextLesson.slug}`} 
+                className={`lesson-nav-btn ${isCompleted ? 'primary-nav pulse-success' : ''}`}
+                style={{ width: '100%', textDecoration: 'none', opacity: ProgressTracker.isLessonUnlocked(course.slug, nextLesson.slug, course) ? 1 : 0.5, pointerEvents: ProgressTracker.isLessonUnlocked(course.slug, nextLesson.slug, course) ? 'auto' : 'none' }}
+              >
+                <span>{uiTexts.next}</span>
+                {isRTL ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+              </Link>
+            </motion.div>
           ) : (
-            <Link 
-              ref={nextBtnRef}
-              to={`/courses/${course.slug}`} 
-              className={`lesson-nav-btn ${isCompleted ? 'primary-nav pulse-success' : ''}`}
-              style={{ opacity: isCompleted ? 1 : 0.5, pointerEvents: isCompleted ? 'auto' : 'none' }}
-            >
-              <span>{uiTexts.finishCourse}</span>
-              <Award size={18} />
-            </Link>
+            <motion.div whileHover={isCompleted ? { scale: 1.03 } : {}} whileTap={isCompleted ? { scale: 0.95 } : {}} style={{ flex: 1 }}>
+              <Link 
+                ref={nextBtnRef}
+                to={`/courses/${course.slug}`} 
+                className={`lesson-nav-btn ${isCompleted ? 'primary-nav pulse-success' : ''}`}
+                style={{ width: '100%', textDecoration: 'none', opacity: isCompleted ? 1 : 0.5, pointerEvents: isCompleted ? 'auto' : 'none' }}
+              >
+                <span>{uiTexts.finishCourse}</span>
+                <Award size={18} />
+              </Link>
+            </motion.div>
           )}
         </footer>
 
-      </div>
+      </motion.div>
     </div>
   );
 };

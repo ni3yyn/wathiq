@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import { BookOpen, Award, BarChart3, Clock, Sparkles, ShoppingBag, FlaskConical, Microscope, Target, ShieldCheck, Leaf } from 'lucide-react';
 import { useLang } from '../../context/LangContext';
 import { ProgressTracker } from '../../utils/ProgressTracker';
-import WathiqHeader from '../WathiqHeader';
 import './Courses.css';
+import { AcademyTicker } from '../NewsTicker';
 
 // Course data imports
 import arCourses from '../../data/courses/ar';
@@ -80,31 +80,37 @@ const CoursesHome = () => {
   return (
     <div className="landing-wrapper" style={{ backgroundColor: 'var(--bg-deep)', minHeight: '100vh' }}>
       <Helmet>
-        <title>{lang === 'fr' ? 'Académie Wathiq | Cours gratuits' : lang === 'en' ? 'Wathiq Academy | Free Courses' : 'أكاديمية وثيق | دورات مجانية'}</title>
+        <title>
+          {lang === 'fr' 
+            ? 'Wathiq | Académie - Cours gratuits' 
+            : lang === 'en' 
+            ? 'Wathiq | Academy - Free Courses' 
+            : 'وثيق | أكاديمية - دورات مجانية'}
+        </title>
         <meta name="description" content={uiTexts.subtitle} />
       </Helmet>
 
       <div className="grid-overlay" />
 
-      <WathiqHeader />
+      {/* Hero Section */}
+      <header className="courses-hero container" role="banner">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="courses-hero-inner"
+        >
 
-      <div className="courses-container" style={{ direction: isRTL ? 'rtl' : 'ltr', paddingBottom: '0', minHeight: 'auto' }}>
-        
-        {/* Hero Section */}
-        <header className="courses-hero" role="banner" style={{ paddingTop: '20px', paddingBottom: '0' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="courses-hero-inner"
-          >
 
-            <h1 className="courses-hero-title">
-              <span className="gradient-text">{uiTexts.title}</span>
-            </h1>
-            <p className="courses-hero-subtitle">
-              {uiTexts.subtitle}
-            </p>
+          <h1 className="courses-hero-title">
+            {lang === 'fr' ? 'Académie Wathiq' : lang === 'en' ? 'Wathiq Care' : 'أكاديمية وثيق للعناية'}<br/>
+            <span className="text-mint">
+              {lang === 'fr' ? 'de la Peau & des Cheveux' : lang === 'en' ? 'Hair & Skin Academy' : 'بالبشرة والشعر'}
+            </span>
+          </h1>
+          <p className="courses-hero-subtitle">
+            {uiTexts.subtitle}
+          </p>
 
             <div className="courses-hero-stats">
               <div className="courses-stat">
@@ -123,35 +129,20 @@ const CoursesHome = () => {
               </div>
               <div className="courses-stat-divider" />
               <div className="courses-stat">
-                <span className="courses-stat-num text-mint">∞</span>
-                <span className="courses-stat-label">{lang === 'fr' ? 'À votre rythme' : lang === 'en' ? 'Finish Anytime' : 'بسرعتك الخاصة'}</span>
+                <span className="courses-stat-num text-mint" style={{ fontSize: '1.2rem', paddingBottom: '5px' }}>{uiTexts.recipesTrack}</span>
+                <span className="courses-stat-label">{uiTexts.recipesDesc}</span>
               </div>
             </div>
 
           </motion.div>
         </header>
-      </div>
 
       {/* Full-width News Ticker */}
-      <div className="news-ticker-fullwidth-wrapper" dir={isRTL ? 'rtl' : 'ltr'}>
-        <div className="news-ticker-container">
-          <div className="news-ticker-scroll">
-            <div className="news-ticker-track-container">
-              {[1, 2, 3, 4].map((index) => (
-                <div key={index} className="news-ticker-track" aria-hidden={index !== 1 ? "true" : undefined}>
-                  <span className="ticker-item"><Award size={14} /> {lang === 'fr' ? 'Certificat de participation PDF gratuit à la fin' : lang === 'en' ? 'Free PDF certificate of participation upon completion' : 'شهادة مشاركة PDF مجانية عند إتمام كل دورة'}</span>
-                  <span className="ticker-item"><Clock size={14} /> {lang === 'fr' ? 'Votre progression est sauvegardée, continuez à tout moment' : lang === 'en' ? 'Progress is saved, you can continue anytime' : 'يتم حفظ تقدمك تلقائياً لتعودي متى شئتِ'}</span>
-                  <span className="ticker-item"><BookOpen size={14} /> {lang === 'fr' ? 'Nouveau contenu ajouté chaque semaine' : lang === 'en' ? 'New content added weekly' : 'محتوى متجدد ودورات جديدة تضاف باستمرار'}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      <AcademyTicker />
 
       <div className="courses-container" style={{ direction: isRTL ? 'rtl' : 'ltr', paddingTop: '0' }}>
         {/* Track Selector */}
-        <section className="tracks-section">
+        <section className="tracks-section" style={{ display: 'none' }}>
           <div className="tracks-tabs-container" style={{ maxWidth: '850px' }}>
             <div 
               className={`track-tab ${activeTrack === 'consumer' ? 'active-track' : ''}`}
@@ -203,9 +194,6 @@ const CoursesHome = () => {
               <article key={course.slug} className="course-card">
                 <div className="course-card-banner">
                   {getCourseIcon(course.slug)}
-                  <span className={`course-level-badge ${course.level}`}>
-                    {getLevelLabel(course.level)}
-                  </span>
                 </div>
 
                 <div className="course-card-content">

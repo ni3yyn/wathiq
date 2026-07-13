@@ -20,7 +20,8 @@
 }
 
 .courses-hero {
-  padding-bottom: 3rem;
+  padding-top: 140px;
+  padding-bottom: 3.5rem;
   text-align: start;
 }
 
@@ -29,22 +30,12 @@
 }
 
 .courses-hero-title {
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: 900;
   line-height: 1.25;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   color: #f1f5f9;
   letter-spacing: -0.5px;
-}
-
-.courses-hero-title .gradient-text {
-  background: linear-gradient(120deg, #10b981 0%, #34d399 25%, #a7f3d0 50%, #34d399 75%, #10b981 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 6s linear infinite;
-  display: inline-block;
 }
 
 .courses-hero-subtitle {
@@ -1303,7 +1294,8 @@ html[dir="rtl"] .news-ticker-track {
 
 /* ─── Responsive Styles ────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .courses-hero-title { font-size: 2.2rem; }
+  .courses-hero-title { font-size: 2rem; }
+  .courses-hero-subtitle { font-size: 1rem; margin-bottom: 1.5rem; }
   .tracks-section { grid-template-columns: 1fr; }
   .courses-grid { grid-template-columns: 1fr; }
   .syllabus-title { font-size: 1.8rem; }
@@ -1312,12 +1304,21 @@ html[dir="rtl"] .news-ticker-track {
   .quiz-section { padding: 18px; }
   .quiz-option-btn { font-size: 0.9rem; padding: 14px 16px; }
 
+  .courses-hero {
+    padding-bottom: 1.5rem;
+  }
+
+@media (max-width: 480px) {
+  .courses-hero-title { font-size: 1.7rem; }
+  .courses-hero { padding-top: 110px; }
+}
+
   /* Hero Stats Responsiveness */
   .courses-hero-stats {
-    gap: 1.25rem;
-    padding: 1.5rem;
+    gap: 1rem;
+    padding: 1.25rem;
     background: rgba(255, 255, 255, 0.02);
-    border-radius: 16px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1339,6 +1340,14 @@ html[dir="rtl"] .news-ticker-track {
   }
   
   .courses-stat-num {
-    font-size: 1.75rem;
+    font-size: 1.35rem;
+  }
+  
+  .courses-stat-label {
+    font-size: 0.8rem;
+  }
+  
+  .courses-container {
+    padding: 80px 16px 40px;
   }
 }

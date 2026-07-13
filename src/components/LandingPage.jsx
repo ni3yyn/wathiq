@@ -15,11 +15,11 @@ import wathiqLogo from '../assets/wathiq-logo.png';
 import '../LandingPage.css';
 import analyticsService from '../services/analytics';
 import SEO from './SEO';
+import { LandingTicker } from './NewsTicker';
 import articlesAr from '../data/articles/ar/index';
 import articlesFr from '../data/articles/fr/index';
 import articlesEn from '../data/articles/en/index';
 import './Blog/Blog.css';
-import WathiqHeader from './WathiqHeader';
 import { Link } from 'react-router-dom';
 
 import arCourses from '../data/courses/ar';
@@ -1250,8 +1250,6 @@ const LandingPage = () => {
 
       <div className="grid-overlay" />
 
-      <WathiqHeader />
-
       {/* 2. Hero Section */}
       <section className="hero-section">
         <div className="container hero-desktop-layout" dir={isRtl ? 'rtl' : 'ltr'}>
@@ -1287,19 +1285,7 @@ const LandingPage = () => {
       </section>
 
       {/* 3. Social Proof (Ticker) */}
-      <div className="ticker-wrapper" style={{ direction: isRtl ? 'rtl' : 'ltr' }}>
-        <div className="ticker-content">
-          {[...Array(2)].map((_, i) => (
-            <React.Fragment key={i}>
-              <span className="ticker-item"><XCircle className="icon-bad" /> {t('ticker_paraben')}</span>
-              <span className="ticker-item"><AlertOctagon className="icon-warn" /> {t('ticker_dusting')}</span>
-              <span className="ticker-item"><XCircle className="icon-bad" /> {t('ticker_fragrance')}</span>
-              <span className="ticker-item"><FlaskConical className="icon-science" /> {t('ticker_conflict')}</span>
-              <span className="ticker-item"><ShieldCheck className="icon-good" /> {t('ticker_science')}</span>
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
+      <LandingTicker />
 
       {/* 4. Features Bento Grid */}
       <section className="container section-padding">

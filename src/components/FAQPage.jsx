@@ -5,7 +5,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import SEO from './SEO';
 import wathiqLogo from '../assets/wathiq-logo.png';
 import '../LandingPage.css'; // Reusing some base styles
-import WathiqHeader from './WathiqHeader';
 
 import { useLang } from '../context/LangContext';
 
@@ -132,8 +131,6 @@ const FAQPage = () => {
       {/* Grid Overlay to match Landing Page */}
       <div className="grid-overlay" />
       
-      <WathiqHeader />
-
       <section className="container section-padding" style={{ paddingTop: '120px', maxWidth: '800px' }}>
         <div className="section-header">
           <h1 className="section-title" style={{ textAlign: 'center' }}>
@@ -145,7 +142,7 @@ const FAQPage = () => {
           </p>
         </div>
 
-        <div className="faq-container" style={{ marginTop: '40px' }}>
+        <div className="faq-container" style={{ marginTop: '40px', direction: isRTL ? 'rtl' : 'ltr' }}>
           {faqs.map((faq, index) => (
             <motion.div 
               key={index} 

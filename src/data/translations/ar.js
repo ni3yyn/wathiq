@@ -7,7 +7,7 @@ const ar = {
   academy: 'أكاديمية وثيق',
 
   // Blog Home
-  blog_title: 'مدونة وثيق العلمية',
+  blog_title: 'المدونة العلمية',
   blog_subtitle: 'تحليل علمي لمكونات التجميل، كشف الادعاءات التسويقية، ومراجعات المنتجات الجزائرية',
   search_placeholder: 'ابحث في المقالات...',
   all_categories: 'جميع المقالات',

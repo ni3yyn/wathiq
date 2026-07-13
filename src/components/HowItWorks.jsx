@@ -10,7 +10,6 @@ import SEO from './SEO';
 import wathiqLogo from '../assets/wathiq-logo.png';
 import '../LandingPage.css';
 import './HowItWorks.css';
-import WathiqHeader from './WathiqHeader';
 
 // ─────────────────────────────────────────────
 // DATA
@@ -324,8 +323,6 @@ const HowItWorks = () => {
       />
       <div className="grid-overlay" />
 
-      <WathiqHeader />
-
       {/* ── Hero ── */}
       <header className="hiw-hero container" role="banner">
         <motion.div
@@ -334,10 +331,7 @@ const HowItWorks = () => {
           transition={{ duration: 0.7 }}
           className="hiw-hero-inner"
         >
-          <div className="hero-pill" style={{ marginBottom: '1.5rem', marginRight: 0 }}>
-            <span className="pulse-dot" />
-            آلية العمل — الشفافية الكاملة
-          </div>
+
           <h1 className="hiw-hero-title">
             كيف يكشف <span className="text-mint">وثيق</span><br />حقيقة منتجاتك؟
           </h1>

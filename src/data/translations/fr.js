@@ -7,7 +7,7 @@ const fr = {
   academy: 'Académie',
 
   // Blog Home
-  blog_title: 'Blog Scientifique Wathiq',
+  blog_title: 'Blog Scientifique',
   blog_subtitle: "Analyses d'ingrédients, décryptage des promesses marketing et revues de produits algériens",
   search_placeholder: 'Rechercher des articles...',
   all_categories: 'Tous les articles',

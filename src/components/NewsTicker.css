@@ -1,0 +1,105 @@
+/* NewsTicker.css */
+.unified-ticker-wrapper {
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--surface-border);
+  border-bottom: 1px solid var(--surface-border);
+  padding: 1rem 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.unified-ticker-content {
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  animation: scroll-ltr 25s linear infinite;
+}
+
+.unified-ticker-wrapper[dir="rtl"] .unified-ticker-content {
+  animation: scroll-rtl 25s linear infinite;
+}
+
+.unified-ticker-wrapper:hover .unified-ticker-content {
+  animation-play-state: paused;
+}
+
+.ticker-track {
+  display: flex;
+  gap: 3rem;
+  padding-right: 3rem;
+}
+
+.unified-ticker-wrapper[dir="rtl"] .ticker-track {
+  padding-right: 0;
+  padding-left: 3rem;
+}
+
+.unified-ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #e2e8f0;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.unified-ticker-item svg {
+  flex-shrink: 0;
+}
+
+/* Icon Colors */
+.ticker-icon-bad { color: var(--danger, #ef4444); }
+.ticker-icon-warn { color: var(--accent, #fbbf24); }
+.ticker-icon-science { color: #8b5cf6; }
+.ticker-icon-good { color: var(--primary, #34d399); }
+.ticker-icon-academy { color: var(--primary, #34d399); }
+
+@keyframes scroll-ltr {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-16.666666%); }
+}
+
+@keyframes scroll-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(16.666666%); }
+}
+
+.academy-ticker-margin {
+  margin: 3rem 0;
+}
+
+.landing-ticker-margin {
+  margin-top: 0;
+  margin-bottom: -3rem; /* Reduce space before Bento grid on desktop */
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .academy-ticker-margin {
+    margin: 1.5rem 0;
+  }
+  .landing-ticker-margin {
+    margin-top: 3rem; /* Add breathing room below hero on mobile */
+    margin-bottom: 2rem; /* Add breathing room above bento on mobile */
+  }
+  
+  .ticker-track {
+    gap: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .unified-ticker-wrapper[dir="rtl"] .ticker-track {
+    padding-right: 0;
+    padding-left: 1.5rem;
+  }
+  
+  .unified-ticker-item {
+    font-size: 0.95rem;
+    gap: 6px;
+  }
+}

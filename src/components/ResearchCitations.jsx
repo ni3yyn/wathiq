@@ -11,7 +11,6 @@ import SEO from './SEO';
 import wathiqLogo from '../assets/wathiq-logo.png';
 import '../LandingPage.css';
 import './ResearchCitations.css';
-import WathiqHeader from './WathiqHeader';
 
 // ============================================================
 // DATA: All scientific references organised by topic
@@ -984,8 +983,6 @@ const ResearchCitations = () => {
       />
       <div className="grid-overlay" />
 
-      <WathiqHeader />
-
       {/* ── Hero Section ── */}
       <header className="rc-hero container" role="banner">
         <motion.div
@@ -994,10 +991,7 @@ const ResearchCitations = () => {
           transition={{ duration: 0.7 }}
           className="rc-hero-inner"
         >
-          <div className="hero-pill" style={{ marginBottom: '1.5rem', marginRight: 0 }}>
-            <span className="pulse-dot" />
-            الأدلة العلمية الموثقة
-          </div>
+
           <h1 className="rc-hero-title">
             الأبحاث <span className="text-mint">المعتمد عليها</span>
           </h1>

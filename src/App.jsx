@@ -15,6 +15,17 @@ import analytics from './services/analytics'; // FIXED: Import the service insta
 // --- CORE STATIC IMPORTS (Instant Load for Landing Page) ---
 import LandingPage from './components/LandingPage';
 
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfUse from './components/TermsOfUse';
+import FAQPage from './components/FAQPage';
+import HowItWorks from './components/HowItWorks';
+import ResearchCitations from './components/ResearchCitations';
+import BlogHome from './components/Blog/BlogHome';
+import BlogArticle from './components/Blog/BlogArticle';
+import CoursesHome from './components/Courses/CoursesHome';
+import CourseSyllabus from './components/Courses/CourseSyllabus';
+import LessonViewer from './components/Courses/LessonViewer';
+
 // --- LAZY ROUTE IMPORTS (Loaded On-Demand for Performance) ---
 const AuthenticationPage = lazy(() => import('./components/AuthenticationPage'));
 const Welcome = lazy(() => import('./components/Welcome'));
@@ -23,18 +34,8 @@ const OilGuard = lazy(() => import('./components/OilGuard'));
 const ComparisonPage = lazy(() => import('./components/ComparisonPage'));
 const WathiqAdmin = lazy(() => import('./components/WathiqAdmin'));
 const AdminPortal = lazy(() => import('./components/AdminPortal')); 
-const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
-const TermsOfUse = lazy(() => import('./components/TermsOfUse'));
-const FAQPage = lazy(() => import('./components/FAQPage'));
-const HowItWorks = lazy(() => import('./components/HowItWorks'));
 const ContributionsManager = lazy(() => import('./components/ContributionsManager'));
-const ResearchCitations = lazy(() => import('./components/ResearchCitations'));
 const AnalyticsDashboard = lazy(() => import('./components/AnalyticsDashboard.jsx'));
-const BlogHome = lazy(() => import('./components/Blog/BlogHome'));
-const BlogArticle = lazy(() => import('./components/Blog/BlogArticle'));
-const CoursesHome = lazy(() => import('./components/Courses/CoursesHome'));
-const CourseSyllabus = lazy(() => import('./components/Courses/CourseSyllabus'));
-const LessonViewer = lazy(() => import('./components/Courses/LessonViewer'));
 
 // --- UI & UX Components ---
 import LoadingOverlay from './components/LoadingOverlay'; 
@@ -57,6 +58,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import './App.css';
 import 'react-circular-progressbar/dist/styles.css';
 import { AnimatePresence } from 'framer-motion';
+import WathiqHeader from './components/WathiqHeader';
 
 // =============================================================================
 // HELPER COMPONENTS
@@ -278,6 +280,10 @@ const WathiqRoutes = () => {
   const isProfileComplete = userProfile ? userProfile.onboardingComplete === true : true;
   const appHomeRoute = isProfileComplete ? "/oil-guard" : "/welcome";
 
+  // Determine if WathiqHeader should be shown (public web routes)
+  const showHeaderRoutes = ['/privacy', '/terms', '/faq', '/how-it-works', '/research', '/blog', '/courses'];
+  const showHeader = !isNative && (location.pathname === '/' || showHeaderRoutes.some(path => location.pathname.startsWith(path)));
+
   // Native Splash Guard
   if (isNative && (showSplash || loading)) {
     return <AnimatedSplash />;
@@ -285,6 +291,7 @@ const WathiqRoutes = () => {
 
   return (
     <>
+      {showHeader && <WathiqHeader />}
       <OfflineIndicator />
       <AnalyticsTracker /> {/* Tracks Page Views */}
       <UpdateManager />
@@ -294,99 +301,101 @@ const WathiqRoutes = () => {
       </AnimatePresence>
       
       <Suspense fallback={<LoadingOverlay text="جاري التحميل..." />}>
-        <Routes location={location} key={location.pathname}>
-            
-        <Route path="/privacy" element={<PrivacyPolicy />} /> 
-        <Route path="/terms" element={<TermsOfUse />} /> 
-        <Route path="/faq" element={<FAQPage />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/guide" element={<Navigate to="/research" replace />} />
-        <Route path="/research" element={<ResearchCitations />} />
-        <Route path="/blog" element={<BlogHome />} />
-        <Route path="/blog/:slug" element={<BlogArticle />} />
-        <Route path="/courses" element={<CoursesHome />} />
-        <Route path="/courses/:courseSlug" element={<CourseSyllabus />} />
-        <Route path="/courses/:courseSlug/:lessonSlug" element={<LessonViewer />} />
-            {/* 
-               ------------------------------------
-               1. WEB BROWSER (LANDING PAGE)
-               ------------------------------------
-            */}
-            {!isNative && (
-              <Route 
-                  path="/" 
-                  element={<LandingPage downloadLink={apkLink} />} 
-              />
-            )}
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+              
+          <Route path="/privacy" element={<PrivacyPolicy />} /> 
+          <Route path="/terms" element={<TermsOfUse />} /> 
+          <Route path="/faq" element={<FAQPage />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/guide" element={<Navigate to="/research" replace />} />
+          <Route path="/research" element={<ResearchCitations />} />
+          <Route path="/blog" element={<BlogHome />} />
+          <Route path="/blog/:slug" element={<BlogArticle />} />
+          <Route path="/courses" element={<CoursesHome />} />
+          <Route path="/courses/:courseSlug" element={<CourseSyllabus />} />
+          <Route path="/courses/:courseSlug/:lessonSlug" element={<LessonViewer />} />
+              {/* 
+                 ------------------------------------
+                 1. WEB BROWSER (LANDING PAGE)
+                 ------------------------------------
+              */}
+              {!isNative && (
+                <Route 
+                    path="/" 
+                    element={<LandingPage downloadLink={apkLink} />} 
+                />
+              )}
 
-            {/* 
-               ------------------------------------
-               2. AUTH & LOGIN
-               ------------------------------------
-            */}
-            <Route path="/login" element={
-                loading ? <LoadingOverlay text="جاري التحقق..." /> : 
-                (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
-            } />
+              {/* 
+                 ------------------------------------
+                 2. AUTH & LOGIN
+                 ------------------------------------
+              */}
+              <Route path="/login" element={
+                  loading ? <LoadingOverlay text="جاري التحقق..." /> : 
+                  (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
+              } />
 
-            {/* 
-               ------------------------------------
-               3. ADMIN ROUTES
-               ------------------------------------
-            */}
-            <Route path="/admin" element={
+              {/* 
+                 ------------------------------------
+                 3. ADMIN ROUTES
+                 ------------------------------------
+              */}
+              <Route path="/admin" element={
+                  <AdminRoute>
+                      <AdminPortal user={user} />
+                  </AdminRoute>
+              } />
+
+              <Route path="/contributions" element={
+                  <AdminRoute>
+                      <ContributionsManager />
+                  </AdminRoute>
+              } />
+
+              <Route path="/wathiq-admin" element={
+                  <AdminRoute>
+                      <WathiqAdmin />
+                  </AdminRoute>
+              } />
+
+              <Route path="/analytics" element={
                 <AdminRoute>
-                    <AdminPortal user={user} />
+                  <AnalyticsDashboard />
                 </AdminRoute>
-            } />
+              } />
 
-            <Route path="/contributions" element={
-                <AdminRoute>
-                    <ContributionsManager />
-                </AdminRoute>
-            } />
+              {/* 
+                 ------------------------------------
+                 4. MAIN APP ROUTES (Protected)
+                 Wrapped in MainLayout for Navigation
+                 ------------------------------------
+              */}
+              <Route path="/*" element={
+                <MainLayout>
+                    <Routes>
+                        
+                        {/* Native Root: Redirects based on Auth */}
+                        {isNative && (
+                            <Route path="/" element={
+                                (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
+                            } />
+                        )}
+                        
+                        <Route path="/welcome" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
+                        <Route path="/oil-guard" element={<ProtectedRoute><OilGuard /></ProtectedRoute>} />
+                        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                        <Route path="/compare" element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} />
 
-            <Route path="/wathiq-admin" element={
-                <AdminRoute>
-                    <WathiqAdmin />
-                </AdminRoute>
-            } />
+                        {/* Catch-all */}
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                </MainLayout>
+              } />
 
-            <Route path="/analytics" element={
-              <AdminRoute>
-                <AnalyticsDashboard />
-              </AdminRoute>
-            } />
-
-            {/* 
-               ------------------------------------
-               4. MAIN APP ROUTES (Protected)
-               Wrapped in MainLayout for Navigation
-               ------------------------------------
-            */}
-            <Route path="/*" element={
-              <MainLayout>
-                  <Routes>
-                      
-                      {/* Native Root: Redirects based on Auth */}
-                      {isNative && (
-                          <Route path="/" element={
-                              (user || userProfile) ? <Navigate to={appHomeRoute} replace /> : <AuthenticationPage />
-                          } />
-                      )}
-                      
-                      <Route path="/welcome" element={<ProtectedRoute><Welcome /></ProtectedRoute>} />
-                      <Route path="/oil-guard" element={<ProtectedRoute><OilGuard /></ProtectedRoute>} />
-                      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                      <Route path="/compare" element={<ProtectedRoute><ComparisonPage /></ProtectedRoute>} />
-
-                      {/* Catch-all */}
-                      <Route path="*" element={<Navigate to="/" replace />} />
-                  </Routes>
-              </MainLayout>
-            } />
-
-        </Routes>
+          </Routes>
+        </AnimatePresence>
       </Suspense>
     </>
   );

@@ -7,7 +7,7 @@ const en = {
   academy: 'Academy',
 
   // Blog Home
-  blog_title: 'Wathiq Scientific Blog',
+  blog_title: 'Scientific Blog',
   blog_subtitle: 'Ingredient analysis, marketing claim verification, and Algerian product reviews',
   search_placeholder: 'Search articles...',
   all_categories: 'All Articles',

@@ -94,9 +94,9 @@ const WathiqHeader = () => {
           <motion.div layout>
             <LanguageSwitcher />
           </motion.div>
-          <motion.button layout className="btn-primary nav-btn play-store-nav" onClick={handleDownload} style={{ display: 'flex', alignItems: 'center' }}>
+          <motion.button layout className="btn-primary nav-btn play-store-nav prominent-download-btn" onClick={handleDownload} style={{ display: 'flex', alignItems: 'center' }}>
             <Download size={15} style={isRTL ? { marginLeft: '6px' } : { marginRight: '6px' }} />
-            <AnimatedText text={lang === 'ar' ? 'تحميل التطبيق' : lang === 'fr' ? 'Télécharger' : 'Download'} />
+            <AnimatedText text={lang === 'ar' ? 'حمل تطبيق وثيق مجانا الآن' : lang === 'fr' ? 'Télécharger' : 'Download'} />
           </motion.button>
         </motion.div>
 
@@ -153,9 +153,9 @@ const WathiqHeader = () => {
                 <AnimatedText text={lang === 'ar' ? 'اللغة:' : lang === 'fr' ? 'Langue:' : 'Language:'} />
                 <LanguageSwitcher />
               </motion.div>
-              <motion.button layout className="btn-primary nav-btn play-store-nav" style={{ width: '100%', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={handleDownload}>
+              <motion.button layout className="btn-primary nav-btn play-store-nav prominent-download-btn" style={{ width: '100%', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={handleDownload}>
                 <Download size={16} style={isRTL ? { marginLeft: '6px' } : { marginRight: '6px' }} />
-                <AnimatedText text={lang === 'ar' ? 'تحميل التطبيق' : lang === 'fr' ? 'Télécharger' : 'Download'} />
+                <AnimatedText text={lang === 'ar' ? 'حمل تطبيق وثيق مجانا الآن' : lang === 'fr' ? 'Télécharger' : 'Download'} />
               </motion.button>
             </motion.div>
           </motion.div>

@@ -8,7 +8,6 @@ import LanguageSwitcher from './LanguageSwitcher';
 import wathiqLogo from '../../assets/wathiq-logo.png';
 import '../../LandingPage.css';
 import './Blog.css';
-import WathiqHeader from '../WathiqHeader';
 
 // Article imports
 import articlesAr from '../../data/articles/ar/index';
@@ -205,12 +204,15 @@ const BlogHome = () => {
     ? "Votre guide scientifique pour découvrir ce que les marques ne vous disent pas — audits produits, science INCI, et décryptage des allégations."
     : "Your scientific guide to discovering what brands don't tell you — product audits, ingredient science, and marketing claim analysis.";
 
+  const brandPrefix = lang === 'ar' ? 'وثيق | ' : 'Wathiq | ';
+  const pageTitle = `${brandPrefix}${t('blog_title')}`;
+
   return (
     <>
       <Helmet>
-        <title>{t('blog_title')} | وثيق</title>
+        <title>{pageTitle}</title>
         <meta name="description" content={t('blog_subtitle')} />
-        <meta property="og:title" content={`${t('blog_title')} | وثيق`} />
+        <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={t('blog_subtitle')} />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://wathiq.web.app/blog" />
@@ -221,15 +223,10 @@ const BlogHome = () => {
       <div className={`blog-wrapper landing-wrapper ${isRTL ? '' : 'ltr'}`}>
         <div className="grid-overlay" />
 
-        <WathiqHeader />
-
         {/* ── Hero ─── */}
         <header className="blog-hero container">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="hero-pill" style={{ marginBottom: '1.25rem', marginRight: 0 }}>
-              <span className="pulse-dot" />
-              {navBlogLabel} — وثيق
-            </div>
+
             <h1 className="blog-hero-title">
               {lang === 'ar' ? (
                 <>{heroTitle} <span className="text-mint">حصرية</span></>

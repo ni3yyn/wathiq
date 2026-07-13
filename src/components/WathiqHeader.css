@@ -221,6 +221,10 @@
   justify-content: flex-start;
 }
 
+.nav-mobile-link:last-of-type {
+  border-bottom: none;
+}
+
 .wathiq-header-nav.ltr .nav-mobile-link {
   /* text-align: left; no longer needed because flex-start respects direction */
 }
@@ -233,7 +237,7 @@
 .nav-mobile-divider {
   height: 1px;
   background: rgba(255, 255, 255, 0.06);
-  margin: 8px 0;
+  margin: -10px 0 -10px 0; /* Negative margin to pull elements closer despite the flex gap */
 }
 
 .nav-mobile-lang-row {
@@ -243,4 +247,59 @@
   font-size: 0.9rem;
   color: #6b7280;
   font-weight: 600;
+  margin-top: -0.5rem; /* counteract some gap above it */
+}
+
+@keyframes premium-shimmer {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+.prominent-download-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 15px -3px rgba(16, 185, 129, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  animation: none !important;
+}
+
+.prominent-download-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-25deg);
+  animation: premium-shimmer 3.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.prominent-download-btn:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%) !important;
+}
+
+.prominent-download-btn svg,
+.prominent-download-btn span,
+.prominent-download-btn div {
+  z-index: 2;
+  position: relative;
+}
+
+.prominent-download-btn:hover svg {
+  transform: translateY(2px);
+  transition: transform 0.2s ease;
+}
+
+.prominent-download-btn svg {
+  transition: transform 0.2s ease;
 }

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, ArrowRight, CheckCircle2, Lock, BookOpen, Clock, Award, Star, ListChecks } from 'lucide-react';
 import { useLang } from '../../context/LangContext';
 import { ProgressTracker } from '../../utils/ProgressTracker';
-import WathiqHeader from '../WathiqHeader';
+import { motion } from 'framer-motion';
 import CertificateCTA from './CertificateCTA';
 import './Courses.css';
 
@@ -97,13 +97,18 @@ const CourseSyllabus = () => {
   return (
     <div className="landing-wrapper" style={{ backgroundColor: 'var(--bg-deep)', minHeight: '100vh' }}>
       <Helmet>
-        <title>{course.meta.title} | Wathiq Academy</title>
+        <title>{lang === 'ar' ? `وثيق | ${course.meta.title}` : `Wathiq | ${course.meta.title}`}</title>
         <meta name="description" content={course.meta.subtitle} />
       </Helmet>
 
-      <WathiqHeader />
-
-      <div className="syllabus-container" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
+      <motion.div 
+        className="syllabus-container" 
+        style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
         
         {/* Back Link */}
         <Link to="/courses" className="syllabus-back-btn">
@@ -122,10 +127,6 @@ const CourseSyllabus = () => {
           </div>
 
           <div className="syllabus-stats-row">
-            <div className="syllabus-stat-box">
-              <div className="syllabus-stat-label">{uiTexts.level}</div>
-              <div className="syllabus-stat-value">{getLevelLabel(course.level)}</div>
-            </div>
             <div className="syllabus-stat-box">
               <div className="syllabus-stat-label">{uiTexts.duration}</div>
               <div className="syllabus-stat-value">{course.estimatedHours} {uiTexts.hours}</div>
@@ -181,28 +182,35 @@ const CourseSyllabus = () => {
                   const isUnlocked = ProgressTracker.isLessonUnlocked(course.slug, lesson.slug, course);
 
                   return (
-                    <Link
+                    <motion.div
                       key={lesson.slug}
-                      to={isUnlocked ? `/courses/${course.slug}/${lesson.slug}` : '#'}
-                      onClick={(e) => {
-                        if (!isUnlocked) {
-                          e.preventDefault();
-                        }
-                      }}
-                      className={`syllabus-lesson-row ${!isUnlocked ? 'locked' : ''}`}
+                      whileHover={isUnlocked ? { scale: 1.02, x: isRTL ? -5 : 5 } : {}}
+                      whileTap={isUnlocked ? { scale: 0.98 } : {}}
+                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     >
-                      <div className="syllabus-lesson-info">
-                        <div className={`syllabus-lesson-status ${isCompleted ? 'completed' : isUnlocked ? 'unlocked' : 'locked'}`}>
-                          {isCompleted ? <CheckCircle2 size={18} /> : !isUnlocked ? <Lock size={16} /> : null}
+                      <Link
+                        to={isUnlocked ? `/courses/${course.slug}/${lesson.slug}` : '#'}
+                        onClick={(e) => {
+                          if (!isUnlocked) {
+                            e.preventDefault();
+                          }
+                        }}
+                        className={`syllabus-lesson-row ${!isUnlocked ? 'locked' : ''}`}
+                        style={{ display: 'flex', textDecoration: 'none' }}
+                      >
+                        <div className="syllabus-lesson-info">
+                          <div className={`syllabus-lesson-status ${isCompleted ? 'completed' : isUnlocked ? 'unlocked' : 'locked'}`}>
+                            {isCompleted ? <CheckCircle2 size={18} /> : !isUnlocked ? <Lock size={16} /> : null}
+                          </div>
+                          <span className="syllabus-lesson-title">{lesson.title}</span>
                         </div>
-                        <span className="syllabus-lesson-title">{lesson.title}</span>
-                      </div>
 
-                      <div className="syllabus-lesson-meta">
-                        <Clock size={12} />
-                        <span>{lesson.readTime} {lang === 'ar' ? 'دقائق' : 'min'}</span>
-                      </div>
-                    </Link>
+                        <div className="syllabus-lesson-meta">
+                          <Clock size={12} />
+                          <span>{lesson.readTime} {lang === 'ar' ? 'دقائق' : 'min'}</span>
+                        </div>
+                      </Link>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -219,9 +227,12 @@ const CourseSyllabus = () => {
           />
         ) : (
           <div className="syllabus-start-btn-wrap">
-            <button 
+            <motion.button 
               className="syllabus-start-btn"
               onClick={handleCtaClick}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               {isStarted ? (
                 <>
@@ -237,11 +248,11 @@ const CourseSyllabus = () => {
                   <span>{uiTexts.btnStart}</span>
                 </>
               )}
-            </button>
+            </motion.button>
           </div>
         )}
 
-      </div>
+      </motion.div>
     </div>
   );
 };

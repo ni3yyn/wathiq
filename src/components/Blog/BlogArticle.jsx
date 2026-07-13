@@ -9,7 +9,6 @@ import LanguageSwitcher from './LanguageSwitcher';
 import wathiqLogo from '../../assets/wathiq-logo.png';
 import '../../LandingPage.css';
 import './Blog.css';
-import WathiqHeader from '../WathiqHeader';
 
 import articlesAr from '../../data/articles/ar/index';
 import articlesFr from '../../data/articles/fr/index';
@@ -113,18 +112,27 @@ const BlogArticle = () => {
 
   const backLabel = article.lang === 'ar' ? 'المدونة' : article.lang === 'fr' ? 'Blog' : 'Blog';
 
+  const brandPrefix = article.lang === 'ar' ? 'وثيق | ' : 'Wathiq | ';
+  const cleanSeoTitle = article.seo.title
+    .replace(/^وثيق\s*\|\s*/, '')
+    .replace(/^Wathiq\s*\|\s*/, '')
+    .replace(/\s*\|\s*تطبيق وثيق$/, '')
+    .replace(/\s*\|\s*وثيق$/, '')
+    .replace(/\s*\|\s*Wathiq$/, '');
+  const pageTitle = `${brandPrefix}${cleanSeoTitle}`;
+
   return (
     <>
       <Helmet>
-        <title>{article.seo.title}</title>
+        <title>{pageTitle}</title>
         <meta name="description" content={article.seo.description} />
         <meta name="keywords" content={article.seo.keywords?.join(', ')} />
         <link rel="canonical" href={pageUrl} />
-        <meta property="og:title" content={article.seo.title} />
+        <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={article.seo.description} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={pageUrl} />
-        <meta property="og:site_name" content="وثيق | Wathiq" />
+        <meta property="og:site_name" content={article.lang === 'ar' ? "تطبيق وثيق" : "Wathiq App"} />
         <meta property="article:published_time" content={article.publishedAt} />
         <meta property="article:author" content={article.author} />
         {article.seo.keywords?.map(k => <meta key={k} property="article:tag" content={k} />)}
@@ -139,8 +147,6 @@ const BlogArticle = () => {
 
       <div className={`blog-article-wrapper landing-wrapper ${isRTL ? '' : 'ltr'}`}>
         <div className="grid-overlay" />
-
-        <WathiqHeader />
 
         {/* ── Article Header ── */}
         <motion.header
