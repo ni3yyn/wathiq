@@ -4,6 +4,7 @@ const ar = {
   blog: 'المدونة',
   home: 'الرئيسية',
   app: 'التطبيق',
+  academy: 'أكاديمية وثيق',
 
   // Blog Home
   blog_title: 'مدونة وثيق العلمية',

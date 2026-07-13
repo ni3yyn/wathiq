@@ -55,7 +55,13 @@ jwtClient.authorize((err, tokens) => {
     'https://wathiq.web.app/blog/ingredients-a-eviter-cosmetiques-bon-marche',
     // English articles
     'https://wathiq.web.app/blog/marketing-lies-algerian-cosmetics',
-    'https://wathiq.web.app/blog/how-to-read-inci-ingredient-list'
+    'https://wathiq.web.app/blog/how-to-read-inci-ingredient-list',
+    // Courses
+    'https://wathiq.web.app/courses',
+    'https://wathiq.web.app/courses/skin-science-101',
+    'https://wathiq.web.app/courses/ingredient-mastery',
+    'https://wathiq.web.app/courses/formulation-basics',
+    'https://wathiq.web.app/courses/build-your-brand'
   ];
 
   console.log(`Sending indexing requests for ${urls.length} URLs...\n`);

@@ -69,6 +69,15 @@ const arLanding = {
   blog_read_btn: "اقرأ المقال",
   blog_cta_btn: "تصفح جميع المقالات",
 
+  // Courses Section
+  courses_title_1: "أكاديمية ",
+  courses_title_mint: "وثيق",
+  courses_subtitle: "تعلمي كيمياء التجميل، اصنعي منتجاتك الخاصة، وابني علامتك التجارية",
+  courses_cta_btn: "ابدئي التعلم الآن مجاناً",
+  course_level_beginner: "مبتدئ",
+  course_level_intermediate: "متوسط",
+  course_level_advanced: "متقدم",
+
   footer_headline: "وثيق متوفر الآن في بلاي ستور!",
   footer_sub: "انضمي لمجتمع المستهلك الذكي، احمي بشرتكِ وشعركِ، ووفري أموالكِ.",
   footer_badge_safe: "آمن 100%",

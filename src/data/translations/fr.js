@@ -4,6 +4,7 @@ const fr = {
   blog: 'Blog',
   home: 'Accueil',
   app: "L'App",
+  academy: 'Académie',
 
   // Blog Home
   blog_title: 'Blog Scientifique Wathiq',

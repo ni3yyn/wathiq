@@ -1,6 +1,73 @@
 import React from 'react';
-import { MessageSquare, Lightbulb, FlaskConical } from 'lucide-react';
+import { MessageSquare, Lightbulb, FlaskConical, Beaker, CheckCircle2 } from 'lucide-react';
+import { useLang } from '../../context/LangContext';
 import './Blog.css';
+
+// ─── Key Term ──────────────────────────────────────────────────────
+const KeyTermBlock = ({ data }) => {
+  const { lang } = useLang();
+  const badgeText = lang === 'fr' ? 'Terme Clé' : lang === 'en' ? 'Key Term' : 'مصطلح رئيسي';
+  return (
+    <div className="block-key-term">
+      <div className="key-term-header">
+        <span className="key-term-badge">💡 {badgeText}</span>
+        <strong className="key-term-name">{data.term}</strong>
+      </div>
+      <p className="key-term-def">{data.definition}</p>
+    </div>
+  );
+};
+
+// ─── Formula Card ──────────────────────────────────────────────────
+const FormulaCardBlock = ({ data }) => {
+  return (
+    <div className="block-formula-card">
+      <div className="formula-card-header">
+        <Beaker size={18} className="formula-icon" />
+        <h3 className="formula-card-title">{data.title}</h3>
+      </div>
+      <div className="formula-card-phases">
+        {data.phases.map((phase, pi) => (
+          <div key={pi} className="formula-phase">
+            <div className="formula-phase-header">
+              <span className="formula-phase-name">{phase.name}</span>
+              <span className="formula-phase-pct">{phase.percentage}</span>
+            </div>
+            <div className="formula-phase-ingredients">
+              {phase.ingredients.map((ing, ii) => (
+                <div key={ii} className="formula-ing-row">
+                  <div className="formula-ing-info">
+                    <span className="formula-ing-name">{ing.name}</span>
+                    <span className="formula-ing-role">{ing.role}</span>
+                  </div>
+                  <span className="formula-ing-pct">{ing.pct}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ─── Step Process ──────────────────────────────────────────────────
+const StepProcessBlock = ({ data }) => (
+  <div className="block-step-process">
+    {data.steps.map((step, si) => (
+      <div key={si} className="step-process-item">
+        <div className="step-process-number-wrap">
+          <div className="step-process-number">{step.number || si + 1}</div>
+          {si < data.steps.length - 1 && <div className="step-process-line" />}
+        </div>
+        <div className="step-process-content">
+          <h4 className="step-process-title">{step.title}</h4>
+          <p className="step-process-text">{step.text}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 // ─── Heading ──────────────────────────────────────────────────────
 const HeadingBlock = ({ data }) => {
@@ -15,14 +82,24 @@ const ParagraphBlock = ({ data }) => (
 );
 
 // ─── Bubble QA ────────────────────────────────────────────────────
-const BubbleQABlock = ({ data }) => (
-  <div className="block-bubble-qa">
-    <div className="bubble-qa-icon">
-      <MessageSquare size={16} strokeWidth={2} />
+const BubbleQABlock = ({ data }) => {
+  const pairs = data.qaPairs || (data.question ? [data] : []);
+  return (
+    <div className="block-bubble-qa">
+      {pairs.map((pair, idx) => (
+        <div key={idx} className="bubble-qa-pair">
+          <div className="bubble-qa-q">
+            <div className="bubble-qa-icon">
+              <MessageSquare size={16} strokeWidth={2} />
+            </div>
+            <blockquote className="bubble-qa-text">{pair.question}</blockquote>
+          </div>
+          {pair.answer && <div className="bubble-qa-a">{pair.answer}</div>}
+        </div>
+      ))}
     </div>
-    <blockquote className="bubble-qa-text">{data.question}</blockquote>
-  </div>
-);
+  );
+};
 
 // ─── Comparison Table ──────────────────────────────────────────────
 const ComparisonTableBlock = ({ data }) => (
@@ -93,6 +170,9 @@ const BlockRenderer = ({ blocks }) => {
           case 'comparison_table': return <ComparisonTableBlock key={idx} data={block.data} />;
           case 'tip_box':         return <TipBoxBlock key={idx} data={block.data} />;
           case 'cta_wathiq':      return <CTAWathiqBlock key={idx} data={block.data} />;
+          case 'key_term':        return <KeyTermBlock key={idx} data={block.data} />;
+          case 'formula_card':    return <FormulaCardBlock key={idx} data={block.data} />;
+          case 'step_process':    return <StepProcessBlock key={idx} data={block.data} />;
           default:                return null;
         }
       })}

@@ -35,6 +35,12 @@ const routesToPrerender = [
   // English articles
   '/blog/marketing-lies-algerian-cosmetics',
   '/blog/how-to-read-inci-ingredient-list',
+  // Courses
+  '/courses',
+  '/courses/skin-science-101',
+  '/courses/ingredient-mastery',
+  '/courses/formulation-basics',
+  '/courses/build-your-brand'
 ];
 
 const app = express();

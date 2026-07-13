@@ -20,6 +20,17 @@ import articlesFr from '../data/articles/fr/index';
 import articlesEn from '../data/articles/en/index';
 import './Blog/Blog.css';
 import WathiqHeader from './WathiqHeader';
+import { Link } from 'react-router-dom';
+
+import arCourses from '../data/courses/ar';
+import enCourses from '../data/courses/en';
+import frCourses from '../data/courses/fr';
+
+const COURSES_BY_LANG = {
+  ar: arCourses,
+  en: enCourses,
+  fr: frCourses
+};
 
 import { useLang } from '../context/LangContext';
 import enLanding from '../data/translations/landing/en';
@@ -1405,7 +1416,7 @@ const LandingPage = () => {
                   <a
                     href={`/blog/${article.slug}`}
                     key={`${article.slug}-${idx}`}
-                    className={`blog-card marquee-blog-card ${article.category === 'claims' ? 'cat-claims' : article.category === 'audit' ? 'cat-audit' : 'cat-science'}`}
+                    className={`blog-card marquee-blog-card ${article.category === 'claims' ? 'cat-claims' : article.category === 'audit' ? 'cat-science' : 'cat-science'}`}
                     style={{ textDecoration: 'none', textAlign: isRtl ? 'right' : 'left', width: '350px', flexShrink: 0 }}
                   >
                     <div className="blog-card-meta-top" style={{ flexDirection: isRtl ? 'row-reverse' : 'row' }}>
@@ -1433,6 +1444,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
 
       {/* 6. Footer CTA - CENTERED */}
       <section className="footer-cta" style={{ direction: isRtl ? 'rtl' : 'ltr' }}>

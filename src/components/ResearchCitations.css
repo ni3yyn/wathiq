@@ -4,7 +4,6 @@
    ───────────────────────────────────────────── */
 
 .rc-wrapper {
-  background: var(--bg-radial);
   position: relative;
   overflow: hidden;
 }

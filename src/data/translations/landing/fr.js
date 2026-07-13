@@ -69,6 +69,15 @@ const frLanding = {
   blog_read_btn: "Lire l'article",
   blog_cta_btn: "Parcourir tous les articles",
 
+  // Courses Section
+  courses_title_1: "Académie ",
+  courses_title_mint: "Wathiq",
+  courses_subtitle: "Apprenez la chimie cosmétique, créez vos produits et lancez votre marque",
+  courses_cta_btn: "Commencez à apprendre gratuitement",
+  course_level_beginner: "Débutant",
+  course_level_intermediate: "Intermédiaire",
+  course_level_advanced: "Avancé",
+
   footer_headline: "Wathiq est maintenant sur le Play Store !",
   footer_sub: "Rejoignez la communauté des consommateurs intelligents, protégez votre peau et vos cheveux.",
   footer_badge_safe: "100% Sûr",

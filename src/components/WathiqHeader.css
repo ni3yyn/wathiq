@@ -41,18 +41,7 @@
   box-sizing: border-box;
 }
 
-/* ─── Scroll State: Compact Floating Pill ─── */
-.wathiq-header-nav.scrolled .wathiq-header-container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 12px auto;
-  border-radius: 16px;
-  border: 1px solid rgba(16, 185, 129, 0.22);
-  background: rgba(10, 20, 18, 0.92);
-  height: 56px;
-  padding: 0 20px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
-}
+
 
 /* ─── Desktop Links & Actions ─── */
 .nav-desktop-menu {

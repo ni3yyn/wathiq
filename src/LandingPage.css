@@ -13,14 +13,14 @@
   /* Alert Red */
 
   /* --- SPECIFIC COLORS REQUESTED --- */
-  --bg-deep: #14201d;
+  --bg-deep: #192a25;
   /* Darker shade of #3e5e56 for depth */
   --bg-card: #29403b;
   /* Specific Dark Green Card BG */
   --bg-surface: #3e5e56;
   /* Specific Lighter Teal Surface */
 
-  --bg-radial: radial-gradient(circle at 50% -20%, #3e5e56 0%, #14201d 50%);
+  --bg-radial: radial-gradient(circle at 50% -20%, #3e5e56 0%, #192a25 80%);
 
   /* Glassmorphism derived from user colors */
   --surface-glass: rgba(62, 94, 86, 0.4);
@@ -52,6 +52,7 @@ body {
 
 .landing-wrapper {
   background: var(--bg-radial);
+  background-attachment: fixed;
   min-height: 100vh;
   position: relative;
   overflow: hidden;

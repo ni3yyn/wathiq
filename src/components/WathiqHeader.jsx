@@ -10,6 +10,7 @@ import './WathiqHeader.css';
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.wathiq.app";
 
 const NAV_LINKS = [
+  { path: '/courses', ar: 'أكاديمية وثيق', fr: 'Académie', en: 'Academy' },
   { path: '/blog', ar: 'المدونة', fr: 'Blog', en: 'Blog' },
   { path: '/how-it-works', ar: 'كيف يعمل؟', fr: 'Comment ça marche', en: 'How it Works' },
   { path: '/research', ar: 'الأبحاث العلمية', fr: 'Recherches', en: 'Research' },
@@ -35,17 +36,8 @@ const WathiqHeader = () => {
   const { lang } = useLang();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const isRTL = lang === 'ar';
   const navRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -76,7 +68,7 @@ const WathiqHeader = () => {
   };
 
   return (
-    <nav ref={navRef} className={`wathiq-header-nav ${scrolled ? 'scrolled' : ''} ${isOpen ? 'menu-open' : ''} ${isRTL ? '' : 'ltr'}`}>
+    <nav ref={navRef} className={`wathiq-header-nav ${isOpen ? 'menu-open' : ''} ${isRTL ? '' : 'ltr'}`}>
       <motion.div layout className="wathiq-header-container">
         {/* Brand logo */}
         <motion.div layout>

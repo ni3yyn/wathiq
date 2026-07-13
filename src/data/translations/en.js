@@ -4,6 +4,7 @@ const en = {
   blog: 'Blog',
   home: 'Home',
   app: 'The App',
+  academy: 'Academy',
 
   // Blog Home
   blog_title: 'Wathiq Scientific Blog',

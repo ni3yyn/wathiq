@@ -32,6 +32,9 @@ const ResearchCitations = lazy(() => import('./components/ResearchCitations'));
 const AnalyticsDashboard = lazy(() => import('./components/AnalyticsDashboard.jsx'));
 const BlogHome = lazy(() => import('./components/Blog/BlogHome'));
 const BlogArticle = lazy(() => import('./components/Blog/BlogArticle'));
+const CoursesHome = lazy(() => import('./components/Courses/CoursesHome'));
+const CourseSyllabus = lazy(() => import('./components/Courses/CourseSyllabus'));
+const LessonViewer = lazy(() => import('./components/Courses/LessonViewer'));
 
 // --- UI & UX Components ---
 import LoadingOverlay from './components/LoadingOverlay'; 
@@ -301,6 +304,9 @@ const WathiqRoutes = () => {
         <Route path="/research" element={<ResearchCitations />} />
         <Route path="/blog" element={<BlogHome />} />
         <Route path="/blog/:slug" element={<BlogArticle />} />
+        <Route path="/courses" element={<CoursesHome />} />
+        <Route path="/courses/:courseSlug" element={<CourseSyllabus />} />
+        <Route path="/courses/:courseSlug/:lessonSlug" element={<LessonViewer />} />
             {/* 
                ------------------------------------
                1. WEB BROWSER (LANDING PAGE)
